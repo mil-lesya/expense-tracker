@@ -14,12 +14,13 @@ export class AuthService {
     private readonly usersService: UsersService,
     private readonly jwtService: JwtService,
     private readonly configService: ConfigService
-  ) {}
+  ) {
+  }
 
   async validateUser(userId: string): Promise<User> {
     const user = await this.usersService.findById(userId);
     if (!user) {
-      throw new UnauthorizedException('Invalid token');
+      throw new UnauthorizedException();
     }
     return user;
   }
@@ -47,8 +48,14 @@ export class AuthService {
     return { user, accessToken };
   }
 
+  checkAuthorization(userIdFromToken: string, userIdFromEntity: string) {
+    if (userIdFromToken !== userIdFromEntity) {
+      throw new UnauthorizedException();
+    }
+  }
+
   private generateToken = (id: string): string => {
-    return this.jwtService.sign( {id} , {
+    return this.jwtService.sign({ id }, {
       secret: this.configService.get('JWT_SECRET'),
       expiresIn: this.configService.get('JWT_EXPIRES'),
     });
