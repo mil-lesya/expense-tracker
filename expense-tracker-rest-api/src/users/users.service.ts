@@ -3,14 +3,12 @@ import { Repository } from 'typeorm';
 import { User } from './user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import * as bcrypt from 'bcrypt';
-import { ConfigService } from '@nestjs/config';
 import { CreateUserDto } from './dto/create-user.dto';
 
 @Injectable()
 export class UsersService {
-  constructor(
-    @InjectRepository(User) private userRepository: Repository<User>,
-    private configService: ConfigService) {}
+  constructor(@InjectRepository(User) private userRepository: Repository<User>) {
+  }
 
   async create(createUserDto: CreateUserDto) {
     createUserDto.password = await this.hashPassword(createUserDto.password);
@@ -28,7 +26,7 @@ export class UsersService {
 
   async update(id: string, attrs: Partial<User>) {
     const user = await this.findById(id);
-    if ( !user ) {
+    if (!user) {
       throw new NotFoundException('User not found');
     }
     Object.assign(user, attrs);
@@ -37,7 +35,7 @@ export class UsersService {
 
   async remove(id: string) {
     const user = await this.findById(id);
-    if ( !user ) {
+    if (!user) {
       throw new NotFoundException('User not found');
     }
     return this.userRepository.remove(user);
