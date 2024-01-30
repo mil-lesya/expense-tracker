@@ -11,8 +11,8 @@ export class Wallet {
   @Column()
   name: string;
 
-  @Column({name: 'starting_balance'})
-  startingBalance: number;
+  @Column()
+  balance: number;
 
   @Column({name: 'is_default'})
   isDefault: boolean;
