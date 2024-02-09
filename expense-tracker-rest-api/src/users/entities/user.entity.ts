@@ -1,6 +1,7 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { Exclude } from 'class-transformer';
-import { Wallet } from '../wallets/wallet.entity';
+import { Category } from '../../categories/entities/category.entity';
+import { Wallet } from '../../wallets/entities/wallet.entity';
 
 @Entity()
 export class User {
@@ -20,4 +21,7 @@ export class User {
 
   @OneToMany(() => Wallet, (wallet) => wallet.user)
   wallets: Wallet[];
+
+  @OneToMany(() => Category, (category) => category.user)
+  categories: Category[];
 }

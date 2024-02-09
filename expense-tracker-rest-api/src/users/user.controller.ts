@@ -11,7 +11,7 @@ import {
   UseGuards,
   UseInterceptors
 } from '@nestjs/common';
-import { UsersService } from './users.service';
+import { UserService } from './user.service';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { AuthGuard } from '@nestjs/passport';
 import { AuthService } from '../auth/auth.service';
@@ -19,9 +19,9 @@ import { AuthService } from '../auth/auth.service';
 @UseGuards(AuthGuard('jwt'))
 @UseInterceptors(ClassSerializerInterceptor)
 @Controller('users')
-export class UsersController {
+export class UserController {
   constructor(
-    private usersService: UsersService,
+    private usersService: UserService,
     private authService: AuthService) {
   }
 

@@ -12,19 +12,18 @@ import {
   UseGuards,
   UseInterceptors
 } from '@nestjs/common';
-import { WalletsService } from './wallets.service';
+import { WalletService } from './wallet.service';
 import { AuthGuard } from '@nestjs/passport';
 import { CreateWalletDto } from './dto/create-wallet.dto';
-import { Wallet } from './wallet.entity';
-import { AuthService } from '../auth/auth.service';
+import { Wallet } from './entities/wallet.entity';
 import { UpdateWalletDto } from './dto/update-wallet.dto';
 
 @UseGuards(AuthGuard('jwt'))
 @UseInterceptors(ClassSerializerInterceptor)
 @Controller('wallets')
-export class WalletsController {
+export class WalletController {
 
-  constructor(private walletService: WalletsService, private authService: AuthService) {
+  constructor(private walletService: WalletService) {
   }
 
   @Post()
@@ -34,22 +33,16 @@ export class WalletsController {
 
   @Get()
   async find(@Req() req: any) {
-    const wallets = await this.walletService.findAll(req.user.id);
-    if (!wallets) {
-      throw new NotFoundException('Wallet not found');
-    }
-    return wallets;
+    return await this.walletService.findAll(req.user.id);
   }
 
   @Get('/:id')
-  async findOne(@Param('id') id: string, @Req() req: any): Promise<Omit<Wallet, 'user'>> {
-    const wallet = await this.walletService.findOne(id);
+  async findOne(@Param('id') id: string, @Req() req: any): Promise<Wallet> {
+    const wallet = await this.walletService.findById(id);
     if (!wallet) {
       throw new NotFoundException('Wallet not found');
     }
-    this.authService.checkAuthorization(req.user.id, wallet.user.id);
-    const { user, ...walletResponse } = wallet;
-    return walletResponse;
+    return wallet;
   }
 
   @Delete('/:id')
@@ -60,5 +53,10 @@ export class WalletsController {
   @Patch('/:id')
   updateUser(@Param('id') id: string, @Body() body: UpdateWalletDto, @Req() req: any) {
     return this.walletService.update(id, req.user.id, body);
+  }
+
+  @Get('/:id/transactions')
+  async findTransactions(@Param('id') id: string, @Req() req: any) {
+    return await this.walletService.findTransactionByWallet(id, req.user.id);
   }
 }
