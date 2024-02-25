@@ -6,7 +6,7 @@ export class CreateWalletDto {
   name: string;
 
   @IsNumber()
-  startingBalance: number;
+  balance: number;
 
   @IsBoolean()
   isDefault: boolean;
