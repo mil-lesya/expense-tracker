@@ -1,0 +1,39 @@
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.logoWrapper {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+  border-radius: 8px;
+  background: var(--color-light-gray, #f7f7f9);
+}
+
+.logoTextWrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.logoName {
+  font-family: var(--font-family-title);
+  font-size: var(--font-size-main-text);
+  line-height: var(--line-height-title-s);
+  font-weight: 500;
+}
+
+.logoText {
+  font-family: var(--font-family-main);
+  font-size: var(--font-size-secondary-text);
+  line-height: var(--line-height-title-s);
+  letter-spacing: var(--letter-spacing);
+  color: var(--color-disabled-text);
+  font-weight: 300;
+}

@@ -1,0 +1,83 @@
+/* Fahkwang - font-weight 400 */
+@font-face {
+  font-display: swap;
+  font-family: 'Fahkwang';
+  font-weight: 400; // normal
+  font-style: normal;
+  src: url('/src/shared/assets/fonts/Fahkwang-Regular.ttf') format('truetype');
+}
+
+/* FahkwangMedium - font-weight 500 */
+@font-face {
+  font-display: swap;
+  font-family: 'FahkwangMedium';
+  font-weight: 500;
+  font-style: normal;
+  src: url('/src/shared/assets/fonts/Fahkwang-Medium.ttf') format('truetype');
+}
+
+:root {
+  --font-family-title: 'Fahkwang', 'Helvetica Neue', Serif;
+  --font-family-subtitle: 'FahkwangMedium', 'Helvetica Neue', Serif;
+  --font-family-main: 'Helvetica Neue', Serif;
+
+  /** Fonts */
+  --font-size-title-xl: 34px;
+  --font-size-title-l: 24px;
+  --font-size-title-m: 18px;
+  --font-size-title-s: 13px;
+  --font-size-main-text: 16px;
+  --font-size-secondary-text: 14px;
+  --font-size-small-text: 12px;
+
+  --line-height-title-xl: 44px;
+  --line-height-title-l: 36px;
+  --line-height-title-m: 27px;
+  --line-height-title-s: 19px;
+  --line-height-main-text: 24px;
+  --line-height-secondary-text: 21px;
+  --line-height-small-text: 18px;
+
+  --letter-spacing: 0.15px;
+
+  --font-title-xl: var(--font-size-title-xl) / var(--line-height-title-xl)
+    var(--font-family-title);
+  --font-title-l: var(--font-size-title-l) / var(--line-height-title-l)
+    var(--font-family-title);
+  --font-title-m: var(--font-size-title-m) / var(--line-height-title-m)
+    var(--font-family-title);
+  --font-title-s: var(--font-size-title-s) / var(--line-height-title-s)
+    var(--font-family-subtitle);
+  --font-main-text: var(--font-size-main-text) / var(--line-height-main-text)
+    var(--font-family-main);
+  --font-secondary-text: var(--font-size-secondary-text) /
+    var(--line-height-secondary-text) var(--font-family-main);
+  --font-small-text: var(--font-size-small-text) / var(--line-height-small-text)
+    var(--font-family-main);
+
+  // Colors
+  --color-white: #ffffff;
+  --color-black: #000000;
+
+  --color-primary: #574ee4;
+  --color-primary-dark: #1b1c38;
+
+  --color-middle-blue: #7f8ef5;
+  --color-middle-grey: #41485c;
+
+  --color-light-blue: #dddffb;
+  --color-light-grey: #f7f7f9;
+
+  --color-green: #8fde66;
+  --color-red: #fb8282;
+  --color-orange: #ffa66f;
+
+  --color-disabled-button: #d2d2de;
+  --color-disabled-text: #8c8c98;
+
+  --color-border: #b8b7c1;
+  --color-placeholder: #d5d4d9;
+
+  // Размеры
+  --navbar-height: 50px;
+}

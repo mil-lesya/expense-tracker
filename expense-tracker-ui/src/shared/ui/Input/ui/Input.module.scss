@@ -1,0 +1,89 @@
+.field {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.label {
+  font: var(--font-small-text);
+  color: var(--color-primary-dark);
+  font-weight: 300;
+}
+
+.inputBody {
+  display: flex;
+  height: 45px;
+  align-items: center;
+  border-radius: 10px;
+  border: 1px solid var(--color-border);
+  background: none;
+  outline: none;
+  transition: border-color 0.2s;
+
+  &:hover {
+    border-color: var(--color-middle-blue);
+  }
+
+  &:focus-within {
+    border-color: var(--color-primary);
+  }
+}
+
+.input {
+  height: 100%;
+  width: 100%;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 10px;
+  background: none;
+  outline: none;
+  font: var(--font-main-text);
+
+  &::placeholder {
+    color: var(--color-placeholder);
+  }
+}
+
+.errorInput {
+  border-color: var(--color-red);
+
+  &:focus-within,
+  &:hover {
+    border-color: var(--color-red);
+  }
+}
+
+.errorMessage {
+  position: absolute;
+  bottom: -15px;
+  font: var(--font-small-text);
+  color: var(--color-red);
+}
+
+.iconButton {
+  background: none;
+  border: none;
+  padding-right: 20px;
+  cursor: pointer;
+
+  &:hover .icon {
+    color: var(--color-middle-blue);
+  }
+
+  &:focus-within .icon {
+    color: var(--color-primary);
+  }
+}
+
+.icon {
+  color: var(--color-border);
+  transition: color 0.2s;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  box-shadow: 0 0 0 30px #fff inset !important;
+}
