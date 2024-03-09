@@ -1,6 +1,6 @@
-import { classNames } from 'shared/lib/classNames/classNames'
-import cls from './Logo.module.scss'
-import LogoIcon from '../../../assets/icons/logo-finterst.svg'
+import { classNames } from 'shared/lib/classNames/classNames';
+import cls from './Logo.module.scss';
+import LogoIcon from '../../../assets/icons/logo-finterst.svg';
 
 interface LogoProps {
   className?: string
@@ -17,7 +17,7 @@ const Logo = ({ className }: LogoProps) => {
         <p className={cls.logoText}>Personal finance manager</p>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Logo
+export default Logo;

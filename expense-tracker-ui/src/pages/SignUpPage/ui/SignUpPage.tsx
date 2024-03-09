@@ -1,5 +1,6 @@
-import { classNames } from 'shared/lib/classNames/classNames'
-import cls from './SignUpPage.module.scss'
+import { classNames } from 'shared/lib/classNames/classNames';
+import cls from './SignUpPage.module.scss';
+import RegistrationForm from 'features/Registration/ui/RegistrationForm/RegistrationForm';
 
 interface SignUpPageProps {
   className?: string
@@ -8,9 +9,9 @@ interface SignUpPageProps {
 const SignUpPage = ({ className }: SignUpPageProps) => {
   return (
     <div className={classNames(cls.SignUpPage, {}, [className])}>
-      <div>SignUpPage</div>
+      <RegistrationForm/>
     </div>
-  )
-}
+  );
+};
 
-export default SignUpPage
+export default SignUpPage;

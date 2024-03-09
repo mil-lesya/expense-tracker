@@ -11,7 +11,7 @@
 }
 
 .layoutButton {
-  width: 172px;
+  min-width: 172px;
 }
 
 .buttonsWrapper {
@@ -41,7 +41,7 @@
   width: calc(100vw - 60px);
   height: calc(100vh - 165px);
   border-radius: 20px;
-  background: rgba(255, 255, 255, 0.23);
+  background: rgba(255 255 255 / 23%);
 }
 
 .pageWrapper {
@@ -60,7 +60,48 @@
   color: var(--color-primary);
 }
 
+.financeIcon {
+  color: #f15a26;
+}
+
+.calendarIcon {
+  color: #ec93fb;
+}
+
 .badgeText {
   font: var(--font-main-text);
   font-weight: 300;
+}
+
+.cardsWrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 50%;
+  gap: 40px;
+}
+
+.badgeDone {
+  margin-left: 30px;
+  position: relative;
+  left: 100px;
+}
+
+.badgeCoin {
+  position: relative;
+  right: 100px;
+  transform: rotate(-25deg);
+}
+
+.badgeFinance {
+  position: relative;
+  left: 100px;
+  transform: rotate(25deg);
+}
+
+.badgeCalendar {
+  position: relative;
+  right: 100px;
+  transform: rotate(-25deg);
 }

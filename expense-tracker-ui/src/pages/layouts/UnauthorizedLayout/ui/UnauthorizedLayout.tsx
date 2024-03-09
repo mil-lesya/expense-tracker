@@ -1,29 +1,37 @@
-import { classNames } from 'shared/lib/classNames/classNames'
-import cls from './UnauthorizedLayout.module.scss'
-import { FC } from 'react'
-import { Button, ThemeButton } from 'shared/ui/Button'
-import { useNavigate } from 'react-router-dom'
-import { Logo } from 'shared/ui/Logo'
-import Background from 'shared/assets/img/background.png'
-import LayoutBadge from 'shared/ui/LayoutBadge/LayoutBadge'
-import DoneIcon from 'shared/assets/icons/done.svg'
-import CoinIcon from 'shared/assets/icons/coin.svg'
+import { classNames } from 'shared/lib/classNames/classNames';
+import cls from './UnauthorizedLayout.module.scss';
+import { FC } from 'react';
+import { Button, ThemeButton } from 'shared/ui/Button';
+import { useNavigate } from 'react-router-dom';
+import { Logo } from 'shared/ui/Logo';
+import Background from 'shared/assets/img/background.png';
+import LayoutBadge from 'shared/ui/LayoutBadge/LayoutBadge';
+import DoneIcon from 'shared/assets/icons/done.svg';
+import CoinIcon from 'shared/assets/icons/coin.svg';
+import FinanceIcon from 'shared/assets/icons/finance.svg';
+import CalendarIcon from 'shared/assets/icons/calendar.svg';
+import { useTranslation } from 'react-i18next';
 
 interface UnauthorizedLayoutProps {
   className?: string
 }
 
 const UnauthorizedLayout: FC<UnauthorizedLayoutProps> = (props) => {
-  const { className, children } = props
-  const navigate = useNavigate()
+  const { className, children } = props;
+  const navigate = useNavigate();
+  const { t, i18n } = useTranslation('unauthorized');
 
-  function handleClickSignIn() {
-    navigate('/signin')
+  function handleClickSignIn () {
+    navigate('/signin');
   }
 
-  function handleClickSignUp() {
-    navigate('/signup')
+  function handleClickSignUp () {
+    navigate('/signup');
   }
+
+  const toggleLang = () => {
+    i18n.changeLanguage(i18n.language === 'ru' ? 'en' : 'ru');
+  };
 
   return (
     <div className={classNames(cls.unauthorizedLayout, {}, [className])}>
@@ -35,14 +43,20 @@ const UnauthorizedLayout: FC<UnauthorizedLayoutProps> = (props) => {
             theme={ThemeButton.PRIMARY_DARK}
             onClick={handleClickSignIn}
           >
-            Sign in
+            {t('layout.buttonLogin')}
           </Button>
           <Button
             className={cls.layoutButton}
             theme={ThemeButton.OUTLINE_DARK}
             onClick={handleClickSignUp}
           >
-            Sign up
+            {t('layout.buttonReg')}
+          </Button>
+          <Button
+            theme={ThemeButton.CLEAR}
+            onClick={toggleLang}
+          >
+           {i18n.language === 'ru' ? 'Язык: ru' : 'Lang: en'}
           </Button>
         </div>
       </div>
@@ -51,36 +65,48 @@ const UnauthorizedLayout: FC<UnauthorizedLayoutProps> = (props) => {
       <div className={cls.wrapper}>
         <div className={cls.pageWrapper}>{children}</div>
         <div className={cls.cardsWrapper}>
-          <LayoutBadge>
+          <LayoutBadge className={cls.badgeDone}>
             <DoneIcon className={cls.doneIcon} />
             <p className={cls.badgeText}>
               Goal setting
-              <br />
+              <br></br>
               and tracking
-              <br />
+              <br></br>
               progress
             </p>
           </LayoutBadge>
-          <LayoutBadge>
+          <LayoutBadge className={cls.badgeCoin}>
             <CoinIcon className={cls.coinIcon} />
             <p className={cls.badgeText}>
               Easily manage
-              <br />
+              <br></br>
               your money
             </p>
           </LayoutBadge>
-          <LayoutBadge>
-            <CoinIcon className={cls.coinIcon} />
+          <LayoutBadge className={cls.badgeFinance}>
+            <FinanceIcon className={cls.financeIcon} />
             <p className={cls.badgeText}>
-              Easily manage
-              <br />
-              your money
+              Financial
+              <br></br>
+              insights and
+              <br></br>
+              analysis
+            </p>
+          </LayoutBadge>
+          <LayoutBadge className={cls.badgeCalendar}>
+            <CalendarIcon className={cls.calendarIcon} />
+            <p className={cls.badgeText}>
+              Budgeting and
+              <br></br>
+              expence
+              <br></br>
+              tracking
             </p>
           </LayoutBadge>
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default UnauthorizedLayout
+export default UnauthorizedLayout;

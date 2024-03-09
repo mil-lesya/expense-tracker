@@ -1,4 +1,4 @@
-import { createReduxStore } from './config/store'
-import StoreProvider from './ui/StoreProvider'
+import { createReduxStore } from './config/store';
+import StoreProvider from './ui/StoreProvider';
 
-export { StoreProvider, createReduxStore }
+export { StoreProvider, createReduxStore };

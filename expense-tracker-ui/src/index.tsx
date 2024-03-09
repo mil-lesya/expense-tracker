@@ -1,7 +1,9 @@
-import { render } from 'react-dom'
-import App from './app/App'
-import { BrowserRouter } from 'react-router-dom'
-import { StoreProvider } from 'app/providers/StoreProvider'
+import { render } from 'react-dom';
+import App from './app/App';
+import { BrowserRouter } from 'react-router-dom';
+import { StoreProvider } from 'app/providers/StoreProvider';
+
+import 'shared/config/i18n/i18n';
 
 render(
   <StoreProvider>
@@ -10,4 +12,4 @@ render(
     </BrowserRouter>
   </StoreProvider>,
   document.getElementById('root')
-)
+);

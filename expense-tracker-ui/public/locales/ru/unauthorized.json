@@ -1,0 +1,28 @@
+{
+    "login": {
+        "title": "Добро пожаловать",
+        "subtitle": "Войдите в приложение, чтобы эффективнее управлять финансами",
+        "button": "Войти",
+        "password": "Пароль",
+        "placeholderPassword": "Ваш пароль"
+    },
+    "registration": {
+        "title": "Добро пожаловать в Финтерест",
+        "subtitle": "Начните свой финансовый путь: зарегистрируйтесь в своем личном финансовом менеджере",
+        "button": "Зарегистрироваться",
+        "username": "Имя",
+        "usernameError": "Поле должно содержать от 3 до 30 букв",
+        "emailError": "Введите корректный email",
+        "placeholderUsername": "Иван Иванов",
+        "password": "Пароль",
+        "passwordError": "Пароль: 8 символов, верхний/нижний регистр, цифры, спецсимволы",
+        "placeholderPassword": "Создайте ваш пароль",
+        "repeatPassword": "Повторите пароль",
+        "repeatPasswordError": "Пароли должны совпадать",
+        "placeholderRepeatPassword": "Повторите пароль"
+    },
+    "layout": {
+        "buttonLogin": "Войти",
+        "buttonReg": "Зарегистрироваться"
+    }
+}

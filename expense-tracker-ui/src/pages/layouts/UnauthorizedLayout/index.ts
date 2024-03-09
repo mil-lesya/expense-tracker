@@ -1,3 +1,3 @@
-import UnauthorizedLayout from './ui/UnauthorizedLayout'
+import UnauthorizedLayout from './ui/UnauthorizedLayout';
 
-export { UnauthorizedLayout }
+export { UnauthorizedLayout };

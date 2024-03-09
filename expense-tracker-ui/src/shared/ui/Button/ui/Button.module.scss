@@ -1,4 +1,5 @@
 .button {
+  position: relative;
   cursor: pointer;
   font: var(--font-main-text);
   text-align: center;
@@ -10,6 +11,8 @@
   border: none;
   background: none;
   outline: none;
+  color: var(--color-primary);
+  font-weight: 500;
 }
 
 %base {
@@ -24,6 +27,7 @@
 
 .primary {
   @extend %base;
+
   background: var(--color-primary);
   border: none;
 
@@ -40,6 +44,7 @@
 
 .primaryDark {
   @extend %base;
+
   background: var(--color-primary-dark);
   border: none;
 
@@ -56,6 +61,7 @@
 
 .outline {
   @extend %base;
+
   background: none;
   color: var(--color-primary);
   border: 1px solid var(--color-primary);
@@ -75,6 +81,7 @@
 
 .outlineDark {
   @extend %base;
+
   background: none;
   color: var(--color-primary-dark);
   border: 1px solid var(--color-primary-dark);
@@ -89,5 +96,33 @@
     color: var(--color-disabled-text);
     background: var(--color-disabled-button);
     border-color: var(--color-disabled-button);
+  }
+}
+
+.loading .text {
+  visibility: hidden;
+  opacity: 0;
+}
+
+.loading::after {
+  content: "";
+  position: absolute;
+  width: 15px;
+  height: 15px;
+  inset: 0;
+  margin: auto;
+  border: 2px solid transparent;
+  border-top-color: var(--color-white);
+  border-radius: 50%;
+  animation: button-loading-spinner 1s ease infinite;
+}
+
+@keyframes button-loading-spinner {
+  from {
+    transform: rotate(0turn);
+  }
+
+  to {
+    transform: rotate(1turn);
   }
 }
