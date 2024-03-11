@@ -1,0 +1,30 @@
+{
+    "login": {
+        "title": "Welcome back",
+        "subtitle": "Sign in for smarter money management",
+        "button": "Sign in",
+        "emailError": "Enter a valid email",
+        "password": "Password",
+        "passwordError": "Enter a valid password",
+        "placeholderPassword": "Your password"
+    },
+    "registration": {
+        "title": "Welcome to Finterest",
+        "subtitle": "Start your financial journey: Sign up for our personal finance manager",
+        "button": "Sign up",
+        "username": "User name",
+        "usernameError": "The field must contain from 3 to 30 letters",
+        "emailError": "Enter a valid email",
+        "placeholderUsername": "John Doe",
+        "password": "Password",
+        "passwordError": "Password: 8 characters, upper/lower case, numbers, special characters",
+        "placeholderPassword": "Create your password",
+        "repeatPassword": "Repeat Password",
+        "repeatPasswordError": "Passwords must match",
+        "placeholderRepeatPassword": "Repeat password"
+    },
+    "layout": {
+        "buttonLogin": "Sign in",
+        "buttonReg": "Sign up"
+    }
+}

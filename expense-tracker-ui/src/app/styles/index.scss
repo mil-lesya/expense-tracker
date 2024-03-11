@@ -1,0 +1,7 @@
+@import 'reset';
+@import 'variables/global';
+
+.app {
+  font: var(--font-title-xl);
+  min-height: 100vh;
+}

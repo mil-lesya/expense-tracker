@@ -1,0 +1,30 @@
+.loginForm {
+  width: 100%;
+  height: 100%;
+  background-color: var(--color-white);
+  border-radius: 15px;
+  padding: 50px;
+}
+
+.title {
+  font: var(--font-title-xl);
+  margin-bottom: 5px;
+}
+
+.subtitle {
+  font: var(--font-main-text);
+  font-weight: 300;
+  color: var(--color-middle-grey);
+  margin-bottom: 40px;
+}
+
+.fields {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-bottom: 40px;
+}
+
+.loginButton {
+  width: 50%;
+}
