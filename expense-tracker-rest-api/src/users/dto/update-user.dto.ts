@@ -1,4 +1,5 @@
-import { IsEmail, IsOptional, IsString } from 'class-validator';
+import { IsEmail, IsEnum, IsOptional, IsString } from 'class-validator';
+import { CurrencyCode } from '../../currency/enums/currency-code.enum';
 
 export class UpdateUserDto {
   @IsString()
@@ -12,4 +13,8 @@ export class UpdateUserDto {
   @IsString()
   @IsOptional()
   password: string;
+
+  @IsEnum(CurrencyCode)
+  @IsOptional()
+  defaultCurrency: CurrencyCode;
 }

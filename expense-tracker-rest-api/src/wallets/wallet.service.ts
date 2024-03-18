@@ -56,7 +56,7 @@ export class WalletService {
       throw new NotFoundException('Wallet not found');
     }
     this.authService.checkAuthorization(userId, wallet.user.id);
-    return this.walletRepository.save(wallet);
+    return this.walletRepository.remove(wallet);
   }
 
 }
