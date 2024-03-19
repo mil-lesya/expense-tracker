@@ -4,6 +4,8 @@ import { User } from './entities/user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import * as bcrypt from 'bcrypt';
 import { CreateUserDto } from './dto/create-user.dto';
+import { UpdateUserDto } from './dto/update-user.dto';
+import { CurrencyCode } from '../currency/enums/currency-code.enum';
 
 @Injectable()
 export class UserService {
@@ -12,6 +14,7 @@ export class UserService {
 
   async create(createUserDto: CreateUserDto) {
     createUserDto.password = await this.hashPassword(createUserDto.password);
+    createUserDto.defaultCurrency = CurrencyCode.USD
     const user = this.userRepository.create(createUserDto);
     return this.userRepository.save(user);
   }
@@ -24,12 +27,12 @@ export class UserService {
     return this.userRepository.findOne({ where: { email } });
   }
 
-  async update(id: string, attrs: Partial<User>) {
+  async update(id: string, updateUserDto: UpdateUserDto) {
     const user = await this.findById(id);
     if (!user) {
       throw new NotFoundException('User not found');
     }
-    Object.assign(user, attrs);
+    Object.assign(user, updateUserDto);
     return this.userRepository.save(user);
   }
 

@@ -25,13 +25,13 @@ export class Wallet {
   @Column({ name: 'is_show_on_panel' })
   isShowOnPanel: boolean;
 
-  @ManyToOne(() => User, (user) => user.wallets, { eager: true })
+  @ManyToOne(() => User, (user) => user.wallets, { eager: true, onDelete: "CASCADE" })
   @JoinColumn({ name: 'user_id' })
   @Exclude()
   user: User;
 
-  @Column({ name: 'currency_code' })
-  currencyCode: CurrencyCode;
+  @Column('numeric', { name: 'currency_code' })
+  amount: number;
 
   @OneToMany(() => Transaction, (transaction) => transaction.wallet)
   transactions: Transaction[];
