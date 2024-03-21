@@ -32,9 +32,18 @@ export class GoalService {
     return this.goalRepository.save(goal);
   }
 
-  findAll(userId: string) {
-    return this.goalRepository.find({ where: { user: { id: userId } } });
-
+  async findAll(userId: string, page: number, limit: number) {
+    const [results, total] = await this.goalRepository.findAndCount({
+      where: { user: { id: userId } },
+      take: limit,
+      skip: limit * (page - 1),
+    });
+    return {
+      goals: results,
+      count: total,
+      totalPages: Math.ceil(total / limit),
+      currentPage: page,
+    };
   }
 
   findById(id: string) {

@@ -8,6 +8,7 @@ import {
   Param,
   Patch,
   Post,
+  Query,
   Req,
   UseGuards,
   UseInterceptors
@@ -24,20 +25,20 @@ import { AuthGuard } from '@nestjs/passport';
 export class BudgetController {
   constructor(private budgetService: BudgetService) {
   }
+
   @Post()
   create(@Body() body: CreateBudgetDto, @Req() req: any) {
     return this.budgetService.create(body, req.user.id);
   }
 
   @Get()
-  async find(@Req() req: any) {
-    return this.budgetService.findAll(req.user.id);
+  async find(@Req() req: any, @Query('page') page: number = 1, @Query('limit') limit: number = 10) {
+    return this.budgetService.findAll(req.user.id, page, limit);
   }
 
   @Get('/:id')
   async findOne(@Param('id') id: string, @Req() req: any): Promise<Budget> {
     const budget = await this.budgetService.findById(id);
-    console.log(budget)
     if (!budget) {
       throw new NotFoundException('Budget not found');
     }
@@ -55,7 +56,7 @@ export class BudgetController {
   }
 
   @Get('/:id/limits')
-  async findTransactions(@Param('id') id: string, @Req() req: any) {
-    return await this.budgetService.findLimitsByBudget(req.user.id, id);
+  async findTransactions(@Param('id') id: string, @Req() req: any, @Query('page') page: number = 1, @Query('limit') limit: number = 10) {
+    return await this.budgetService.findLimitsByBudget(req.user.id, id, page, limit);
   }
 }

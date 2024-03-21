@@ -8,6 +8,7 @@ import {
   Param,
   Patch,
   Post,
+  Query,
   Req,
   UseGuards,
   UseInterceptors
@@ -32,8 +33,8 @@ export class WalletController {
   }
 
   @Get()
-  async find(@Req() req: any) {
-    return await this.walletService.findAll(req.user.id);
+  async find(@Req() req: any, @Query('page') page: number = 1, @Query('limit') limit: number = 10) {
+    return await this.walletService.findAll(req.user.id, page, limit);
   }
 
   @Get('/:id')
@@ -56,7 +57,7 @@ export class WalletController {
   }
 
   @Get('/:id/transactions')
-  async findTransactions(@Param('id') id: string, @Req() req: any) {
-    return await this.walletService.findTransactionByWallet(id, req.user.id);
+  async findTransactions(@Param('id') id: string, @Req() req: any, @Query('page') page: number = 1, @Query('limit') limit: number = 10) {
+    return await this.walletService.findTransactionByWallet(id, req.user.id, page, limit);
   }
 }

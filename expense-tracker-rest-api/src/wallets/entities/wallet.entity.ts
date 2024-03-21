@@ -30,8 +30,8 @@ export class Wallet {
   @Exclude()
   user: User;
 
-  @Column('numeric', { name: 'currency_code' })
-  amount: number;
+  @Column()
+  currency: CurrencyCode;
 
   @OneToMany(() => Transaction, (transaction) => transaction.wallet)
   transactions: Transaction[];

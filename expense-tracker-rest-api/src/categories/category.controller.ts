@@ -8,6 +8,7 @@ import {
   Param,
   Patch,
   Post,
+  Query,
   Req,
   UseGuards,
   UseInterceptors
@@ -15,7 +16,6 @@ import {
 import { CategoryService } from './category.service';
 import { CreateCategoryDto } from './dto/create-category.dto';
 import { AuthGuard } from '@nestjs/passport';
-import { Category } from './entities/category.entity';
 import { UpdateCategoryDto } from './dto/update-category.dto';
 
 @UseGuards(AuthGuard('jwt'))
@@ -26,17 +26,17 @@ export class CategoryController {
   }
 
   @Post()
-  create(@Body() body: CreateCategoryDto, @Req() req: any): Promise<Category> {
+  create(@Body() body: CreateCategoryDto, @Req() req: any) {
     return this.categoriesService.create(body, req.user.id);
   }
 
   @Get()
-  async find(@Req() req: any): Promise<Category[]> {
-    return this.categoriesService.findAll(req.user.id);
+  async find(@Req() req: any, @Query('page') page: number = 1, @Query('limit') limit: number = 10) {
+    return this.categoriesService.findAll(req.user.id, page, limit);
   }
 
   @Get('/:id')
-  async findOne(@Param('id') id: string, @Req() req: any): Promise<Category> {
+  async findOne(@Param('id') id: string, @Req() req: any) {
     const category = await this.categoriesService.findById(id);
     if (!category) {
       throw new NotFoundException('Category not found');
@@ -45,12 +45,12 @@ export class CategoryController {
   }
 
   @Patch('/:id')
-  update(@Param('id') id: string, @Body() body: UpdateCategoryDto, @Req() req: any): Promise<Category> {
+  update(@Param('id') id: string, @Body() body: UpdateCategoryDto, @Req() req: any) {
     return this.categoriesService.update(id, req.user.id, body);
   }
 
   @Delete('/:id')
-  remove(@Param('id') id: string, @Req() req: any): Promise<Category> {
+  remove(@Param('id') id: string, @Req() req: any) {
     return this.categoriesService.remove(id, req.user.id);
   }
 }
