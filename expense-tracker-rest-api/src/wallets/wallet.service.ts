@@ -18,29 +18,50 @@ export class WalletService {
     private readonly authService: AuthService) {
   }
 
-  async create(createWalletDto: CreateWalletDto, userId: string): Promise<Wallet> {
+  async create(createWalletDto: CreateWalletDto, userId: string) {
     const user = await this.userService.findById(userId);
     const wallet = this.walletRepository.create({ ...createWalletDto, user });
     return this.walletRepository.save(wallet);
   }
 
-  findAll(userId: string): Promise<Wallet[]> {
-    return this.walletRepository.find({ where: { user: { id: userId } } });
+  async findAll(userId: string, page: number, limit: number) {
+    const [results, total] = await this.walletRepository.findAndCount({
+      where: { user: { id: userId } },
+      take: limit,
+      skip: limit * (page - 1),
+    });
+    return {
+      wallets: results,
+      count: total,
+      totalPages: Math.ceil(total / limit),
+      currentPage: page,
+    };
   }
-  async findTransactionByWallet(walletId: string, userId: string) {
+
+  async findTransactionByWallet(walletId: string, userId: string, page: number, limit: number) {
     const wallet = await this.findById(walletId);
     if (!wallet) {
       throw new NotFoundException('Wallet not found');
     }
     this.authService.checkAuthorization(userId, wallet.user.id);
-    return this.transactionRepository.find({where: { wallet: {id: walletId}}})
+    const [results, total] = await this.transactionRepository.findAndCount({
+      where: { wallet: { id: walletId } },
+      take: limit,
+      skip: limit * (page - 1),
+    });
+    return {
+      transactions: results,
+      count: total,
+      totalPages: Math.ceil(total / limit),
+      currentPage: page,
+    };
   }
 
-  findById(id: string): Promise<Wallet> {
+  findById(id: string) {
     return this.walletRepository.findOneBy({ id });
   }
 
-  async update(id: string, userId: string, updateWalletDto: UpdateWalletDto): Promise<Wallet> {
+  async update(id: string, userId: string, updateWalletDto: UpdateWalletDto) {
     const wallet = await this.findById(id);
     if (!wallet) {
       throw new NotFoundException('Wallet not found');

@@ -18,5 +18,5 @@ export class CreateWalletDto {
   isShowOnPanel: boolean;
 
   @IsEnum(CurrencyCode)
-  currencyCode: CurrencyCode;
+  currency: CurrencyCode;
 }

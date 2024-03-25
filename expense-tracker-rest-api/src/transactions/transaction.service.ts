@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { AuthService } from '../auth/auth.service';
@@ -19,12 +19,14 @@ export class TransactionService {
     private readonly categoryService: CategoryService) {
   }
 
-  async create(createTransactionDto: CreateTransactionDto, userId: string): Promise<TransactionResponseDto> {
+  async create(createTransactionDto: CreateTransactionDto, userId: string) {
     const wallet = await this.walletService.findById(createTransactionDto.walletId);
+    if (!wallet) throw new BadRequestException;
     this.authService.checkAuthorization(userId, wallet.user.id);
 
     const category = await this.categoryService.findById(createTransactionDto.categoryId);
-    if (category.user) {
+    if (!wallet) throw new BadRequestException;
+    if (category?.user) {
       this.authService.checkAuthorization(userId, category.user.id);
     }
 
@@ -35,12 +37,21 @@ export class TransactionService {
     return this.getTransactionResponse(createdTransaction);
   }
 
-  async findByUser(userId: string): Promise<TransactionResponseDto[]> {
-    const transactions = await this.transactionRepository.find({ where: { wallet: { user: { id: userId } } } });
-    return transactions.map(transaction => this.getTransactionResponse(transaction));
+  async findByUser(userId: string, page: number, limit: number) {
+    const [results, total] = await this.transactionRepository.findAndCount({
+      where: { wallet: { user: { id: userId } } },
+      take: limit,
+      skip: limit * (page - 1),
+    });
+    return {
+      transactions: results.map(transaction => this.getTransactionResponse(transaction)),
+      count: total,
+      totalPages: Math.ceil(total / limit),
+      currentPage: page,
+    };
   }
 
-  async findByOne(id: string) {
+  async findOne(id: string) {
     const transaction = await this.transactionRepository.findOneBy({ id });
     if (!transaction) {
       throw new NotFoundException('Transaction not found');

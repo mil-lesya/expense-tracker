@@ -7,6 +7,7 @@ import {
   Param,
   Patch,
   Post,
+  Query,
   Req,
   UseGuards,
   UseInterceptors
@@ -14,7 +15,6 @@ import {
 import { AuthGuard } from '@nestjs/passport';
 import { TransactionService } from './transaction.service';
 import { CreateTransactionDto } from './dto/create-transaction.dto';
-import { TransactionResponseDto } from './interfaces/transaction.response.dto';
 import { UpdateTransactionDto } from './dto/update-transaction.dto';
 
 @UseGuards(AuthGuard('jwt'))
@@ -22,30 +22,30 @@ import { UpdateTransactionDto } from './dto/update-transaction.dto';
 @Controller('transactions')
 export class TransactionController {
   constructor(private transactionsService: TransactionService) {
-}
+  }
 
   @Post()
-  async create(@Body() body: CreateTransactionDto, @Req() req: any): Promise<TransactionResponseDto>{
-    return  await this.transactionsService.create(body, req.user.id);
+  async create(@Body() body: CreateTransactionDto, @Req() req: any) {
+    return await this.transactionsService.create(body, req.user.id);
   }
 
   @Get()
-  async find(@Req() req: any): Promise<TransactionResponseDto[]> {
-    return this.transactionsService.findByUser(req.user.id);
+  async find(@Req() req: any, @Query('page') page: number = 1, @Query('limit') limit: number = 10) {
+    return this.transactionsService.findByUser(req.user.id, page, limit);
   }
 
   @Get('/:id')
-  async findOne(@Param('id') id: string): Promise<TransactionResponseDto> {
-    return this.transactionsService.findByOne(id);
+  async findOne(@Param('id') id: string) {
+    return this.transactionsService.findOne(id);
   }
 
   @Patch('/:id')
-  update(@Param('id') id: string, @Body() body: UpdateTransactionDto, @Req() req: any): Promise<TransactionResponseDto> {
+  update(@Param('id') id: string, @Body() body: UpdateTransactionDto, @Req() req: any) {
     return this.transactionsService.update(id, req.user.id, body);
   }
 
   @Delete('/:id')
-  remove(@Param('id') id: string, @Req() req: any): Promise<TransactionResponseDto> {
+  remove(@Param('id') id: string, @Req() req: any) {
     return this.transactionsService.remove(id, req.user.id);
   }
 }

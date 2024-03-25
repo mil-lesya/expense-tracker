@@ -3,12 +3,14 @@ import {
   ClassSerializerInterceptor,
   Controller,
   Delete,
-  Get, HttpStatus,
+  Get,
   NotFoundException,
   Param,
   Patch,
   Post,
-  Req, UploadedFile,
+  Query,
+  Req,
+  UploadedFile,
   UseGuards,
   UseInterceptors
 } from '@nestjs/common';
@@ -19,7 +21,6 @@ import { AuthGuard } from '@nestjs/passport';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
 import { editFileName, getDestination, imageFileFilter } from './file-upload';
-import { ConfigService } from '@nestjs/config';
 
 @UseGuards(AuthGuard('jwt'))
 @UseInterceptors(ClassSerializerInterceptor)
@@ -48,8 +49,8 @@ export class GoalController {
   }
 
   @Get()
-  async find(@Req() req: any) {
-    return this.goalService.findAll(req.user.id);
+  async find(@Req() req: any, @Query('page') page: number = 1, @Query('limit') limit: number = 10) {
+    return this.goalService.findAll(req.user.id, page, limit);
   }
 
   @Get('/:id')

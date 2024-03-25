@@ -28,11 +28,6 @@ export class LimitController {
     return this.limitService.create(body, req.user.id);
   }
 
-  // @Get()
-  // async find(@Req() req: any) {
-  //   return this.limitService.findAll(req.user.id);
-  // }
-
   @Get('/:id')
   async findOne(@Param('id') id: string, @Req() req: any){
     const limit = await this.limitService.findById(id);

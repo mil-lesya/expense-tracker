@@ -24,11 +24,19 @@ export class CategoryService {
     return this.categoryRepository.save(category);
   }
 
-  findAll(userId: string) {
-    return this.categoryRepository
+  async findAll(userId: string, page: number, limit: number) {
+    const [results, total] = await this.categoryRepository
       .createQueryBuilder('category')
-      .where('user_id = :userId OR user_id IS NULL', { userId  })
-      .getMany();
+      .where('user_id = :userId OR user_id IS NULL', { userId })
+      .take(limit)
+      .skip(limit * (page - 1))
+      .getManyAndCount();
+    return {
+      categories: results,
+      count: total,
+      totalPages: Math.ceil(total / limit),
+      currentPage: page,
+    };
   }
 
   findById(id: string) {
@@ -36,20 +44,20 @@ export class CategoryService {
   }
 
   findOneByName(name: string, userId: string) {
-    return this.categoryRepository.findOneBy({ name, user: {id: userId} });
+    return this.categoryRepository.findOneBy({ name, user: { id: userId } });
   }
 
-  async update(id: string, userId: string, updateCategoryDto : UpdateCategoryDto) {
+  async update(id: string, userId: string, updateCategoryDto: UpdateCategoryDto) {
     const category = await this.findById(id);
     if (!category) {
       throw new NotFoundException('Category not found');
     }
-    if(!category.user){
-      throw new BadRequestException("Cannot modify default categories");
+    if (!category.user) {
+      throw new BadRequestException('Cannot modify default categories');
     }
     this.authService.checkAuthorization(userId, category.user.id);
     Object.assign(category, updateCategoryDto);
-    return  this.categoryRepository.save(category);
+    return this.categoryRepository.save(category);
   }
 
   async remove(id: string, userId: string) {
@@ -57,8 +65,8 @@ export class CategoryService {
     if (!category) {
       throw new NotFoundException('Wallet not found');
     }
-    if(!category.user){
-      throw new BadRequestException("Cannot delete default categories");
+    if (!category.user) {
+      throw new BadRequestException('Cannot delete default categories');
     }
     this.authService.checkAuthorization(userId, category.user.id);
     return this.categoryRepository.remove(category);
