@@ -1,4 +1,8 @@
-import { BadRequestException, Injectable, UnauthorizedException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { UserService } from '../users/user.service';
 import { JwtService } from '@nestjs/jwt';
 import { User } from '../users/entities/user.entity';
@@ -13,9 +17,8 @@ export class AuthService {
   constructor(
     private readonly usersService: UserService,
     private readonly jwtService: JwtService,
-    private readonly configService: ConfigService
-  ) {
-  }
+    private readonly configService: ConfigService,
+  ) {}
 
   async validateUser(userId: string): Promise<User> {
     const user = await this.usersService.findById(userId);
@@ -26,7 +29,9 @@ export class AuthService {
   }
 
   async register(registerUser: SignupUserDto): Promise<UserJwtResponse> {
-    const existingUser = await this.usersService.findByEmail(registerUser.email);
+    const existingUser = await this.usersService.findByEmail(
+      registerUser.email,
+    );
     if (existingUser) {
       throw new BadRequestException('User already exists');
     }
@@ -55,9 +60,12 @@ export class AuthService {
   }
 
   private generateToken = (id: string): string => {
-    return this.jwtService.sign({ id }, {
-      secret: this.configService.get('JWT_SECRET'),
-      expiresIn: this.configService.get('JWT_EXPIRES'),
-    });
+    return this.jwtService.sign(
+      { id },
+      {
+        secret: this.configService.get('JWT_SECRET'),
+        expiresIn: this.configService.get('JWT_EXPIRES'),
+      },
+    );
   };
 }

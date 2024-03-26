@@ -11,7 +11,7 @@ import {
   Query,
   Req,
   UseGuards,
-  UseInterceptors
+  UseInterceptors,
 } from '@nestjs/common';
 import { WalletService } from './wallet.service';
 import { AuthGuard } from '@nestjs/passport';
@@ -23,9 +23,7 @@ import { UpdateWalletDto } from './dto/update-wallet.dto';
 @UseInterceptors(ClassSerializerInterceptor)
 @Controller('wallets')
 export class WalletController {
-
-  constructor(private walletService: WalletService) {
-  }
+  constructor(private walletService: WalletService) {}
 
   @Post()
   create(@Body() body: CreateWalletDto, @Req() req: any) {
@@ -33,7 +31,11 @@ export class WalletController {
   }
 
   @Get()
-  async find(@Req() req: any, @Query('page') page: number = 1, @Query('limit') limit: number = 10) {
+  async find(
+    @Req() req: any,
+    @Query('page') page: number = 1,
+    @Query('limit') limit: number = 10,
+  ) {
     return await this.walletService.findAll(req.user.id, page, limit);
   }
 
@@ -52,12 +54,26 @@ export class WalletController {
   }
 
   @Patch('/:id')
-  updateUser(@Param('id') id: string, @Body() body: UpdateWalletDto, @Req() req: any) {
+  updateUser(
+    @Param('id') id: string,
+    @Body() body: UpdateWalletDto,
+    @Req() req: any,
+  ) {
     return this.walletService.update(id, req.user.id, body);
   }
 
   @Get('/:id/transactions')
-  async findTransactions(@Param('id') id: string, @Req() req: any, @Query('page') page: number = 1, @Query('limit') limit: number = 10) {
-    return await this.walletService.findTransactionByWallet(id, req.user.id, page, limit);
+  async findTransactions(
+    @Param('id') id: string,
+    @Req() req: any,
+    @Query('page') page: number = 1,
+    @Query('limit') limit: number = 10,
+  ) {
+    return await this.walletService.findTransactionByWallet(
+      id,
+      req.user.id,
+      page,
+      limit,
+    );
   }
 }

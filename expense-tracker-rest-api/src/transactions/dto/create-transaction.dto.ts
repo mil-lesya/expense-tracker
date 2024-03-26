@@ -3,7 +3,6 @@ import { IsEnum, IsNumber, IsString, IsUUID } from 'class-validator';
 import { TransactionType } from '../enums/transaction-type.enum';
 
 export class CreateTransactionDto {
-
   @IsString()
   description: string;
 

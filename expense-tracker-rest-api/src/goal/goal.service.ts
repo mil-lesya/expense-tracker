@@ -16,9 +16,8 @@ export class GoalService {
     @InjectRepository(Goal) private goalRepository: Repository<Goal>,
     private readonly userService: UserService,
     private readonly authService: AuthService,
-    private configService: ConfigService
-  ) {
-  }
+    private configService: ConfigService,
+  ) {}
 
   async create(createGoalDto: CreateGoalDto, userId: string) {
     const user = await this.userService.findById(userId);
@@ -27,7 +26,7 @@ export class GoalService {
       user,
       isCompleted: false,
       depositedAmount: 0,
-      image: `${ this.configService.get('API_DOMAIN') }/${ userId }/goals/${ createGoalDto.image }`
+      image: `${this.configService.get('API_DOMAIN')}/${userId}/goals/${createGoalDto.image}`,
     });
     return this.goalRepository.save(goal);
   }
@@ -59,10 +58,16 @@ export class GoalService {
     this.authService.checkAuthorization(userId, goal.user.id);
 
     if (updateGoalDto.image) {
-      updateGoalDto.image = `${ this.configService.get('API_DOMAIN') }/${ userId }/goals/${ updateGoalDto.image }`;
+      updateGoalDto.image = `${this.configService.get('API_DOMAIN')}/${userId}/goals/${updateGoalDto.image}`;
       if (goal.image) {
         const filename = goal.image.split('/').pop();
-        const oldFilePath = join(__dirname, '../../uploads', userId, 'goals', filename);
+        const oldFilePath = join(
+          __dirname,
+          '../../uploads',
+          userId,
+          'goals',
+          filename,
+        );
         fs.unlink(oldFilePath, (err) => {
           if (err) console.error(err);
         });
@@ -82,7 +87,13 @@ export class GoalService {
 
     if (goal.image) {
       const filename = goal.image.split('/').pop();
-      const oldFilePath = join(__dirname, '../../uploads', userId, 'goals', filename);
+      const oldFilePath = join(
+        __dirname,
+        '../../uploads',
+        userId,
+        'goals',
+        filename,
+      );
       fs.unlink(oldFilePath, (err) => {
         if (err) console.error(err);
       });

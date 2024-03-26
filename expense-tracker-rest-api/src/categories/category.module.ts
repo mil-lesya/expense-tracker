@@ -8,14 +8,9 @@ import { Category } from './entities/category.entity';
 import { AuthService } from '../auth/auth.service';
 
 @Module({
-  imports: [
-    TypeOrmModule.forFeature([Category]),
-    UserModule,
-    AuthModule
-  ],
+  imports: [TypeOrmModule.forFeature([Category]), UserModule, AuthModule],
   providers: [CategoryService, AuthService],
   controllers: [CategoryController],
   exports: [CategoryService],
 })
-export class CategoryModule {
-}
+export class CategoryModule {}

@@ -1,6 +1,18 @@
-import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import {
+  Any,
+  Between,
+  FindOptionsOrder,
+  FindOptionsWhere,
+  ILike,
+  In,
+  Repository,
+} from 'typeorm';
 import { AuthService } from '../auth/auth.service';
 import { Transaction } from './entities/transaction.entity';
 import { CreateTransactionDto } from './dto/create-transaction.dto';
@@ -8,43 +20,86 @@ import { WalletService } from '../wallets/wallet.service';
 import { CategoryService } from '../categories/category.service';
 import { TransactionResponseDto } from './interfaces/transaction.response.dto';
 import { UpdateTransactionDto } from './dto/update-transaction.dto';
+import { FilterOptions } from './transaction.controller';
 
 @Injectable()
 export class TransactionService {
-
   constructor(
-    @InjectRepository(Transaction) private transactionRepository: Repository<Transaction>,
+    @InjectRepository(Transaction)
+    private transactionRepository: Repository<Transaction>,
     private readonly authService: AuthService,
     private readonly walletService: WalletService,
-    private readonly categoryService: CategoryService) {
-  }
+    private readonly categoryService: CategoryService,
+  ) {}
 
   async create(createTransactionDto: CreateTransactionDto, userId: string) {
-    const wallet = await this.walletService.findById(createTransactionDto.walletId);
-    if (!wallet) throw new BadRequestException;
+    const wallet = await this.walletService.findById(
+      createTransactionDto.walletId,
+    );
+    if (!wallet) throw new BadRequestException();
     this.authService.checkAuthorization(userId, wallet.user.id);
 
-    const category = await this.categoryService.findById(createTransactionDto.categoryId);
-    if (!wallet) throw new BadRequestException;
+    const category = await this.categoryService.findById(
+      createTransactionDto.categoryId,
+    );
+    if (!wallet) throw new BadRequestException();
     if (category?.user) {
       this.authService.checkAuthorization(userId, category.user.id);
     }
 
     const date = new Date();
 
-    const transaction = this.transactionRepository.create({ ...createTransactionDto, wallet, category, date });
-    const createdTransaction = await this.transactionRepository.save(transaction);
+    const transaction = this.transactionRepository.create({
+      ...createTransactionDto,
+      wallet,
+      category,
+      date,
+    });
+    const createdTransaction =
+      await this.transactionRepository.save(transaction);
     return this.getTransactionResponse(createdTransaction);
   }
 
-  async findByUser(userId: string, page: number, limit: number) {
+  async findByUser(
+    userId: string,
+    page: number,
+    limit: number,
+    search: string,
+    filters?: FilterOptions,
+    sort?: string,
+    order?: 'ASC' | 'DESC',
+  ) {
+    const { type, currency, category, wallet } = filters || {};
+
+    const whereCondition: FindOptionsWhere<Transaction> = {
+      description: ILike(`%${search}%`),
+      wallet: { user: { id: userId } },
+      ...(type && { type: Any(type) }),
+      ...(currency && { currency: Any(currency) }),
+      ...(category && {
+        category: { id: Any(category), user: { id: userId } },
+      }),
+      ...(wallet && { wallet: { id: Any(wallet), user: { id: userId } } }),
+    };
+
+    const orderBy: FindOptionsOrder<Transaction> =
+      sort === 'category' || sort === 'wallet'
+        ? { [sort]: { name: order } }
+        : sort
+          ? { [sort]: order }
+          : {};
+
     const [results, total] = await this.transactionRepository.findAndCount({
-      where: { wallet: { user: { id: userId } } },
+      where: whereCondition,
+      order: orderBy,
       take: limit,
       skip: limit * (page - 1),
     });
+
     return {
-      transactions: results.map(transaction => this.getTransactionResponse(transaction)),
+      transactions: results.map((transaction) =>
+        this.getTransactionResponse(transaction),
+      ),
       count: total,
       totalPages: Math.ceil(total / limit),
       currentPage: page,
@@ -63,7 +118,11 @@ export class TransactionService {
     return await this.transactionRepository.findOneBy({ id });
   }
 
-  async update(id: string, userId: string, updateTransactionDto: UpdateTransactionDto) {
+  async update(
+    id: string,
+    userId: string,
+    updateTransactionDto: UpdateTransactionDto,
+  ) {
     const transaction = await this.findById(id);
     if (!transaction) {
       throw new NotFoundException('Transaction not found');
@@ -77,7 +136,9 @@ export class TransactionService {
 
     let category = null;
     if (updateTransactionDto.categoryId) {
-      category = await this.categoryService.findById(updateTransactionDto.categoryId);
+      category = await this.categoryService.findById(
+        updateTransactionDto.categoryId,
+      );
       if (category.user) {
         this.authService.checkAuthorization(userId, category.user.id);
       }
@@ -88,10 +149,14 @@ export class TransactionService {
     transaction.type = updateTransactionDto.type || transaction.type;
     transaction.date = updateTransactionDto.date || transaction.date;
     transaction.amount = updateTransactionDto.amount || transaction.amount;
-    transaction.currency = updateTransactionDto.currency || transaction.currency;
-    transaction.description = updateTransactionDto.description || transaction.description;
+    transaction.currency =
+      updateTransactionDto.currency || transaction.currency;
+    transaction.description =
+      updateTransactionDto.description || transaction.description;
 
-    return this.getTransactionResponse(await this.transactionRepository.save(transaction));
+    return this.getTransactionResponse(
+      await this.transactionRepository.save(transaction),
+    );
   }
 
   async remove(id: string, userId: string) {
@@ -103,7 +168,9 @@ export class TransactionService {
     const wallet = await this.walletService.findById(transaction.wallet.id);
     this.authService.checkAuthorization(userId, wallet.user.id);
 
-    return this.getTransactionResponse(await this.transactionRepository.remove(transaction));
+    return this.getTransactionResponse(
+      await this.transactionRepository.remove(transaction),
+    );
   }
 
   getTransactionResponse(transaction: Transaction): TransactionResponseDto {

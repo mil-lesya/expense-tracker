@@ -21,11 +21,15 @@ import { Wallet } from '../wallets/entities/wallet.entity';
     UserModule,
     AuthModule,
     CategoryModule,
-    WalletModule
+    WalletModule,
   ],
-  providers: [TransactionService, AuthService, CategoryService, WalletService, UserService],
-  controllers: [TransactionController]
-
+  providers: [
+    TransactionService,
+    AuthService,
+    CategoryService,
+    WalletService,
+    UserService,
+  ],
+  controllers: [TransactionController],
 })
-export class TransactionModule {
-}
+export class TransactionModule {}

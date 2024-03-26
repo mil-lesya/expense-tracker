@@ -1,9 +1,15 @@
-import { IsDateString, IsEnum, IsNumber, IsOptional, IsString, IsUUID } from 'class-validator';
+import {
+  IsDateString,
+  IsEnum,
+  IsNumber,
+  IsOptional,
+  IsString,
+  IsUUID,
+} from 'class-validator';
 import { CurrencyCode } from '../../currency/enums/currency-code.enum';
 import { TransactionType } from '../enums/transaction-type.enum';
 
 export class UpdateTransactionDto {
-
   @IsString()
   @IsOptional()
   description: string;

@@ -14,19 +14,25 @@ export class LimitService {
     @InjectRepository(Limit) private limitRepository: Repository<Limit>,
     private readonly budgetService: BudgetService,
     private readonly categoryService: CategoryService,
-    private readonly authService: AuthService) {
-  }
+    private readonly authService: AuthService,
+  ) {}
   async create(createLimitDto: CreateLimitDto, userId: string) {
     const budget = await this.budgetService.findById(createLimitDto.budgetId);
-    console.log(budget)
+    console.log(budget);
     this.authService.checkAuthorization(userId, budget.user.id);
 
-    const category = await this.categoryService.findById(createLimitDto.categoryId);
+    const category = await this.categoryService.findById(
+      createLimitDto.categoryId,
+    );
     if (category.user) {
       this.authService.checkAuthorization(userId, category.user.id);
     }
 
-    const limit = this.limitRepository.create({ ...createLimitDto, budget, category });
+    const limit = this.limitRepository.create({
+      ...createLimitDto,
+      budget,
+      category,
+    });
     return this.limitRepository.save(limit);
   }
 
@@ -39,11 +45,10 @@ export class LimitService {
     if (!limit) {
       throw new NotFoundException('Limit not found');
     }
-    console.log(limit)
+    console.log(limit);
     this.authService.checkAuthorization(userId, limit.budget.user.id);
     Object.assign(limit, updateBudgetDto);
     return this.limitRepository.save(limit);
-
   }
 
   async remove(userId: string, id: string) {

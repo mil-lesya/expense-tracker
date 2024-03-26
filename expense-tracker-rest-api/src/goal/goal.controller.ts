@@ -12,7 +12,7 @@ import {
   Req,
   UploadedFile,
   UseGuards,
-  UseInterceptors
+  UseInterceptors,
 } from '@nestjs/common';
 import { GoalService } from './goal.service';
 import { CreateGoalDto } from './dto/create-goal.dto';
@@ -26,10 +26,7 @@ import { editFileName, getDestination, imageFileFilter } from './file-upload';
 @UseInterceptors(ClassSerializerInterceptor)
 @Controller('goals')
 export class GoalController {
-  constructor(
-    private goalService: GoalService,
-  ) {
-  }
+  constructor(private goalService: GoalService) {}
 
   @Post()
   @UseInterceptors(
@@ -41,7 +38,11 @@ export class GoalController {
       fileFilter: imageFileFilter,
     }),
   )
-  create(@UploadedFile() file: Express.Multer.File, @Body() body: CreateGoalDto, @Req() req: any) {
+  create(
+    @UploadedFile() file: Express.Multer.File,
+    @Body() body: CreateGoalDto,
+    @Req() req: any,
+  ) {
     if (file) {
       body.image = file.filename;
     }
@@ -49,7 +50,11 @@ export class GoalController {
   }
 
   @Get()
-  async find(@Req() req: any, @Query('page') page: number = 1, @Query('limit') limit: number = 10) {
+  async find(
+    @Req() req: any,
+    @Query('page') page: number = 1,
+    @Query('limit') limit: number = 10,
+  ) {
     return this.goalService.findAll(req.user.id, page, limit);
   }
 
@@ -72,7 +77,12 @@ export class GoalController {
       fileFilter: imageFileFilter,
     }),
   )
-  updateUser(@UploadedFile() file: Express.Multer.File, @Param('id') id: string, @Body() body: UpdateGoalDto, @Req() req: any) {
+  updateUser(
+    @UploadedFile() file: Express.Multer.File,
+    @Param('id') id: string,
+    @Body() body: UpdateGoalDto,
+    @Req() req: any,
+  ) {
     if (file) {
       body.image = file.filename;
     }

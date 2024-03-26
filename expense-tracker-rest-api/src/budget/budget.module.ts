@@ -10,11 +10,7 @@ import { UserService } from '../users/user.service';
 import { Limit } from '../limit/entity/limit.entity';
 
 @Module({
-  imports: [
-    TypeOrmModule.forFeature([Budget, Limit]),
-    UserModule,
-    AuthModule
-  ],
+  imports: [TypeOrmModule.forFeature([Budget, Limit]), UserModule, AuthModule],
   controllers: [BudgetController],
   providers: [BudgetService, AuthService],
   exports: [BudgetService],

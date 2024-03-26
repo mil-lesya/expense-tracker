@@ -17,9 +17,15 @@ import { User } from '../users/entities/user.entity';
   imports: [
     TypeOrmModule.forFeature([Limit, Budget, Category, User]),
     AuthModule,
-    BudgetModule
+    BudgetModule,
   ],
-  providers: [LimitService, AuthService, BudgetService, CategoryService, UserService],
-  controllers: [LimitController]
+  providers: [
+    LimitService,
+    AuthService,
+    BudgetService,
+    CategoryService,
+    UserService,
+  ],
+  controllers: [LimitController],
 })
 export class LimitModule {}

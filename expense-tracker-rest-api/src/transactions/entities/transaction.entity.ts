@@ -1,4 +1,10 @@
-import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 import { Category } from '../../categories/entities/category.entity';
 import { CurrencyCode } from '../../currency/enums/currency-code.enum';
 import { TransactionType } from '../enums/transaction-type.enum';
@@ -7,7 +13,6 @@ import { Exclude } from 'class-transformer';
 
 @Entity()
 export class Transaction {
-
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
@@ -20,14 +25,16 @@ export class Transaction {
   @Column('numeric')
   amount: number;
 
-  @ManyToOne(() => Category, (category) => category.transactions, {eager: true })
+  @ManyToOne(() => Category, (category) => category.transactions, {
+    eager: true,
+  })
   @JoinColumn({ name: 'category_id' })
-  category: Category
+  category: Category;
 
-  @ManyToOne(() => Wallet, (wallet) => wallet.transactions, {eager: true })
+  @ManyToOne(() => Wallet, (wallet) => wallet.transactions, { eager: true })
   @JoinColumn({ name: 'wallet_id' })
   @Exclude()
-  wallet: Wallet
+  wallet: Wallet;
 
   @Column()
   currency: CurrencyCode;

@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Wallet } from './entities/wallet.entity';
@@ -10,16 +14,19 @@ import { Transaction } from '../transactions/entities/transaction.entity';
 
 @Injectable()
 export class WalletService {
-
   constructor(
     @InjectRepository(Wallet) private walletRepository: Repository<Wallet>,
-    @InjectRepository(Transaction) private transactionRepository: Repository<Transaction>,
+    @InjectRepository(Transaction)
+    private transactionRepository: Repository<Transaction>,
     private readonly userService: UserService,
-    private readonly authService: AuthService) {
-  }
+    private readonly authService: AuthService,
+  ) {}
 
   async create(createWalletDto: CreateWalletDto, userId: string) {
     const user = await this.userService.findById(userId);
+    if (await this.findOneByName(createWalletDto.name, userId)) {
+      throw new BadRequestException('Such wallet already exist.');
+    }
     const wallet = this.walletRepository.create({ ...createWalletDto, user });
     return this.walletRepository.save(wallet);
   }
@@ -38,7 +45,12 @@ export class WalletService {
     };
   }
 
-  async findTransactionByWallet(walletId: string, userId: string, page: number, limit: number) {
+  async findTransactionByWallet(
+    walletId: string,
+    userId: string,
+    page: number,
+    limit: number,
+  ) {
     const wallet = await this.findById(walletId);
     if (!wallet) {
       throw new NotFoundException('Wallet not found');
@@ -61,6 +73,10 @@ export class WalletService {
     return this.walletRepository.findOneBy({ id });
   }
 
+  findOneByName(name: string, userId: string) {
+    return this.walletRepository.findOneBy({ name, user: { id: userId } });
+  }
+
   async update(id: string, userId: string, updateWalletDto: UpdateWalletDto) {
     const wallet = await this.findById(id);
     if (!wallet) {
@@ -79,5 +95,4 @@ export class WalletService {
     this.authService.checkAuthorization(userId, wallet.user.id);
     return this.walletRepository.remove(wallet);
   }
-
 }
