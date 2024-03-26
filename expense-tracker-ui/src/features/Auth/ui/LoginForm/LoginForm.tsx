@@ -10,7 +10,7 @@ import { getLoginState } from '../../model/selectors/getLoginState/getLoginState
 import { loginByEmail } from '../../model/services/loginByEmail/loginByEmail';
 import { useTranslation } from 'react-i18next';
 import { EMAIL_MASK, PASSWORD_MASK } from 'shared/const/mask';
-import { useNavigate } from 'react-router-dom';
+import toast from 'react-hot-toast';
 
 interface LoginFormProps {
   className?: string
@@ -18,7 +18,7 @@ interface LoginFormProps {
 
 const LoginForm = ({ className }: LoginFormProps) => {
   const dispatch = useDispatch();
-  const { email, password, isLoading } = useSelector(getLoginState);
+  const { email, password, isLoading, error } = useSelector(getLoginState);
   const { t } = useTranslation('unauthorized');
 
   const [emailError, setEmailError] = useState('');
@@ -33,6 +33,12 @@ const LoginForm = ({ className }: LoginFormProps) => {
       setDisabledBtn(false);
     }
   }, [email, password, emailError, passwordError]);
+
+  useEffect(() => {
+    if (error) {
+      toast.error(error);
+    }
+  }, [error]);
 
   const onChangeEmail = useCallback(
     (value: string) => {

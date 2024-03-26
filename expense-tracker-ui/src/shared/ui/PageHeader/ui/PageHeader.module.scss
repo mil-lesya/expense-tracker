@@ -1,0 +1,28 @@
+.pageHeader {
+    position: absolute;
+    top: 19px;
+    left: 296px;
+
+    @include only-laptop {
+        left: 76px;
+    }
+
+    @include only-tablet {
+        left: -3px;
+    }
+
+    @include only-mobile {
+        position: static;
+    }
+}
+
+.headerText {
+    position: absolute;
+    top: 10px;
+    left: 20px;
+    font: var(--font-title-xl);
+
+    @include only-mobile {
+        position: static;
+    }
+}

@@ -1,0 +1,11 @@
+{
+    "dashboard": "Главная",
+    "savings": "Цели",
+    "transactions": "Транзакции",
+    "budgets": "Бюджеты",
+    "wallets": "Кошельки",
+    "reports": "Аналитика",
+    "settings": "Настройки",
+    "profile": "Профиль",
+    "logout": "Выйти"
+}

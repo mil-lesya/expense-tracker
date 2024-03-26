@@ -1,21 +1,26 @@
 import { classNames } from 'shared/lib/classNames/classNames';
 import cls from './Logo.module.scss';
-import LogoIcon from '../../../assets/icons/logo-finterst.svg';
+import { SvgIcon } from 'shared/ui/SvgIcon';
 
 interface LogoProps {
+  withoutText?: boolean
   className?: string
 }
 
-const Logo = ({ className }: LogoProps) => {
+const Logo = ({ withoutText = false, className }: LogoProps) => {
   return (
     <div className={classNames(cls.logo, {}, [className])}>
       <div className={cls.logoWrapper}>
-        <LogoIcon />
+        <SvgIcon name='logo-finterst' />
       </div>
-      <div className={cls.logoTextWrapper}>
-        <p className={cls.logoName}>FINTEREST</p>
-        <p className={cls.logoText}>Personal finance manager</p>
-      </div>
+      {withoutText
+        ? <></>
+        : (
+        <div className={cls.logoTextWrapper}>
+          <p className={cls.logoName}>FINTEREST</p>
+          <p className={cls.logoText}>Personal finance manager</p>
+        </div>
+          )}
     </div>
   );
 };

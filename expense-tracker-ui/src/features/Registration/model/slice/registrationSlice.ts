@@ -1,6 +1,6 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
-// import { loginByEmail } from '../services/loginByEmail/loginByEmail';
 import { RegistrationSchema } from '../types/registrationSchema';
+import { registrationByEmail } from '../services/registrationByEmail/registrationByEmail';
 
 const initialState: RegistrationSchema = {
   isLoading: false,
@@ -26,21 +26,21 @@ export const registrationSlice = createSlice({
     setDefaultCurrency: (state, action: PayloadAction<string>) => {
       state.defaultCurrency = action.payload;
     }
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(registrationByEmail.pending, (state) => {
+        state.error = undefined;
+        state.isLoading = true;
+      })
+      .addCase(registrationByEmail.fulfilled, (state, action) => {
+        state.isLoading = false;
+      })
+      .addCase(registrationByEmail.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload as string;
+      });
   }
-//   extraReducers: (builder) => {
-//     builder
-//       .addCase(loginByEmail.pending, (state) => {
-//         state.error = undefined;
-//         state.isLoading = true;
-//       })
-//       .addCase(loginByEmail.fulfilled, (state, action) => {
-//         state.isLoading = false;
-//       })
-//       .addCase(loginByEmail.rejected, (state, action) => {
-//         state.isLoading = false;
-//         state.error = action.payload as string;
-//       });
-//   }
 });
 
 export const { actions: registrationActions } = registrationSlice;

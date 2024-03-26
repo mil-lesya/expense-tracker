@@ -6,11 +6,8 @@ import { useNavigate } from 'react-router-dom';
 import { Logo } from 'shared/ui/Logo';
 import Background from 'shared/assets/img/background.png';
 import LayoutBadge from 'shared/ui/LayoutBadge/LayoutBadge';
-import DoneIcon from 'shared/assets/icons/done.svg';
-import CoinIcon from 'shared/assets/icons/coin.svg';
-import FinanceIcon from 'shared/assets/icons/finance.svg';
-import CalendarIcon from 'shared/assets/icons/calendar.svg';
 import { useTranslation } from 'react-i18next';
+import { SvgIcon } from 'shared/ui/SvgIcon';
 
 interface UnauthorizedLayoutProps {
   className?: string
@@ -66,7 +63,7 @@ const UnauthorizedLayout: FC<UnauthorizedLayoutProps> = (props) => {
         <div className={cls.pageWrapper}>{children}</div>
         <div className={cls.cardsWrapper}>
           <LayoutBadge className={cls.badgeDone}>
-            <DoneIcon className={cls.doneIcon} />
+            <SvgIcon name='done' className={cls.doneIcon} />
             <p className={cls.badgeText}>
               Goal setting
               <br></br>
@@ -76,7 +73,7 @@ const UnauthorizedLayout: FC<UnauthorizedLayoutProps> = (props) => {
             </p>
           </LayoutBadge>
           <LayoutBadge className={cls.badgeCoin}>
-            <CoinIcon className={cls.coinIcon} />
+            <SvgIcon name='coin' className={cls.coinIcon} />
             <p className={cls.badgeText}>
               Easily manage
               <br></br>
@@ -84,7 +81,7 @@ const UnauthorizedLayout: FC<UnauthorizedLayoutProps> = (props) => {
             </p>
           </LayoutBadge>
           <LayoutBadge className={cls.badgeFinance}>
-            <FinanceIcon className={cls.financeIcon} />
+            <SvgIcon name='finance' className={cls.financeIcon} />
             <p className={cls.badgeText}>
               Financial
               <br></br>
@@ -94,7 +91,7 @@ const UnauthorizedLayout: FC<UnauthorizedLayoutProps> = (props) => {
             </p>
           </LayoutBadge>
           <LayoutBadge className={cls.badgeCalendar}>
-            <CalendarIcon className={cls.calendarIcon} />
+            <SvgIcon name='calendar' className={cls.calendarIcon} />
             <p className={cls.badgeText}>
               Budgeting and
               <br></br>

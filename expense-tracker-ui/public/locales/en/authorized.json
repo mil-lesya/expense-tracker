@@ -1,0 +1,11 @@
+{
+    "dashboard": "Dashboard",
+    "savings": "Savings",
+    "transactions": "Transactions",
+    "budgets": "Budgets",
+    "wallets": "Wallets",
+    "reports": "Reports",
+    "settings": "Settings",
+    "profile": "Profile",
+    "logout": "Logout"
+}

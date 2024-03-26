@@ -1,0 +1,78 @@
+/** VIEWPORT WIDTH */
+@mixin base {
+  @media screen and (width <= 359px) {
+    @content;
+  }
+}
+
+@mixin min-mobile {
+  @media screen and (width >= 360px) {
+    @content;
+  }
+}
+
+@mixin min-tablet {
+  @media screen and (width >= 768px) {
+    @content;
+  }
+}
+
+@mixin min-laptop {
+  @media screen and (width >= 1024px) {
+    @content;
+  }
+}
+
+@mixin min-desktop {
+  @media screen and (width >= 1200px) {
+    @content;
+  }
+}
+
+@mixin min-desktop-xl {
+  @media screen and (width >= 1600px) {
+    @content;
+  }
+}
+
+@mixin min-width($width) {
+  @media screen and (width >= $width) {
+    @content;
+  }
+}
+
+@mixin only-mobile {
+  @media screen and (width <= 767px) {
+    @content;
+  }
+}
+
+@mixin only-tablet {
+  @media screen and (width >= 768px) and (width <= 1023px) {
+    @content;
+  }
+}
+
+@mixin only-laptop {
+  @media screen and (width >= 1024px) and (width <= 1199px) {
+    @content;
+  }
+}
+
+@mixin max-tablet {
+  @media screen and (width <= 1023px) {
+    @content;
+  }
+}
+
+@mixin minmax-width($min-width, $max-width) {
+  @media screen and (width >= $min-width) and (width <= $max-width) {
+    @content;
+  }
+}
+
+@mixin max-width($max-width) {
+  @media screen and (width <= $max-width) {
+    @content;
+  }
+}

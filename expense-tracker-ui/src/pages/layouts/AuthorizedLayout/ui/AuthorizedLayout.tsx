@@ -4,6 +4,9 @@ import cls from './AuthorizedLayout.module.scss';
 import { useDispatch } from 'react-redux';
 import { userActions } from 'entities/User';
 import { Button, ThemeButton } from 'shared/ui/Button';
+import { Navbar } from 'widgets/Navbar';
+import { Sidebar } from 'widgets/Sidebar';
+import { PageContainer } from 'shared/ui/PageContainer';
 
 interface AuthorizedLayoutProps {
   className?: string
@@ -19,9 +22,14 @@ const AuthorizedLayout: FC<AuthorizedLayoutProps> = (props) => {
 
   return (
     <div className={classNames(cls.AuthorizedLayout, {}, [className])}>
-       <div>Auth Layout</div>
-       <div className={cls.pageWrapper}>{children}</div>
-       <Button theme={ThemeButton.PRIMARY} onClick={onClickLogout}>logout</Button>
+       <Sidebar></Sidebar>
+       <Navbar></Navbar>
+       <div className={cls.pageWrapper}>
+        <PageContainer>
+          {children}
+        </PageContainer>
+        </div>
+       {/* <Button theme={ThemeButton.PRIMARY} onClick={onClickLogout}>logout</Button> */}
     </div>
   );
 };

@@ -1,4 +1,23 @@
 .AuthorizedLayout {
-    width: 50%;
-    height: 50%;
+    position: relative;
+    width: 100%;
+    background-color: var(--color-light-grey);
+
+    @include only-mobile {
+        background-color: var(--color-white);
+    }
+}
+
+.pageWrapper {
+    display: flex;
+    justify-content: flex-end;
+    width: 100vw;
+
+    @include only-mobile {
+        justify-content: center;
+    }
+
+    @include only-tablet {
+        justify-content: flex-start;
+    }
 }

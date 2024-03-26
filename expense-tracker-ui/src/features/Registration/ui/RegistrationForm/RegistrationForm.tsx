@@ -10,7 +10,7 @@ import { getRegistrationState } from 'features/Registration/model/selectors/getR
 import { registrationActions } from 'features/Registration/model/slice/registrationSlice';
 import { registrationByEmail } from 'features/Registration/model/services/registrationByEmail/registrationByEmail';
 import { EMAIL_MASK, PASSWORD_MASK, TEXT_MASK } from 'shared/const/mask';
-import { useNavigate } from 'react-router-dom';
+import toast from 'react-hot-toast';
 
 interface RegistrationFormProps {
   className?: string
@@ -18,9 +18,8 @@ interface RegistrationFormProps {
 
 const RegistrationForm = ({ className }: RegistrationFormProps) => {
   const dispatch = useDispatch();
-  const { username, email, password, isLoading } = useSelector(getRegistrationState);
+  const { username, email, password, isLoading, error } = useSelector(getRegistrationState);
   const { t } = useTranslation('unauthorized');
-  const navigate = useNavigate();
 
   const [usernameError, setUsernameError] = useState('');
   const [emailError, setEmailError] = useState('');
@@ -39,6 +38,12 @@ const RegistrationForm = ({ className }: RegistrationFormProps) => {
       setDisabledBtn(false);
     }
   }, [usernameError, emailError, passwordError, repeatPasswordError]);
+
+  useEffect(() => {
+    if (error) {
+      toast.error(error);
+    }
+  }, [error]);
 
   const onChangeUsername = useCallback(
     (value: string) => {
@@ -62,8 +67,8 @@ const RegistrationForm = ({ className }: RegistrationFormProps) => {
   );
 
   const onRegistrationClick = useCallback(() => {
-    dispatch(registrationByEmail({ email, password }));
-  }, [dispatch, email, password]);
+    dispatch(registrationByEmail({ username, email, password }));
+  }, [dispatch, username, email, password]);
 
   const onChangeReapetPassword = (val: string) => {
     setRepeatPassword(val);
@@ -131,7 +136,6 @@ const RegistrationForm = ({ className }: RegistrationFormProps) => {
       >
         {t('registration.button')}
       </Button>
-      {/* <p>Don't have an account?</p> */}
     </div>
   );
 };

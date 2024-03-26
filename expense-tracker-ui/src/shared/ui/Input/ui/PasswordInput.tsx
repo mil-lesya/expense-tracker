@@ -1,8 +1,7 @@
 import { FC, memo, useState, useEffect } from 'react';
 import Input, { HTMLInputProps } from './Input';
-import EyeIcon from '../../../assets/icons/eye.svg';
-import EyeOffIcon from '../../../assets/icons/eye-off.svg';
 import cls from './Input.module.scss';
+import { SvgIcon } from 'shared/ui/SvgIcon';
 
 interface PasswordInputProps extends HTMLInputProps {
   className?: string
@@ -61,13 +60,7 @@ const PasswordInput: FC<PasswordInputProps> = (props) => {
       onChange={onChange}
     >
       <button className={cls.iconButton} onClick={onIconClick}>
-        {visiblePassword
-          ? (
-          <EyeIcon className={cls.icon} />
-            )
-          : (
-          <EyeOffIcon className={cls.icon} />
-            )}
+        <SvgIcon name={visiblePassword ? 'eye' : 'eye-off'} className={cls.icon} />
       </button>
     </Input>
   );
