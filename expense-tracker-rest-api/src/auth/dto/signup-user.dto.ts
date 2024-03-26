@@ -1,4 +1,11 @@
-import { IsString, IsEmail, MinLength, Matches, IsOptional, IsEnum } from 'class-validator';
+import {
+  IsString,
+  IsEmail,
+  MinLength,
+  Matches,
+  IsOptional,
+  IsEnum,
+} from 'class-validator';
 import { CurrencyCode } from '../../currency/enums/currency-code.enum';
 
 export class SignupUserDto {

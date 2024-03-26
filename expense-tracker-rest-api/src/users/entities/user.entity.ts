@@ -9,7 +9,6 @@ import { Limit } from '../../limit/entity/limit.entity';
 
 @Entity()
 export class User {
-
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
@@ -23,7 +22,7 @@ export class User {
   @Exclude()
   password: string;
 
-  @Column({name: 'default_currency'})
+  @Column({ name: 'default_currency' })
   defaultCurrency: CurrencyCode;
 
   @OneToMany(() => Wallet, (wallet) => wallet.user)

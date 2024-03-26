@@ -25,11 +25,10 @@ import { UserModule } from '../users/user.module';
       },
       inject: [ConfigService],
     }),
-    forwardRef(() => UserModule)
+    forwardRef(() => UserModule),
   ],
   providers: [JwtStrategy, AuthService],
   exports: [JwtModule, PassportModule],
   controllers: [AuthController],
 })
-export class AuthModule {
-}
+export class AuthModule {}

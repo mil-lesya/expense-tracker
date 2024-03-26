@@ -38,7 +38,7 @@ import { join } from 'path';
       }),
     }),
     ServeStaticModule.forRoot({
-      rootPath: join(__dirname, '..', 'uploads')
+      rootPath: join(__dirname, '..', 'uploads'),
     }),
     UserModule,
     AuthModule,
@@ -47,10 +47,9 @@ import { join } from 'path';
     TransactionModule,
     GoalModule,
     BudgetModule,
-    LimitModule
+    LimitModule,
   ],
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {
-}
+export class AppModule {}

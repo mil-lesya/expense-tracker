@@ -1,4 +1,11 @@
-import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 import { CurrencyCode } from '../../currency/enums/currency-code.enum';
 import { User } from '../../users/entities/user.entity';
 import { Transaction } from '../../transactions/entities/transaction.entity';
@@ -6,11 +13,10 @@ import { Exclude } from 'class-transformer';
 
 @Entity()
 export class Wallet {
-
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column()
+  @Column({ nullable: false })
   name: string;
 
   @Column()
@@ -25,7 +31,10 @@ export class Wallet {
   @Column({ name: 'is_show_on_panel' })
   isShowOnPanel: boolean;
 
-  @ManyToOne(() => User, (user) => user.wallets, { eager: true, onDelete: "CASCADE" })
+  @ManyToOne(() => User, (user) => user.wallets, {
+    eager: true,
+    onDelete: 'CASCADE',
+  })
   @JoinColumn({ name: 'user_id' })
   @Exclude()
   user: User;

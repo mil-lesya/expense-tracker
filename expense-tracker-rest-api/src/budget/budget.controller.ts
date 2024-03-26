@@ -11,7 +11,7 @@ import {
   Query,
   Req,
   UseGuards,
-  UseInterceptors
+  UseInterceptors,
 } from '@nestjs/common';
 import { BudgetService } from './budget.service';
 import { CreateBudgetDto } from './dto/create-budget.dto';
@@ -23,8 +23,7 @@ import { AuthGuard } from '@nestjs/passport';
 @UseInterceptors(ClassSerializerInterceptor)
 @Controller('budget')
 export class BudgetController {
-  constructor(private budgetService: BudgetService) {
-  }
+  constructor(private budgetService: BudgetService) {}
 
   @Post()
   create(@Body() body: CreateBudgetDto, @Req() req: any) {
@@ -32,7 +31,11 @@ export class BudgetController {
   }
 
   @Get()
-  async find(@Req() req: any, @Query('page') page: number = 1, @Query('limit') limit: number = 10) {
+  async find(
+    @Req() req: any,
+    @Query('page') page: number = 1,
+    @Query('limit') limit: number = 10,
+  ) {
     return this.budgetService.findAll(req.user.id, page, limit);
   }
 
@@ -51,12 +54,26 @@ export class BudgetController {
   }
 
   @Patch('/:id')
-  updateUser(@Param('id') id: string, @Body() body: UpdateBudgetDto, @Req() req: any) {
+  updateUser(
+    @Param('id') id: string,
+    @Body() body: UpdateBudgetDto,
+    @Req() req: any,
+  ) {
     return this.budgetService.update(req.user.id, id, body);
   }
 
   @Get('/:id/limits')
-  async findTransactions(@Param('id') id: string, @Req() req: any, @Query('page') page: number = 1, @Query('limit') limit: number = 10) {
-    return await this.budgetService.findLimitsByBudget(req.user.id, id, page, limit);
+  async findTransactions(
+    @Param('id') id: string,
+    @Req() req: any,
+    @Query('page') page: number = 1,
+    @Query('limit') limit: number = 10,
+  ) {
+    return await this.budgetService.findLimitsByBudget(
+      req.user.id,
+      id,
+      page,
+      limit,
+    );
   }
 }

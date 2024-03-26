@@ -9,7 +9,7 @@ import {
   Patch,
   Req,
   UseGuards,
-  UseInterceptors
+  UseInterceptors,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { UpdateUserDto } from './dto/update-user.dto';
@@ -22,8 +22,8 @@ import { AuthService } from '../auth/auth.service';
 export class UserController {
   constructor(
     private usersService: UserService,
-    private authService: AuthService) {
-  }
+    private authService: AuthService,
+  ) {}
 
   @Get('/:id')
   async findUser(@Param('id') id: string, @Req() req: any) {
@@ -42,7 +42,11 @@ export class UserController {
   }
 
   @Patch('/:id')
-  updateUser(@Param('id') id: string, @Body() body: UpdateUserDto, @Req() req: any) {
+  updateUser(
+    @Param('id') id: string,
+    @Body() body: UpdateUserDto,
+    @Req() req: any,
+  ) {
     this.authService.checkAuthorization(req.user.id, id);
     return this.usersService.update(id, body);
   }

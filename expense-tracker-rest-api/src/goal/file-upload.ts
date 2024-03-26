@@ -14,7 +14,7 @@ export const imageFileFilter = (req, file, callback) => {
   callback(null, true);
 };
 export const editFileName = (req, file, callback) => {
-  const filename = file.originalname.split('.').shift()
+  const filename = file.originalname.split('.').shift();
   const extension = file.originalname.split('.').pop();
   callback(null, `${filename}-${Date.now()}.${extension}`);
 };

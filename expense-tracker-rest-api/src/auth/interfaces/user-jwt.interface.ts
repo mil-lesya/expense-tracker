@@ -3,6 +3,6 @@ export interface UserJwtResponse {
     id: string;
     username: string;
     email: string;
-  }
+  };
   accessToken: string;
 }

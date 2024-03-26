@@ -1,4 +1,10 @@
-import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 import { CurrencyCode } from '../../currency/enums/currency-code.enum';
 import { Category } from '../../categories/entities/category.entity';
 import { User } from '../../users/entities/user.entity';
@@ -7,7 +13,6 @@ import { Budget } from '../../budget/entity/budget.entity';
 
 @Entity()
 export class Limit {
-
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
@@ -17,12 +22,15 @@ export class Limit {
   @Column('numeric')
   amount: number;
 
-  @ManyToOne(() => Budget, (budget) => budget.limits, {eager: true, onDelete: "CASCADE" })
+  @ManyToOne(() => Budget, (budget) => budget.limits, {
+    eager: true,
+    onDelete: 'CASCADE',
+  })
   @JoinColumn({ name: 'budget_id' })
   @Exclude()
-  budget: Budget
+  budget: Budget;
 
-  @ManyToOne(() => Category, (category) => category.limits, {eager: true })
+  @ManyToOne(() => Category, (category) => category.limits, { eager: true })
   @JoinColumn({ name: 'category_id' })
-  category: Category
+  category: Category;
 }

@@ -12,9 +12,9 @@ import { Transaction } from '../transactions/entities/transaction.entity';
   imports: [
     TypeOrmModule.forFeature([Wallet, Transaction]),
     UserModule,
-    AuthModule
+    AuthModule,
   ],
   controllers: [WalletController],
-  providers: [WalletService, AuthService]
+  providers: [WalletService, AuthService],
 })
 export class WalletModule {}

@@ -9,12 +9,13 @@ import { CurrencyCode } from '../currency/enums/currency-code.enum';
 
 @Injectable()
 export class UserService {
-  constructor(@InjectRepository(User) private userRepository: Repository<User>) {
-  }
+  constructor(
+    @InjectRepository(User) private userRepository: Repository<User>,
+  ) {}
 
   async create(createUserDto: CreateUserDto) {
     createUserDto.password = await this.hashPassword(createUserDto.password);
-    createUserDto.defaultCurrency = CurrencyCode.USD
+    createUserDto.defaultCurrency = CurrencyCode.USD;
     const user = this.userRepository.create(createUserDto);
     return this.userRepository.save(user);
   }

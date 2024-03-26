@@ -6,7 +6,7 @@ import {
   IsNumber,
   IsNumberString,
   IsOptional,
-  IsString
+  IsString,
 } from 'class-validator';
 import { CurrencyCode } from '../../currency/enums/currency-code.enum';
 

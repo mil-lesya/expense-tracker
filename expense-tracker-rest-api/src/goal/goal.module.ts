@@ -13,9 +13,9 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
     TypeOrmModule.forFeature([Goal]),
     UserModule,
     AuthModule,
-    ConfigModule
+    ConfigModule,
   ],
   providers: [GoalService, AuthService, ConfigService],
-  controllers: [GoalController]
+  controllers: [GoalController],
 })
 export class GoalModule {}

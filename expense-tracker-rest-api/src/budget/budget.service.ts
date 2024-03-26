@@ -14,8 +14,8 @@ export class BudgetService {
     @InjectRepository(Budget) private budgetRepository: Repository<Budget>,
     @InjectRepository(Limit) private limitRepository: Repository<Limit>,
     private readonly userService: UserService,
-    private readonly authService: AuthService) {
-  }
+    private readonly authService: AuthService,
+  ) {}
 
   async create(createBudgetDto: CreateBudgetDto, userId: string) {
     const user = await this.userService.findById(userId);
@@ -37,7 +37,12 @@ export class BudgetService {
     };
   }
 
-  async findLimitsByBudget(userId: string, budgetId: string, page: number, limit: number) {
+  async findLimitsByBudget(
+    userId: string,
+    budgetId: string,
+    page: number,
+    limit: number,
+  ) {
     const budget = await this.findById(budgetId);
     if (!budget) {
       throw new NotFoundException('Budget not found');
@@ -68,7 +73,6 @@ export class BudgetService {
     this.authService.checkAuthorization(userId, budget.user.id);
     Object.assign(budget, updateBudgetDto);
     return this.budgetRepository.save(budget);
-
   }
 
   async remove(userId: string, id: string) {

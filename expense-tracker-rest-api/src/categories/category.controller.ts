@@ -11,7 +11,7 @@ import {
   Query,
   Req,
   UseGuards,
-  UseInterceptors
+  UseInterceptors,
 } from '@nestjs/common';
 import { CategoryService } from './category.service';
 import { CreateCategoryDto } from './dto/create-category.dto';
@@ -22,8 +22,7 @@ import { UpdateCategoryDto } from './dto/update-category.dto';
 @UseInterceptors(ClassSerializerInterceptor)
 @Controller('categories')
 export class CategoryController {
-  constructor(private categoriesService: CategoryService) {
-  }
+  constructor(private categoriesService: CategoryService) {}
 
   @Post()
   create(@Body() body: CreateCategoryDto, @Req() req: any) {
@@ -31,7 +30,11 @@ export class CategoryController {
   }
 
   @Get()
-  async find(@Req() req: any, @Query('page') page: number = 1, @Query('limit') limit: number = 10) {
+  async find(
+    @Req() req: any,
+    @Query('page') page: number = 1,
+    @Query('limit') limit: number = 10,
+  ) {
     return this.categoriesService.findAll(req.user.id, page, limit);
   }
 
@@ -45,7 +48,11 @@ export class CategoryController {
   }
 
   @Patch('/:id')
-  update(@Param('id') id: string, @Body() body: UpdateCategoryDto, @Req() req: any) {
+  update(
+    @Param('id') id: string,
+    @Body() body: UpdateCategoryDto,
+    @Req() req: any,
+  ) {
     return this.categoriesService.update(id, req.user.id, body);
   }
 
