@@ -1,0 +1,113 @@
+.sidebar {
+    position: fixed;
+    width: var(--sidebar-width);
+    height: 100vh;
+    background-color: transparent;
+    padding: 30px 42px;
+
+    @include only-laptop {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 10px;
+    }
+
+    @include max-tablet {
+        height: 60px;
+        width: 100vw;
+        bottom: 0;
+        padding: 0;
+        background-color: var(--color-white);
+        border-top: 0.5px solid var(--color-border);
+    }
+
+    .links {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        height: 100%;
+
+        @include max-tablet {
+            align-items: center;
+            padding: 10px;
+        }
+
+        @include only-tablet {
+            flex-direction: row;
+            justify-content: center;
+            gap: 25px;
+        }
+    }
+
+    .topLinks {
+        display: flex;
+        flex-direction: column;
+        gap: 25px;
+        margin-top: 30px;
+
+        @include max-tablet {
+            flex-direction: row;
+            margin-top: 0;
+        }
+    }
+
+    .bottomLinks {
+        margin-bottom: 30px;
+
+        @include only-laptop {
+            margin-bottom: 0;
+        }
+
+        @include only-mobile {
+            display: none;
+        }
+
+        @include only-tablet {
+            margin-bottom: 0;
+        }
+    }
+}
+
+.sidebarItem {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+    width: 100%;
+    font: var(--font-main-text);
+    color: var(--color-primary-dark);
+    text-decoration: none;
+    background-color: transparent;
+    border-radius: 20px;
+    transition: background-color 0.3s ease;
+
+    @include only-laptop {
+        width: 45px;
+        height: 45px;
+        border-radius: 50px;
+    }
+
+    @include max-tablet {
+        width: 45px;
+        height: 45px;
+        border-radius: 50px;
+    }
+
+    &:hover,
+    &:active {
+        background-color: #EFEFEF;
+
+        @include max-tablet {
+            background-color: var(--color-light-blue);
+        }
+    }
+}
+
+.active {
+    background-color: var(--color-light-blue);
+
+    &:hover {
+        background-color: var(--color-light-blue);
+    }
+}

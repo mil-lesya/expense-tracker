@@ -70,5 +70,14 @@
   --color-placeholder: #d5d4d9;
 
   // Размеры
-  --navbar-height: 50px;
+  --navbar-height: 70px;
+  --sidebar-width: 300px;
+
+  @include only-mobile {
+    --navbar-height: 60px;
+  }
+
+  @include only-laptop {
+    --sidebar-width: 80px;
+  }
 }

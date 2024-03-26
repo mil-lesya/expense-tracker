@@ -7,6 +7,7 @@ import { getUserState } from 'entities/User';
 import { AuthorizedLayout } from 'pages/layouts/AuthorizedLayout';
 import { initAuthData } from 'entities/User/model/services/initAuthData';
 import { useNavigate } from 'react-router-dom';
+import { Toaster } from 'react-hot-toast';
 
 const App = () => {
   const dispatch = useDispatch();
@@ -38,6 +39,13 @@ const App = () => {
         <AppRouter />
       </UnauthorizedLayout>
           )}
+      <Toaster
+        position="bottom-center"
+        toastOptions={{
+          duration: 5000,
+          className: 'toast'
+        }}
+        />
     </Suspense>
   );
 };

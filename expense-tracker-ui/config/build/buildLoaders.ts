@@ -42,7 +42,12 @@ export function buildLoaders ({ isDev }: BuildOptions): webpack.RuleSetRule[] {
           }
         }
       },
-      'sass-loader'
+      {
+        loader: 'sass-loader',
+        options: {
+          additionalData: '@import "app/styles/variables/mixins";'
+        }
+      }
     ]
   };
 

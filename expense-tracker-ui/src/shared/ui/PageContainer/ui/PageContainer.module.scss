@@ -1,0 +1,18 @@
+.pageContainer {
+    width: calc(100vw - var(--sidebar-width));
+    background-color: var(--color-white);
+    min-height: calc(100vh - var(--navbar-height));
+    border-radius: 20px;
+    box-shadow: 0 0 4px rgba(0, 0, 0, 10%);
+    padding: 20px;
+
+    @include only-mobile {
+        box-shadow: none;
+        width: 100vw;
+        border-radius: none;
+    }
+
+    @include only-tablet {
+        width: 100vw;
+    }
+}

@@ -1,7 +1,15 @@
 @import 'reset';
+@import 'variables/mixins';
 @import 'variables/global';
 
 .app {
   font: var(--font-title-xl);
   min-height: 100vh;
+}
+
+.toast {
+  font: var(--font-main-text);
+  border-radius: 10px;
+  border: 1px solid var(--color-border);
+  padding: 20px;
 }
