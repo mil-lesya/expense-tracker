@@ -1,34 +1,36 @@
-/* Fahkwang - font-weight 400 */
+/* Arsenal - font-weight 400 */
 @font-face {
   font-display: swap;
-  font-family: Fahkwang;
+  font-family: Arsenal;
   font-weight: 400; // normal
   font-style: normal;
-  src: url('/src/shared/assets/fonts/Fahkwang-Regular.ttf') format('truetype');
+  src: url('/src/shared/assets/fonts/Arsenal-Regular.otf') format('truetype');
 }
 
-/* FahkwangMedium - font-weight 500 */
+/* ArsenalBold - font-weight 800 */
 @font-face {
   font-display: swap;
-  font-family: FahkwangMedium;
-  font-weight: 500;
+  font-family: ArsenalBold;
+  font-weight: 800;
   font-style: normal;
-  src: url('/src/shared/assets/fonts/Fahkwang-Medium.ttf') format('truetype');
+  src: url('/src/shared/assets/fonts/Arsenal-Bold.otf') format('truetype');
 }
 
 :root {
-  --font-family-title: 'Fahkwang', 'Helvetica Neue', serif;
-  --font-family-subtitle: 'FahkwangMedium', 'Helvetica Neue', serif;
+  --font-family-title: 'Arsenal', 'Helvetica Neue', serif;
+  --font-family-title-second: 'ArsenalBold', 'Helvetica Neue', serif;
+  --font-family-subtitle: 'Arsenal', 'Helvetica Neue', serif;
   --font-family-main: 'Helvetica Neue', serif;
 
   /** Fonts */
-  --font-size-title-xl: 34px;
+  --font-size-title-xl: 38px;
   --font-size-title-l: 24px;
   --font-size-title-m: 18px;
   --font-size-title-s: 13px;
   --font-size-main-text: 16px;
   --font-size-secondary-text: 14px;
   --font-size-small-text: 12px;
+  --font-size-logo: 17px;
   --line-height-title-xl: 44px;
   --line-height-title-l: 36px;
   --line-height-title-m: 27px;
@@ -37,6 +39,7 @@
   --line-height-secondary-text: 21px;
   --line-height-small-text: 18px;
   --letter-spacing: 0.15px;
+  --letter-spacing-title: 1.5px;
   --font-title-xl: var(--font-size-title-xl) / var(--line-height-title-xl)
     var(--font-family-title);
   --font-title-l: var(--font-size-title-l) / var(--line-height-title-l)
@@ -68,8 +71,9 @@
   --color-disabled-text: #8c8c98;
   --color-border: #b8b7c1;
   --color-placeholder: #d5d4d9;
+  --color-overlay: rgba(0 0 0 / 50%);
 
-  // Размеры
+  // Sizes
   --navbar-height: 70px;
   --sidebar-width: 300px;
 
@@ -80,4 +84,13 @@
   @include only-laptop {
     --sidebar-width: 80px;
   }
+
+  // z-indexes
+  --unauth-bg-z-index: -1;
+  --not-found-page-z-index: 100;
+  --mobile-menu-z-index: 10;
+  --mobile-menu-content-z-index: 12;
+  --mobile-menu-backdrop-z-index: 11;
+  --modal-z-index: 10;
+  --sidebar-z-index: 10;
 }

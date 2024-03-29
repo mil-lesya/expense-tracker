@@ -2,8 +2,11 @@
 @import 'variables/mixins';
 @import 'variables/global';
 
-.app {
+body {
   font: var(--font-title-xl);
+}
+
+.app {
   min-height: 100vh;
 }
 

@@ -1,6 +1,6 @@
 import { classNames } from 'shared/lib/classNames/classNames';
 import cls from './SignUpPage.module.scss';
-import RegistrationForm from 'features/Registration/ui/RegistrationForm/RegistrationForm';
+import { RegistrationFormAsync } from 'features/Registration';
 
 interface SignUpPageProps {
   className?: string
@@ -9,7 +9,7 @@ interface SignUpPageProps {
 const SignUpPage = ({ className }: SignUpPageProps) => {
   return (
     <div className={classNames(cls.SignUpPage, {}, [className])}>
-      <RegistrationForm/>
+      <RegistrationFormAsync/>
     </div>
   );
 };

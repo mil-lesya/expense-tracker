@@ -1,6 +1,8 @@
 import { classNames } from 'shared/lib/classNames/classNames';
 import cls from './SignInPage.module.scss';
-import LoginForm from 'features/Auth/ui/LoginForm/LoginForm';
+import { LoginFormAsync } from 'features/Auth';
+import { Suspense } from 'react';
+import { Loader } from 'shared/ui/Loader';
 
 interface SignInPageProps {
   className?: string
@@ -9,7 +11,9 @@ interface SignInPageProps {
 const SignInPage = ({ className }: SignInPageProps) => {
   return (
     <div className={classNames(cls.signInPage, {}, [className])}>
-      <LoginForm />
+      <Suspense fallback={<Loader />}>
+          <LoginFormAsync />
+      </Suspense>
     </div>
   );
 };

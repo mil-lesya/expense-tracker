@@ -2,7 +2,7 @@ import { FC, useEffect, useState } from 'react';
 import { classNames } from 'shared/lib/classNames/classNames';
 import cls from './PageHeader.module.scss';
 import { SvgIcon } from 'shared/ui/SvgIcon';
-import { useMediaWidth } from 'shared/hooks/useMediaWidth';
+import { useMediaWidth } from 'shared/lib/hooks/useMediaWidth';
 import { MOBILE_SIZE } from 'shared/const/windowSizes';
 
 interface PageHeaderProps {
