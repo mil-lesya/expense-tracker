@@ -5,7 +5,7 @@ import { Logo } from 'shared/ui/Logo';
 import SidebarItem from './SidebarItem';
 import { AppRoutes, RoutePath } from 'shared/config/routeConfig/routeConfig';
 import { useTranslation } from 'react-i18next';
-import { useMediaWidth } from 'shared/hooks/useMediaWidth';
+import { useMediaWidth } from 'shared/lib/hooks/useMediaWidth';
 import { LAPTOP_SIZE, MOBILE_SIZE, TABLET_SIZE } from 'shared/const/windowSizes';
 
 interface SidebarProps {

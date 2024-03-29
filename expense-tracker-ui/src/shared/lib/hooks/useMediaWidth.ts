@@ -1,4 +1,4 @@
-import { DESKTOP_SIZE, LAPTOP_SIZE, MOBILE_SIZE, TABLET_SIZE } from './../const/windowSizes';
+import { DESKTOP_SIZE, LAPTOP_SIZE, MOBILE_SIZE, TABLET_SIZE } from '../../const/windowSizes';
 import { useState, useEffect } from 'react';
 import { useWindowSize } from './useWindowSize';
 

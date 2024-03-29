@@ -23,10 +23,11 @@
 }
 
 .logoName {
-  font-family: var(--font-family-title);
-  font-size: var(--font-size-main-text);
+  font-family: var(--font-family-title-second);
+  font-size: var(--font-size-logo);
   line-height: var(--line-height-title-s);
-  font-weight: 500;
+  letter-spacing: var(--letter-spacing-title);
+  color: var(--color-primary-dark);
 }
 
 .logoText {

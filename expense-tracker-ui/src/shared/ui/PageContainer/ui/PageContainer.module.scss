@@ -1,9 +1,10 @@
 .pageContainer {
     width: calc(100vw - var(--sidebar-width));
+    height: 100%;
     background-color: var(--color-white);
     min-height: calc(100vh - var(--navbar-height));
     border-radius: 20px;
-    box-shadow: 0 0 4px rgba(0, 0, 0, 10%);
+    box-shadow: 0 0 4px rgba($color: #000, $alpha: 10%);
     padding: 20px;
 
     @include only-mobile {

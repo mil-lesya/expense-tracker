@@ -1,6 +1,5 @@
 import { UnauthorizedLayout } from 'pages/layouts/UnauthorizedLayout';
 import { AppRouter } from './providers/router';
-import './styles/index.scss';
 import { Suspense, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getUserState } from 'entities/User';
@@ -31,15 +30,15 @@ const App = () => {
       { isAuth
         ? (
         <AuthorizedLayout className='app'>
-        <AppRouter />
-      </AuthorizedLayout>
+          <AppRouter />
+        </AuthorizedLayout>
           )
         : (
         <UnauthorizedLayout className='app'>
         <AppRouter />
       </UnauthorizedLayout>
           )}
-      <Toaster
+<Toaster
         position="bottom-center"
         toastOptions={{
           duration: 5000,

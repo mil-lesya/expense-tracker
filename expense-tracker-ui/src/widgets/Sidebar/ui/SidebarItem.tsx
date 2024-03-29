@@ -3,7 +3,7 @@ import { classNames } from 'shared/lib/classNames/classNames';
 import cls from './Sidebar.module.scss';
 import { Link } from 'react-router-dom';
 import { SvgIcon } from 'shared/ui/SvgIcon';
-import { useMediaWidth } from 'shared/hooks/useMediaWidth';
+import { useMediaWidth } from 'shared/lib/hooks/useMediaWidth';
 import { LAPTOP_SIZE, MOBILE_SIZE, TABLET_SIZE } from 'shared/const/windowSizes';
 
 interface SidebarItemProps {

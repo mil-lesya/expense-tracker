@@ -4,7 +4,7 @@ import cls from './Navbar.module.scss';
 import { useDispatch, useSelector } from 'react-redux';
 import { getUserState, userActions } from 'entities/User';
 import Tippy from '@tippyjs/react';
-import { useMediaWidth } from 'shared/hooks/useMediaWidth';
+import { useMediaWidth } from 'shared/lib/hooks/useMediaWidth';
 import { MOBILE_SIZE } from 'shared/const/windowSizes';
 import { Logo } from 'shared/ui/Logo';
 import { MobileMenu } from 'widgets/MobileMenu';

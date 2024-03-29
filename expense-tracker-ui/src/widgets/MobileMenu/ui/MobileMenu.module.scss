@@ -10,7 +10,7 @@
     visibility: hidden;
     opacity: 0;
     transition: opacity 0.3s ease;
-    z-index: 100; // Убедитесь, что sidebar будет поверх других элементов
+    z-index: var(--mobile-menu-z-index);
   
     &.open {
       visibility: visible;
@@ -20,13 +20,13 @@
     .menuContent {
       width: 250px;
       background-color: white;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 50%);
+      box-shadow: 0 0 10px rgba($color: #000, $alpha: 30%);
       height: 100vh;
       padding: 20px;
       overflow-y: auto;
       transition: transform 0.3s ease;
-      transform: translateX(-250px); // Начальное состояние за пределами экрана
-      z-index: 110;
+      transform: translateX(-250px);
+      z-index: var(--mobile-menu-content-z-index);
 
       &.open {
         transform: translateX(0);
@@ -59,11 +59,11 @@
     .backdrop {
       position: fixed;
       inset: 0;
-      background-color: rgba(0, 0, 0, 50%);
+      background-color: var(--color-overlay);
       visibility: hidden;
       opacity: 0;
       transition: visibility 0s linear 0.3s, opacity 0.3s linear;
-      z-index: 99;
+      z-index: var(--mobile-menu-backdrop-z-index);
     }
   
     &.open > .backdrop {

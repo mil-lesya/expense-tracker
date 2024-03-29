@@ -19,6 +19,7 @@
         padding: 0;
         background-color: var(--color-white);
         border-top: 0.5px solid var(--color-border);
+        z-index: var(--sidebar-z-index);
     }
 
     .links {
