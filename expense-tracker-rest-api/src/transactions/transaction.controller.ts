@@ -20,9 +20,10 @@ import { CurrencyCode } from '../currency/enums/currency-code.enum';
 import { TransactionType } from './enums/transaction-type.enum';
 
 export interface FilterOptions {
-  search: string;
   startDate?: Date;
   endDate?: Date;
+  minAmount?: number;
+  maxAmount?: number;
   currency?: CurrencyCode[];
   type?: TransactionType[];
   category?: string[];

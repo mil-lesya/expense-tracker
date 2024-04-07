@@ -5,7 +5,6 @@ import { Wallet } from '../../wallets/entities/wallet.entity';
 import { CurrencyCode } from '../../currency/enums/currency-code.enum';
 import { Goal } from '../../goal/entities/goal.entity';
 import { Budget } from '../../budget/entity/budget.entity';
-import { Limit } from '../../limit/entity/limit.entity';
 
 @Entity()
 export class User {

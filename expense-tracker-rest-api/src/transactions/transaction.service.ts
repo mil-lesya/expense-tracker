@@ -10,7 +10,8 @@ import {
   FindOptionsOrder,
   FindOptionsWhere,
   ILike,
-  In,
+  LessThanOrEqual,
+  MoreThanOrEqual,
   Repository,
 } from 'typeorm';
 import { AuthService } from '../auth/auth.service';
@@ -69,7 +70,16 @@ export class TransactionService {
     sort?: string,
     order?: 'ASC' | 'DESC',
   ) {
-    const { type, currency, category, wallet } = filters || {};
+    const {
+      type,
+      currency,
+      category,
+      wallet,
+      startDate,
+      endDate,
+      minAmount,
+      maxAmount,
+    } = filters || {};
 
     const whereCondition: FindOptionsWhere<Transaction> = {
       description: ILike(`%${search}%`),
@@ -80,6 +90,12 @@ export class TransactionService {
         category: { id: Any(category), user: { id: userId } },
       }),
       ...(wallet && { wallet: { id: Any(wallet), user: { id: userId } } }),
+      ...(startDate && endDate && { date: Between(startDate, endDate) }),
+      ...(startDate && !endDate && { date: MoreThanOrEqual(startDate) }),
+      ...(!startDate && endDate && { date: LessThanOrEqual(endDate) }),
+      ...(minAmount && maxAmount && { amount: Between(minAmount, maxAmount) }),
+      ...(minAmount && !maxAmount && { amount: MoreThanOrEqual(minAmount) }),
+      ...(!maxAmount && maxAmount && { amount: LessThanOrEqual(maxAmount) }),
     };
 
     const orderBy: FindOptionsOrder<Transaction> =
