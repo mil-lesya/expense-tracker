@@ -13,6 +13,7 @@ import { AuthService } from '../auth/auth.service';
 import { UpdateWalletDto } from './dto/update-wallet.dto';
 import { Transaction } from '../transactions/entities/transaction.entity';
 import { firstValueFrom } from 'rxjs';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class WalletService {
@@ -24,6 +25,7 @@ export class WalletService {
     private readonly userService: UserService,
     private readonly authService: AuthService,
     private readonly httpService: HttpService,
+    private readonly configService: ConfigService,
   ) {}
 
   async create(createWalletDto: CreateWalletDto, userId: string) {
@@ -104,7 +106,7 @@ export class WalletService {
   private async convertCurrency(wallet: Wallet) {
     const response = await firstValueFrom(
       this.httpService.get(
-        `https://v6.exchangerate-api.com/v6/b7f880af6106d8d519f61d4f/pair/${wallet.currency}/${wallet.user.defaultCurrency}/${wallet.balance}`,
+        `https://v6.exchangerate-api.com/v6/${this.configService.get('API_KEY')}/pair/${wallet.currency}/${wallet.user.defaultCurrency}/${wallet.balance}`,
       ),
     );
     return response.data.conversion_result;
