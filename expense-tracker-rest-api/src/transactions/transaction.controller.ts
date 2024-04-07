@@ -16,19 +16,6 @@ import { AuthGuard } from '@nestjs/passport';
 import { TransactionService } from './transaction.service';
 import { CreateTransactionDto } from './dto/create-transaction.dto';
 import { UpdateTransactionDto } from './dto/update-transaction.dto';
-import { CurrencyCode } from '../currency/enums/currency-code.enum';
-import { TransactionType } from './enums/transaction-type.enum';
-
-export interface FilterOptions {
-  startDate?: Date;
-  endDate?: Date;
-  minAmount?: number;
-  maxAmount?: number;
-  currency?: CurrencyCode[];
-  type?: TransactionType[];
-  category?: string[];
-  wallet?: string[];
-}
 
 @UseGuards(AuthGuard('jwt'))
 @UseInterceptors(ClassSerializerInterceptor)
@@ -47,7 +34,14 @@ export class TransactionController {
     @Query('page') page: number = 1,
     @Query('limit') limit: number = 10,
     @Query('search') search: string = '',
-    @Query('filters') filters: FilterOptions,
+    @Query('startDate') startDate: Date,
+    @Query('endDate') endDate: Date,
+    @Query('minAmount') minAmount: number,
+    @Query('maxAmount') maxAmount: number,
+    @Query('currency') currency: string,
+    @Query('type') type: string,
+    @Query('category') category: string,
+    @Query('wallet') wallet: string,
     @Query('sort') sort: string,
     @Query('order') order: 'ASC' | 'DESC' = 'ASC',
   ) {
@@ -56,7 +50,14 @@ export class TransactionController {
       page,
       limit,
       search,
-      filters,
+      startDate,
+      endDate,
+      minAmount,
+      maxAmount,
+      currency,
+      type,
+      category,
+      wallet,
       sort,
       order,
     );

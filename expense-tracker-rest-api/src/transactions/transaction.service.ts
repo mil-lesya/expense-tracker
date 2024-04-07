@@ -21,7 +21,8 @@ import { WalletService } from '../wallets/wallet.service';
 import { CategoryService } from '../categories/category.service';
 import { TransactionResponseDto } from './interfaces/transaction.response.dto';
 import { UpdateTransactionDto } from './dto/update-transaction.dto';
-import { FilterOptions } from './transaction.controller';
+import { TransactionType } from './enums/transaction-type.enum';
+import { CurrencyCode } from '../currency/enums/currency-code.enum';
 
 @Injectable()
 export class TransactionService {
@@ -66,30 +67,45 @@ export class TransactionService {
     page: number,
     limit: number,
     search: string,
-    filters?: FilterOptions,
+    startDate?: Date,
+    endDate?: Date,
+    minAmount?: number,
+    maxAmount?: number,
+    currency?: string,
+    type?: string,
+    category?: string,
+    wallet?: string,
     sort?: string,
     order?: 'ASC' | 'DESC',
   ) {
-    const {
-      type,
-      currency,
-      category,
-      wallet,
-      startDate,
-      endDate,
-      minAmount,
-      maxAmount,
-    } = filters || {};
+    const transactionTypes: TransactionType[] = type
+      ?.split(',')
+      .reduce((acc, s) => {
+        const type = TransactionType[s as keyof typeof TransactionType];
+        if (type) acc.push(type);
+        return acc;
+      }, [] as TransactionType[]);
+
+    const currencyCodes: CurrencyCode[] = currency
+      ?.split(',')
+      .reduce((acc, s) => {
+        const currency = CurrencyCode[s as keyof typeof CurrencyCode];
+        if (currency) acc.push(currency);
+        return acc;
+      }, [] as CurrencyCode[]);
+
+    const categories = category?.split(',');
+    const wallets = wallet?.split(',');
 
     const whereCondition: FindOptionsWhere<Transaction> = {
       description: ILike(`%${search}%`),
       wallet: { user: { id: userId } },
-      ...(type && { type: Any(type) }),
-      ...(currency && { currency: Any(currency) }),
+      ...(type && { type: Any(transactionTypes) }),
+      ...(currency && { currency: Any(currencyCodes) }),
       ...(category && {
-        category: { id: Any(category), user: { id: userId } },
+        category: { id: Any(categories), user: { id: userId } },
       }),
-      ...(wallet && { wallet: { id: Any(wallet), user: { id: userId } } }),
+      ...(wallet && { wallet: { id: Any(wallets), user: { id: userId } } }),
       ...(startDate && endDate && { date: Between(startDate, endDate) }),
       ...(startDate && !endDate && { date: MoreThanOrEqual(startDate) }),
       ...(!startDate && endDate && { date: LessThanOrEqual(endDate) }),
