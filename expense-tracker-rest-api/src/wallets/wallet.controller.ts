@@ -39,6 +39,11 @@ export class WalletController {
     return await this.walletService.findAll(req.user.id, page, limit);
   }
 
+  @Get('/balance')
+  async getTotalBalance(@Req() req: any) {
+    return await this.walletService.getTotalBalance(req.user.id);
+  }
+
   @Get('/:id')
   async findOne(@Param('id') id: string, @Req() req: any): Promise<Wallet> {
     const wallet = await this.walletService.findById(id);
@@ -49,12 +54,12 @@ export class WalletController {
   }
 
   @Delete('/:id')
-  removeUser(@Param('id') id: string, @Req() req: any) {
+  remove(@Param('id') id: string, @Req() req: any) {
     return this.walletService.remove(id, req.user.id);
   }
 
   @Patch('/:id')
-  updateUser(
+  update(
     @Param('id') id: string,
     @Body() body: UpdateWalletDto,
     @Req() req: any,
