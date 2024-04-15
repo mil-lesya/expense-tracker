@@ -1,2 +1,9 @@
 {
+    "buttons": {
+        "readMore": "Read more",
+        "readLess": "Read less"
+    },
+    "inputs": {
+        "requiredMessage": "Required field"
+    }
 }

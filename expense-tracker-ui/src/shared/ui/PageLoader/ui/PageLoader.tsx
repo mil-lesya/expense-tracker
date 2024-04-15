@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, memo } from 'react';
 import cls from './PageLoader.module.scss';
 import { Loader } from 'shared/ui/Loader';
 
@@ -14,4 +14,4 @@ const PageLoader: FC<PageLoaderProps> = (props) => {
   );
 };
 
-export default PageLoader;
+export default memo(PageLoader);

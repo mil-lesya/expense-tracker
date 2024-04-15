@@ -104,6 +104,9 @@ const RegistrationForm = ({ className }: RegistrationFormProps) => {
             value={username}
             onChange={onChangeUsername}
             mask={TEXT_MASK}
+            // maskOptions={{
+            //   mask: TEXT_MASK
+            // }}
             required
             errorText={t('registration.usernameError')}
             error={usernameError}

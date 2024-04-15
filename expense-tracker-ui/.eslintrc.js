@@ -36,5 +36,5 @@ module.exports = {
     '@typescript-eslint/prefer-nullish-coalescing': 'off',
     'react/no-deprecated': 'off',
     '@typescript-eslint/no-floating-promises': 'off',
-  }
+  },
 };

@@ -1,12 +1,21 @@
 import { AnyAction, CombinedState, EnhancedStore, Reducer, ReducersMapObject } from '@reduxjs/toolkit';
+import { AxiosInstance } from 'axios';
 import { UserSchema } from 'entities/User';
+import { WalletSchema } from 'entities/Wallet';
+import { AddEditWalletSchema } from 'features/AddEditWallet';
 import { LoginSchema } from 'features/Auth';
+import { DeleteWalletSchema } from 'features/DeleteWallet/model/types/deleteWalletSchema';
 import { RegistrationSchema } from 'features/Registration';
+import { NavigateOptions } from 'react-router';
+import { To } from 'react-router-dom';
 
 export interface StateSchema {
   user: UserSchema
   loginForm?: LoginSchema
   registrationForm?: RegistrationSchema
+  wallets?: WalletSchema
+  addEditWallet?: AddEditWalletSchema
+  deleteWallet?: DeleteWalletSchema
 }
 
 export type StateSchemaKey = keyof StateSchema;
@@ -20,4 +29,15 @@ export interface ReducerManager {
 
 export interface ReduxStoreWidthManager extends EnhancedStore<StateSchema> {
   reducerManager: ReducerManager
+}
+
+export interface ThunkExtraArg {
+  api: AxiosInstance
+  navigate?: (to: To, options?: NavigateOptions) => void
+}
+
+export interface ThunkConfig<T> {
+  rejectValue: T
+  extra: ThunkExtraArg
+  state: StateSchema
 }

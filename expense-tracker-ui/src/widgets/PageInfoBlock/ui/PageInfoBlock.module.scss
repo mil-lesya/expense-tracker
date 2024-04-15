@@ -1,0 +1,55 @@
+.pageInfoBlock {
+    display: flex;
+    gap: 120px;
+    width: 100%;
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid var(--color-border);
+
+    @include only-mobile {
+        margin-top: 10px;
+        flex-direction: column;
+        gap: 20px;
+    }
+}
+
+.infoBlock {
+    display: flex;
+    flex-direction: column;
+}
+
+.info {
+    font: var(--font-main-text);
+    font-weight: 300;
+
+    @include only-mobile {
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;  
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+}
+
+.expanded {
+    @include only-mobile {
+        -webkit-line-clamp: unset;
+    }
+}
+
+.readMoreBtn {
+    display: none;
+    font: var(--font-main-text);
+    font-weight: 300;
+
+    @include only-mobile {
+        background: none;
+        color: var(--color-primary);
+        cursor: pointer;
+        padding: 0;
+        border: none;
+        display: block;
+        margin-top: 8px;
+        align-self: flex-end;
+    }
+}

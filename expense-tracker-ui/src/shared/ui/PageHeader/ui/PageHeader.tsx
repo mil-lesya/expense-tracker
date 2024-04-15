@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from 'react';
+import { FC, ReactNode, memo, useEffect, useState } from 'react';
 import { classNames } from 'shared/lib/classNames/classNames';
 import cls from './PageHeader.module.scss';
 import { SvgIcon } from 'shared/ui/SvgIcon';
@@ -7,6 +7,7 @@ import { MOBILE_SIZE } from 'shared/const/windowSizes';
 
 interface PageHeaderProps {
   className?: string
+  children: ReactNode
 }
 
 const PageHeader: FC<PageHeaderProps> = (props) => {
@@ -30,4 +31,4 @@ const PageHeader: FC<PageHeaderProps> = (props) => {
   );
 };
 
-export default PageHeader;
+export default memo(PageHeader);

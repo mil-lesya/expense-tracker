@@ -5,7 +5,7 @@
     min-height: calc(100vh - var(--navbar-height));
     border-radius: 20px;
     box-shadow: 0 0 4px rgba($color: #000, $alpha: 10%);
-    padding: 20px;
+    padding: 30px;
 
     @include only-mobile {
         box-shadow: none;

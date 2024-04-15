@@ -24,7 +24,7 @@ const SavingsPage: FC<SavingsPageProps> = (props) => {
       <div className={classNames(cls.savingsPage, {}, [className])}>
         <Button theme={ThemeButton.PRIMARY} onClick={onToggleModal}>Create</Button>
         {isCreateSavingModal && (
-          <Modal isOpen={isCreateSavingModal} onClose={onToggleModal}>
+          <Modal isOpen={isCreateSavingModal} onClose={onToggleModal} title='' subtitle=''>
             <div>
             bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
             </div>

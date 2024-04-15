@@ -1,0 +1,212 @@
+.control {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: fit-content;
+    cursor: pointer;
+  
+    &:not(.disabled)::before {
+      content: "";
+      position: absolute;
+      inset: -10px;
+    }
+
+    .title {
+        font: var(--font-main-text);
+        font-weight: 300;
+    }
+    
+    .head .title {
+        display: block;
+        font-weight: 500;
+        font-size: 1.4rem;
+        line-height: 1.6rem;
+    
+        @include min-tablet {
+          font-size: 1.6rem;
+          line-height: 2.4rem;
+        }
+    }
+
+    &:hover .title {
+        color: var(--color-primary);
+    }
+}
+
+.btn {
+    position: relative;
+    display: flex;
+}
+
+.check-mark {
+    position: relative;
+}
+
+.disabled {
+    opacity: 0.5;
+    color: #000;
+    pointer-events: none;
+    cursor: default;
+}
+
+.dense {
+    width: fit-content;
+}
+
+.error {
+    color: var(--color-negative);
+}
+
+.right {
+    justify-content: stretch;
+
+    .title:not(.control__head) {
+      order: 1;
+      margin-left: 10px;
+    }
+
+    .head {
+      order: 1;
+      margin-left: 16px;
+    }
+
+    .btn {
+      order: 0;
+      /* stylelint-disable-next-line declaration-no-important */
+      margin-left: 0 !important;
+    }
+  }
+
+.subtitle {
+    display: block;
+    margin-top: 8px;
+    font-size: 1.4rem;
+    line-height: 2rem;
+    color: var(--color-text-secondary);
+
+    @include min-tablet {
+      margin-top: 4px;
+      line-height: 1.6rem;
+    }
+}
+
+.head + .btn,
+.title:not(.visuallyHidden) + .btn {
+    margin-left: 16px;
+}
+
+.input {
+    position: absolute;
+    z-index: 2;
+    inset: 0;
+    appearance: none;
+    display: block;
+    width: 18px;
+    height: 18px;
+    background-color: transparent;
+    border: none;
+    border-radius: 4px;
+    outline-offset: 2px;
+    cursor: pointer;
+}
+
+.input::-ms-check {
+    opacity: 0;
+}
+
+/** CHECKBOX */
+.checkbox ~ .checkMark {
+    width: 18px;
+    height: 18px;
+    border: 2px solid var(--color-primary);
+    border-radius: 4px;
+}
+
+// .checkbox:checked {
+//     background-color: var(--color-primary);
+// }
+
+.checkbox ~ .checkMark::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    width: 12px;
+    height: 8px;
+    margin: auto;
+    transition: transform 0.3s ease;
+  }
+
+.checkbox:checked ~ .checkMark::before {
+    background-image: url('data:image/svg+xml,<svg viewBox="0 0 12 8" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(%23a)"><path d="m1.5 4 3 3 6-6" stroke="%23574ee4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></g><defs><clipPath id="a"><path fill="%23fff" d="M0 0h12v8H0z"/></clipPath></defs></svg>');
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+  /** RADIO */
+
+.radio {
+    width: 18px;
+    height: 18px;
+}
+
+.radio ~ .checkMark {
+    width: 18px;
+    height: 18px;
+    border: 2px solid var(--color-primary);
+    border-radius: 18px;
+  }
+
+/* stylelint-disable-next-line no-descending-specificity */
+.radio ~ .checkMark::before {
+    content: "";
+    position: absolute;
+    z-index: 1;
+    inset: -2px;
+    background-color: transparent;
+    border-radius: 50%;
+    transition: background-color 0.2s ease;
+  }
+
+.radio:checked ~ .checkMark::before {
+    background-color: var(--color-primary);
+  }
+
+  /** TOGGLE */
+.toggle {
+    width: 43px;
+    height: 24px;
+    border-radius: 12px;
+  }
+
+.toggle ~ .checkMark {
+    display: flex;
+    width: 43px;
+    height: 24px;
+    padding: 3px;
+    background-color: var(--color-disabled-button);
+    border-radius: 18px;
+    transition: background-color 0.2s;
+  }
+
+.toggle:checked ~ .checkMark {
+    background-color: var(--color-primary);
+  }
+
+  /* stylelint-disable-next-line no-descending-specificity */
+  .toggle ~ .checkMark::before {
+    content: "";
+    width: 18px;
+    height: 18px;
+    background-color: var(--color-white);
+    border-radius: 50%;
+    transition: transform 0.2s;
+  }
+
+  .toggle:checked ~ .checkMark::before {
+    transform: translate(19px, 0);
+  }
+
+.error .input ~ .checkMark {
+    background-color: var(--color-negative);
+}

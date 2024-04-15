@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from 'react';
+import { FC, memo, useEffect, useState } from 'react';
 import { classNames } from 'shared/lib/classNames/classNames';
 import cls from './Navbar.module.scss';
 import { useDispatch, useSelector } from 'react-redux';
@@ -15,7 +15,7 @@ interface NavbarProps {
   className?: string
 }
 
-export const Navbar: FC<NavbarProps> = (props) => {
+const Navbar: FC<NavbarProps> = (props) => {
   const { className } = props;
   const dispatch = useDispatch();
   const { authData } = useSelector(getUserState);
@@ -77,3 +77,5 @@ export const Navbar: FC<NavbarProps> = (props) => {
     </div>
   );
 };
+
+export default memo(Navbar);

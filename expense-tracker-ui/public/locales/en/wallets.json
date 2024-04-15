@@ -1,0 +1,32 @@
+{
+    "title": "Wallets",
+    "buttons": {
+        "create": "Create a wallet",
+        "edit": "Edit",
+        "delete": "Delete"
+    },
+    "info": "Here you can easily access, change, and even delete the details of your various wallets. Whether you want to review your current information or simply need a clearer view of your assets and liabilities, effortless management is possible here.",
+    "emptyList": "No wallets found. Create a new wallet",
+    "modal": {
+        "buttonCreate": "Create",
+        "buttonEdit": "Edit",
+        "buttonCancel": "Cancel",
+        "buttonDelete": "Delete",
+        "titleAdd": "Add a new wallet",
+        "titleEdit": "Edit a wallet",
+        "titleDelete": "Delete a wallet",
+        "subtitle": "Taking control of your finances",
+        "deleteQuestion": "Are you sure you want to delete your wallet ",
+        "deleteWarning": "This action cannot be undone",
+        "labelName": "Wallet name",
+        "placeholderName": "Enter wallet name",
+        "labelCurrency": "Wallet currency",
+        "placeholderCurrency": "USD",
+        "labelStartingBalance": "Starting balance",
+        "placeholderStartingBalance": "0,00",
+        "errorBalance": "The field can only contain numeric values",
+        "labelIsDefault": "Set as the default wallet",
+        "labelIsShowOnPanel": "Show on \"overview panel\"",
+        "labelIsShowBalance": "Take into wallet in \"Balance\""
+    }
+}

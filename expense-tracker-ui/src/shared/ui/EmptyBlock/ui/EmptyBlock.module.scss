@@ -1,0 +1,17 @@
+.emptyBlock {
+    width: 100%;
+    position: absolute;
+    top: 50%;
+    text-align: center;
+}
+
+.text {
+    font: var(--font-main-text);
+    font-size: var(--font-size-title-l);
+    color: var(--color-border);
+    line-height: 38px;
+
+    @include only-mobile {
+        line-height: 25px;
+    }
+}

@@ -1,0 +1,21 @@
+.deleteWalletModal {
+    width: 100%;
+}
+
+.buttonsWrapper {
+    width: 100%;
+    display: flex;
+    gap: 20px;
+}
+
+.button {
+    width: 50%;
+}
+
+.question {
+    font-family: var(--font-family-main);
+    font-size: var(--font-size-title-l);
+    line-height: 35px;
+    font-weight: 300;
+    margin-bottom: 20px;
+}

@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from 'react';
+import { FC, memo, useEffect, useState } from 'react';
 import { classNames } from 'shared/lib/classNames/classNames';
 import cls from './SvgIcon.module.scss';
 
@@ -39,4 +39,4 @@ const SvgIcon: FC<SvgIconProps> = (props) => {
   return <SvgIcon className={classNames(cls.svgIcon, {}, [className])} />;
 };
 
-export default SvgIcon;
+export default memo(SvgIcon);

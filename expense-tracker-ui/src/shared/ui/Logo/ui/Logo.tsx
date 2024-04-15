@@ -1,6 +1,7 @@
 import { classNames } from 'shared/lib/classNames/classNames';
 import cls from './Logo.module.scss';
 import { SvgIcon } from 'shared/ui/SvgIcon';
+import { memo } from 'react';
 
 interface LogoProps {
   withoutText?: boolean
@@ -25,4 +26,4 @@ const Logo = ({ withoutText = false, className }: LogoProps) => {
   );
 };
 
-export default Logo;
+export default memo(Logo);

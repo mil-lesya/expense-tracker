@@ -7,6 +7,7 @@ export interface User {
 export interface UserSchema {
   authData?: User
   isAuth: boolean
+  isLoading: boolean
 }
 
 export interface UserLoginResponseDto {
