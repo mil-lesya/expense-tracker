@@ -14,6 +14,7 @@ import { UserService } from '../users/user.service';
 import { Category } from '../categories/entities/category.entity';
 import { User } from '../users/entities/user.entity';
 import { Wallet } from '../wallets/entities/wallet.entity';
+import { HttpModule } from '@nestjs/axios';
 
 @Module({
   imports: [
@@ -22,6 +23,7 @@ import { Wallet } from '../wallets/entities/wallet.entity';
     AuthModule,
     CategoryModule,
     WalletModule,
+    HttpModule,
   ],
   providers: [
     TransactionService,
