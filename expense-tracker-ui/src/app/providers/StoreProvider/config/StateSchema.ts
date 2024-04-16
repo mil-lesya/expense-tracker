@@ -4,10 +4,11 @@ import { UserSchema } from 'entities/User';
 import { WalletSchema } from 'entities/Wallet';
 import { AddEditWalletSchema } from 'features/AddEditWallet';
 import { LoginSchema } from 'features/Auth';
-import { DeleteWalletSchema } from 'features/DeleteWallet/model/types/deleteWalletSchema';
+import { DeleteWalletSchema } from 'features/DeleteWallet';
 import { RegistrationSchema } from 'features/Registration';
 import { NavigateOptions } from 'react-router';
 import { To } from 'react-router-dom';
+import { WalletsTotalBalanceSchema } from 'widgets/WalletsTotalBalance';
 
 export interface StateSchema {
   user: UserSchema
@@ -16,6 +17,7 @@ export interface StateSchema {
   wallets?: WalletSchema
   addEditWallet?: AddEditWalletSchema
   deleteWallet?: DeleteWalletSchema
+  walletsTotalBalance?: WalletsTotalBalanceSchema
 }
 
 export type StateSchemaKey = keyof StateSchema;

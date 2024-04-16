@@ -2,8 +2,7 @@ import { FC, useCallback, useEffect, useState } from 'react';
 import { classNames } from 'shared/lib/classNames/classNames';
 import cls from './AddEditWalletModal.module.scss';
 import { Modal } from 'shared/ui/Modal';
-import DynamicModuleLoader, { ReducersList } from 'shared/lib/components/DynamicModuleLoader/DinamicModuleLoader';
-import { addEditWalletActions, addEditWalletReducer } from 'features/AddEditWallet/model/slice/addEditWalletSlice';
+import { addEditWalletActions } from 'features/AddEditWallet/model/slice/addEditWalletSlice';
 import { Button, ThemeButton } from 'shared/ui/Button';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
@@ -29,10 +28,6 @@ import toast from 'react-hot-toast';
 import { Wallet } from 'entities/Wallet';
 import { editWallet } from 'features/AddEditWallet/model/services/editWallet';
 import { EditWalletDto } from 'features/AddEditWallet/model/types/addEditWalletSchema';
-
-// const reducers: ReducersList = {
-//   addEditWallet: addEditWalletReducer
-// };
 
 export interface AddEditWalletModalProps {
   isEdit: boolean
@@ -178,7 +173,6 @@ const AddEditWalletModal: FC<AddEditWalletModalProps> = (props) => {
   );
 
   return (
-  // <DynamicModuleLoader reducers={reducers}>
       <Modal
         isOpen={isOpen}
         onClose={onCloseModal}
@@ -253,7 +247,6 @@ const AddEditWalletModal: FC<AddEditWalletModalProps> = (props) => {
           </Button>
         </div>
       </Modal>
-  // </DynamicModuleLoader>
   );
 };
 

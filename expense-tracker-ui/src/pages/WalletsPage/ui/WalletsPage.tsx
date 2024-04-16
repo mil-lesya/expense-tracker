@@ -5,18 +5,22 @@ import { PageHeader } from 'shared/ui/PageHeader';
 import { PageInfoBlock } from 'widgets/PageInfoBlock';
 import { useTranslation } from 'react-i18next';
 import DynamicModuleLoader, { ReducersList } from 'shared/lib/components/DynamicModuleLoader/DinamicModuleLoader';
-import { getUserWallets, walletsReducer } from 'entities/Wallet/model/slice/walletSlice';
+import {
+  Wallet,
+  WalletsList,
+  getWalletsIsLoading,
+  getUserWallets,
+  walletsReducer,
+  fetchWallets
+} from 'entities/Wallet';
 import { useSelector, useStore } from 'react-redux';
-import { fetchWallets } from 'entities/Wallet/model/services/fetchWallets';
-import { Wallet, WalletsList, getWalletsIsLoading } from 'entities/Wallet';
 import { PageLoader } from 'shared/ui/PageLoader';
 import { EmptyBlock } from 'shared/ui/EmptyBlock';
 import { useAppDispatch } from 'shared/lib/hooks/useAppDispatch';
-import { AddEditWalletModal } from 'features/AddEditWallet';
+import { AddEditWalletModal, addEditWalletReducer } from 'features/AddEditWallet';
 import { ReduxStoreWidthManager } from 'app/providers/StoreProvider';
-import { addEditWalletReducer } from 'features/AddEditWallet/model/slice/addEditWalletSlice';
-import { deleteWalletReducer } from 'features/DeleteWallet/model/slice/deleteWalletSlice';
-import DeleteWalletModal from 'features/DeleteWallet/ui/DeleteWalletModal';
+import { DeleteWalletModal, deleteWalletReducer } from 'features/DeleteWallet';
+import { WalletsTotalBalance } from 'widgets/WalletsTotalBalance';
 
 const reducers: ReducersList = {
   wallets: walletsReducer
@@ -94,6 +98,7 @@ const WalletsPage: FC<WalletsPageProps> = (props) => {
           onClick={onToggleAddEditModal}>
         {t('info')}
        </PageInfoBlock>
+       <WalletsTotalBalance></WalletsTotalBalance>
        {wallets.length
          ? (<WalletsList
               wallets={wallets}

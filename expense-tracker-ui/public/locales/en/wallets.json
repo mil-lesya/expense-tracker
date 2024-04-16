@@ -28,5 +28,7 @@
         "labelIsDefault": "Set as the default wallet",
         "labelIsShowOnPanel": "Show on \"overview panel\"",
         "labelIsShowBalance": "Take into wallet in \"Balance\""
-    }
+    },
+    "totalBalance": "Total wallet balance",
+    "totalBalanceInfo": "The total balance of wallets is displayed according to the default currency. To change the currency, go to the Settings section"
 }

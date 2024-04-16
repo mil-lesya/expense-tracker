@@ -11,7 +11,7 @@ import toast from 'react-hot-toast';
 import { deleteWallet } from '../model/services/deleteWallet';
 import { Wallet } from 'entities/Wallet';
 
-interface DeleteWalletModalProps {
+export interface DeleteWalletModalProps {
   isOpen: boolean
   onClose: () => void
   wallet?: Wallet
