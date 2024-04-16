@@ -4,7 +4,8 @@ import { initAuthData } from '../services/initAuthData';
 import { ACCESS_TOKEN_KEY } from 'shared/const/localstorage';
 
 const initialState: UserSchema = {
-  isAuth: false
+  isAuth: false,
+  isLoading: true
 };
 
 export const userSlice = createSlice({
@@ -25,9 +26,15 @@ export const userSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(initAuthData.pending, (state) => {})
-      .addCase(initAuthData.fulfilled, (state, action) => {})
-      .addCase(initAuthData.rejected, (state, action) => {});
+      .addCase(initAuthData.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(initAuthData.fulfilled, (state, action) => {
+        state.isLoading = false;
+      })
+      .addCase(initAuthData.rejected, (state, action) => {
+        state.isLoading = false;
+      });
   }
 });
 

@@ -1,0 +1,27 @@
+.walletsTotalBalance {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    background-color: var(--color-light-blue);
+    border-radius: 20px;
+    padding: 20px 30px;
+    font-family: var(--font-family-main);
+    font-weight: 300;
+    font-size: 30px;
+    margin-bottom: 20px;
+}
+
+.title {
+    font-family: var(--font-family-main);
+    font-size: 30px;
+    font-weight: 300;
+}
+
+.info {
+    padding: 10px;
+    border-radius: 10px;
+    font: var(--font-main-text);
+    background-color: rgba(0, 0, 0, 50%);
+    color: var(--color-white);
+}

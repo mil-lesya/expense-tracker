@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, memo } from 'react';
 import './Loader.scss';
 
 const Loader: FC = () => {
@@ -16,4 +16,4 @@ const Loader: FC = () => {
   );
 };
 
-export default Loader;
+export default memo(Loader);

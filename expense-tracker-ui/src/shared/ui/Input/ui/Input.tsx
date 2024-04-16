@@ -1,17 +1,22 @@
 import { classNames } from 'shared/lib/classNames/classNames';
 import cls from './Input.module.scss';
-import { InputHTMLAttributes, FC, memo } from 'react';
+import { InputHTMLAttributes, FC, memo, useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
+import { IMaskInput, IMaskInputProps, useIMask } from 'react-imask';
 
 export type HTMLInputProps = Omit<
 InputHTMLAttributes<HTMLInputElement>,
 'value' | 'onChange'
 >;
 
+type MaskOptions = IMaskInputProps<HTMLInputElement>;
+
 interface InputProps extends HTMLInputProps {
   className?: string
-  value?: string
+  value?: string | number
   label?: string
   mask?: RegExp
+  maskOptions?: MaskOptions
   required?: boolean
   errorText?: string
   error?: string
@@ -28,6 +33,7 @@ const Input: FC<InputProps> = (props) => {
     onChange,
     type = 'text',
     mask,
+    maskOptions = { mask: /[^\s]*/ },
     required = false,
     errorText,
     error,
@@ -38,19 +44,22 @@ const Input: FC<InputProps> = (props) => {
     ...otherProps
   } = props;
 
-  const onChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const inputValue = e.target.value;
-    onChange(inputValue);
+  const { t } = useTranslation();
 
-    if (required && !inputValue) {
-      setError('Поле обязательно для заполнения');
+  const onAccept = (value: string) => {
+    if (!value && required) {
+      setError(t('inputs.requiredMessage'));
+      onChange(value);
       return;
     }
-    if (mask && !mask.test(inputValue)) {
+
+    if (mask && !mask.test(value)) {
       setError(errorText);
-    } else if (mask && mask.test(inputValue)) {
+    } else {
       setError(null);
     }
+
+    onChange(value);
   };
 
   return (
@@ -59,15 +68,16 @@ const Input: FC<InputProps> = (props) => {
       <div
         className={classNames(cls.inputBody, { [cls.errorInput]: error }, [])}
       >
-        <input
+        <IMaskInput
           className={classNames(cls.input, {}, [])}
           type={type}
+          value={value != null ? String(value) : ''}
+          unmask={true}
           placeholder={placeholder}
           minLength={minLength}
           maxLength={maxLength}
-          value={value}
-          onChange={onChangeHandler}
-          {...otherProps}
+          onAccept={onAccept}
+          {...maskOptions}
         />
         {children}
       </div>

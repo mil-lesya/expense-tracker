@@ -1,2 +1,9 @@
 {
+    "buttons": {
+        "readMore": "Показать",
+        "readLess": "Скрыть"
+    },
+    "inputs": {
+        "requiredMessage": "Поле обязательно для заполнения"
+    }
 }

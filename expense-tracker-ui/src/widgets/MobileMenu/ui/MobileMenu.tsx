@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, memo } from 'react';
 import { classNames } from 'shared/lib/classNames/classNames';
 import cls from './MobileMenu.module.scss';
 import { useDispatch } from 'react-redux';
@@ -48,4 +48,4 @@ const MobileMenu: FC<MobileMenuProps> = (props) => {
   );
 };
 
-export default MobileMenu;
+export default memo(MobileMenu);
