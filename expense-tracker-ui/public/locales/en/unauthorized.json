@@ -6,7 +6,9 @@
         "emailError": "Enter a valid email",
         "password": "Password",
         "passwordError": "Enter a valid password",
-        "placeholderPassword": "Your password"
+        "placeholderPassword": "Your password",
+        "dontHaveAccount": "Don't have an account?",
+        "signUp": "Sign up"
     },
     "registration": {
         "title": "Welcome to Finterest",
@@ -15,16 +17,30 @@
         "username": "User name",
         "usernameError": "The field must contain from 3 to 30 letters",
         "emailError": "Enter a valid email",
+        "defaultCurrency": "Default currency",
         "placeholderUsername": "John Doe",
         "password": "Password",
         "passwordError": "Password: 8 characters, upper/lower case, numbers, special characters",
         "placeholderPassword": "Create your password",
         "repeatPassword": "Repeat Password",
         "repeatPasswordError": "Passwords must match",
-        "placeholderRepeatPassword": "Repeat password"
+        "placeholderRepeatPassword": "Repeat password",
+        "alreadyAccount": "Already have an account?",
+        "signIn": "Sign in"
     },
     "layout": {
         "buttonLogin": "Sign in",
-        "buttonReg": "Sign up"
+        "buttonReg": "Sign up",
+        "goalSetting": "Goal setting",
+        "andTracking": "and tracking",
+        "progress": "progress",
+        "easilyManage": "Easily manage",
+        "yourMoney": "your money",
+        "financial": "Financial",
+        "insightsAnd": "insights and",
+        "analysis": "analysis",
+        "budgetingAnd": "Budgeting and",
+        "expense": "expense",
+        "tracking": "tracking"
     }
 }

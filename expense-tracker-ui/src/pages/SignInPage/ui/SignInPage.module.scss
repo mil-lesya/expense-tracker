@@ -1,4 +1,12 @@
 .signInPage {
   width: 100%;
   margin-left: 50px;
+
+  @include only-mobile {
+    margin-left: 0;
+  }
+
+  @include only-tablet {
+    margin-right: 50px;
+  }
 }

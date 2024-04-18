@@ -157,7 +157,10 @@ const AddEditWalletModal: FC<AddEditWalletModalProps> = (props) => {
   const onAddEditWallet = useCallback(
     () => {
       if (isEdit) {
-        if (Object.keys(walletChanges).length === 0) return;
+        if (Object.keys(walletChanges).length === 0) {
+          onCloseModal();
+          return;
+        }
 
         dispatch(editWallet({ id: editWalletData.id, ...walletChanges })).then(() => {
           onCloseModal();

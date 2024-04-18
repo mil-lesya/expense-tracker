@@ -16,6 +16,14 @@
   src: url('/src/shared/assets/fonts/Arsenal-Bold.otf') format('truetype');
 }
 
+@font-face {
+  font-display: swap;
+  font-family: 'Helvetica Neue';
+  font-weight: 500;
+  font-style: normal;
+  src: url('/src/shared/assets/fonts/HelveticaNeueLight.otf') format('truetype');
+}
+
 :root {
   --font-family-title: 'Arsenal', 'Helvetica Neue', serif;
   --font-family-title-second: 'ArsenalBold', 'Helvetica Neue', serif;
@@ -64,7 +72,7 @@
   --color-middle-grey: #41485c;
   --color-light-blue: #dddffb;
   --color-light-grey: #f7f7f9;
-  --color-light-grey2: #e9e9f0;
+  --color-light-grey2: #ebebf1;
   --color-green: #8fde66;
   --color-red: #fb8282;
   --color-orange: #ffa66f;

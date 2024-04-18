@@ -30,10 +30,6 @@ const MobileMenu: FC<MobileMenuProps> = (props) => {
         </button>
         <ul className={cls.menuList}>
           <li className={cls.menuListItem}>
-            <SvgIcon name='profile' />
-            {t('profile')}
-          </li>
-          <li className={cls.menuListItem}>
             <SvgIcon name='settings' />
             {t('settings')}
           </li>

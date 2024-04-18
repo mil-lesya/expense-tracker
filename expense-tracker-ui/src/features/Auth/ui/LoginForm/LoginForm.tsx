@@ -16,6 +16,9 @@ import { getLoginIsLoading } from 'features/Auth/model/selectors/getLoginIsLoadi
 import { getLoginError } from 'features/Auth/model/selectors/getLoginError/getLoginError';
 import DynamicModuleLoader, { ReducersList } from 'shared/lib/components/DynamicModuleLoader/DinamicModuleLoader';
 import { useAppDispatch } from 'shared/lib/hooks/useAppDispatch';
+import { useMediaWidth } from 'shared/lib/hooks/useMediaWidth';
+import { MOBILE_SIZE } from 'shared/const/windowSizes';
+import { useNavigate } from 'react-router-dom';
 
 const initialReducers: ReducersList = {
   loginForm: loginReducer
@@ -34,10 +37,22 @@ const LoginForm = ({ className }: LoginFormProps) => {
   const error = useSelector(getLoginError);
 
   const { t } = useTranslation('unauthorized');
+  const { currentStyle } = useMediaWidth();
+  const navigate = useNavigate();
 
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
   const [disabledBtn, setDisabledBtn] = useState(false);
+
+  const [isMobile, setIsMobile] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (currentStyle === MOBILE_SIZE) {
+      setIsMobile(true);
+    } else {
+      setIsMobile(false);
+    }
+  }, [currentStyle]);
 
   useEffect(() => {
     if (!email || !password ||
@@ -71,6 +86,10 @@ const LoginForm = ({ className }: LoginFormProps) => {
   const onLoginClick = useCallback(() => {
     dispatch(loginByEmail({ email, password }));
   }, [dispatch, email, password]);
+
+  function handleClickSignUp () {
+    navigate('/signup');
+  }
 
   return (
     <DynamicModuleLoader reducers={initialReducers}>
@@ -110,6 +129,12 @@ const LoginForm = ({ className }: LoginFormProps) => {
         >
           {t('login.button')}
         </Button>
+        {isMobile && (
+          <div className={cls.goToReg}>
+            {t('login.dontHaveAccount')}
+            <Button theme={ThemeButton.CLEAR} onClick={handleClickSignUp}>{t('login.signUp')}</Button>
+          </div>
+        )}
       </div>
     </DynamicModuleLoader>
   );

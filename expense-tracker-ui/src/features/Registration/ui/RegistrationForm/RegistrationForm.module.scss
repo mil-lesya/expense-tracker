@@ -4,6 +4,11 @@
     background-color: var(--color-white);
     border-radius: 15px;
     padding: 50px;
+
+    @include only-mobile {
+      padding: 0;
+      background-color: none;
+  }
 }
 
 .title {
@@ -27,4 +32,17 @@
   
   .loginButton {
     width: 50%;
+
+    @include only-mobile {
+      width: 100%;
+    }
   }
+
+.goToLogin {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font: var(--font-main-text);
+  font-weight: 900;
+  margin-top: 15px;
+}

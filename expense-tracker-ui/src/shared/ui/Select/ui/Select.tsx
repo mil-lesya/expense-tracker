@@ -2,10 +2,14 @@ import { classNames } from 'shared/lib/classNames/classNames';
 import { useState, useRef, memo } from 'react';
 import cls from './Select.module.scss';
 import Tippy from '@tippyjs/react';
+import { SvgIcon } from 'shared/ui/SvgIcon';
 
+export enum ThemeSelect {
+  CLEAR = 'clear',
+}
 export interface SelectOption {
   value: string
-  content: string
+  content: string | number
 }
 
 interface SelectProps {
@@ -15,6 +19,7 @@ interface SelectProps {
   value?: string
   onChange?: (value: string) => void
   readonly?: boolean
+  theme?: ThemeSelect
 }
 
 const Select = (props: SelectProps) => {
@@ -24,7 +29,8 @@ const Select = (props: SelectProps) => {
     options,
     onChange,
     value,
-    readonly
+    readonly,
+    theme
   } = props;
 
   const [isOpen, setIsOpen] = useState(false);
@@ -48,7 +54,7 @@ const Select = (props: SelectProps) => {
             {options?.map(opt => (
               <div
                 key={opt.value}
-                className={cls.option}
+                className={classNames(cls.option, {}, [cls[theme]])}
                 onClick={() => { handleOptionClick(opt.value); }}
               >
                 {opt.content}
@@ -85,14 +91,15 @@ const Select = (props: SelectProps) => {
           ]
         }}
       >
-        <div className={cls.selectWrapper}>
+        <div className={classNames(cls.selectWrapper, {}, [cls[theme]])}>
           <button
             className={cls.select}
             onClick={() => { setIsOpen(!isOpen); }}
             disabled={readonly}
             ref={selectRef}
           >
-            {selectedOptionContent}
+            <span>{selectedOptionContent}</span>
+            <SvgIcon name='triangle' className={classNames(cls.selectTriangle, { [cls.open]: isOpen }, [])} />
           </button>
         </div>
       </Tippy>

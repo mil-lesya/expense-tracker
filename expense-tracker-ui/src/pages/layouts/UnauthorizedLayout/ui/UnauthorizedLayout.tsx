@@ -1,6 +1,6 @@
 import { classNames } from 'shared/lib/classNames/classNames';
 import cls from './UnauthorizedLayout.module.scss';
-import { FC } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { Button, ThemeButton } from 'shared/ui/Button';
 import { useNavigate } from 'react-router-dom';
 import { Logo } from 'shared/ui/Logo';
@@ -8,6 +8,8 @@ import Background from 'shared/assets/img/background.png';
 import LayoutBadge from 'shared/ui/LayoutBadge/LayoutBadge';
 import { useTranslation } from 'react-i18next';
 import { SvgIcon } from 'shared/ui/SvgIcon';
+import { useMediaWidth } from 'shared/lib/hooks/useMediaWidth';
+import { MOBILE_SIZE } from 'shared/const/windowSizes';
 
 interface UnauthorizedLayoutProps {
   className?: string
@@ -17,6 +19,17 @@ const UnauthorizedLayout: FC<UnauthorizedLayoutProps> = (props) => {
   const { className, children } = props;
   const navigate = useNavigate();
   const { t, i18n } = useTranslation('unauthorized');
+  const { currentStyle } = useMediaWidth();
+
+  const [isMobile, setIsMobile] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (currentStyle === MOBILE_SIZE) {
+      setIsMobile(true);
+    } else {
+      setIsMobile(false);
+    }
+  }, [currentStyle]);
 
   function handleClickSignIn () {
     navigate('/signin');
@@ -33,22 +46,26 @@ const UnauthorizedLayout: FC<UnauthorizedLayoutProps> = (props) => {
   return (
     <div className={classNames(cls.unauthorizedLayout, {}, [className])}>
       <div className={cls.layoutNavbar}>
-        <Logo />
+        <Logo withoutText={isMobile} />
         <div className={cls.buttonsWrapper}>
-          <Button
-            className={cls.layoutButton}
-            theme={ThemeButton.PRIMARY_DARK}
-            onClick={handleClickSignIn}
-          >
-            {t('layout.buttonLogin')}
-          </Button>
-          <Button
-            className={cls.layoutButton}
-            theme={ThemeButton.OUTLINE_DARK}
-            onClick={handleClickSignUp}
-          >
-            {t('layout.buttonReg')}
-          </Button>
+          {!isMobile && (
+            <>
+            <Button
+              className={cls.layoutButton}
+              theme={ThemeButton.PRIMARY_DARK}
+              onClick={handleClickSignIn}
+            >
+              {t('layout.buttonLogin')}
+            </Button>
+            <Button
+              className={cls.layoutButton}
+              theme={ThemeButton.OUTLINE_DARK}
+              onClick={handleClickSignUp}
+            >
+              {t('layout.buttonReg')}
+            </Button>
+            </>
+          )}
           <Button
             theme={ThemeButton.CLEAR}
             onClick={toggleLang}
@@ -65,39 +82,39 @@ const UnauthorizedLayout: FC<UnauthorizedLayoutProps> = (props) => {
           <LayoutBadge className={cls.badgeDone}>
             <SvgIcon name='done' className={cls.doneIcon} />
             <p className={cls.badgeText}>
-              Goal setting
+              {t('layout.goalSetting')}
               <br></br>
-              and tracking
+              {t('layout.andTracking')}
               <br></br>
-              progress
+              {t('layout.progress')}
             </p>
           </LayoutBadge>
           <LayoutBadge className={cls.badgeCoin}>
             <SvgIcon name='coin' className={cls.coinIcon} />
             <p className={cls.badgeText}>
-              Easily manage
+              {t('layout.easilyManage')}
               <br></br>
-              your money
+              {t('layout.yourMoney')}
             </p>
           </LayoutBadge>
           <LayoutBadge className={cls.badgeFinance}>
             <SvgIcon name='finance' className={cls.financeIcon} />
             <p className={cls.badgeText}>
-              Financial
+              {t('layout.financial')}
               <br></br>
-              insights and
+              {t('layout.insightsAnd')}
               <br></br>
-              analysis
+              {t('layout.analysis')}
             </p>
           </LayoutBadge>
           <LayoutBadge className={cls.badgeCalendar}>
             <SvgIcon name='calendar' className={cls.calendarIcon} />
             <p className={cls.badgeText}>
-              Budgeting and
+              {t('layout.budgetingAnd')}
               <br></br>
-              expence
+              {t('layout.expense')}
               <br></br>
-              tracking
+              {t('layout.tracking')}
             </p>
           </LayoutBadge>
         </div>

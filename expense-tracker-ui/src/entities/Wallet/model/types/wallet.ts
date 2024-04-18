@@ -17,7 +17,7 @@ export interface WalletSchema extends EntityState<Wallet> {
   error?: string
   count?: number
   totalPages?: number
-  currentPage?: string
+  currentPage?: number
 }
 
 export interface WalletsResponseDto extends RecordsPagesResponse {

@@ -4,7 +4,9 @@
         "subtitle": "Войдите в приложение, чтобы эффективнее управлять финансами",
         "button": "Войти",
         "password": "Пароль",
-        "placeholderPassword": "Ваш пароль"
+        "placeholderPassword": "Ваш пароль",
+        "dontHaveAccount": "У вас нет аккаунта?",
+        "signUp": "Зарегистрироваться"
     },
     "registration": {
         "title": "Добро пожаловать в Финтерест",
@@ -12,6 +14,7 @@
         "button": "Зарегистрироваться",
         "username": "Имя",
         "usernameError": "Поле должно содержать от 3 до 30 букв",
+        "defaultCurrency": "Валюта по умолчанию",
         "emailError": "Введите корректный email",
         "placeholderUsername": "Иван Иванов",
         "password": "Пароль",
@@ -19,10 +22,23 @@
         "placeholderPassword": "Создайте ваш пароль",
         "repeatPassword": "Повторите пароль",
         "repeatPasswordError": "Пароли должны совпадать",
-        "placeholderRepeatPassword": "Повторите пароль"
+        "placeholderRepeatPassword": "Повторите пароль",
+        "alreadyAccount": "У вас уже есть аккаунт?",
+        "signIn": "Войти"
     },
     "layout": {
         "buttonLogin": "Войти",
-        "buttonReg": "Зарегистрироваться"
+        "buttonReg": "Зарегистрироваться",
+        "goalSetting": "Цели",
+        "andTracking": "и отслеживание",
+        "progress": "прогресса",
+        "easilyManage": "Легкое управление",
+        "yourMoney": "финансами",
+        "financial": "Анализ",
+        "insightsAnd": "ваших",
+        "analysis": "финансов",
+        "budgetingAnd": "Отслеживание",
+        "expense": "расходов и",
+        "tracking": "доходов"
     }
 }

@@ -1,7 +1,7 @@
 export interface RecordsPagesResponse {
   count: number
   totalPages: number
-  currentPage: string
+  currentPage: number
 }
 
 export interface RecordsPagesDto {

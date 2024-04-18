@@ -24,9 +24,9 @@ const App = () => {
       return;
     }
 
-    if (!isAuth && location.pathname !== '/signin') {
+    if (!isAuth && (location.pathname !== '/signin' && location.pathname !== '/signup')) {
       navigate('/signin');
-    } else if (isAuth && location.pathname === '/signin') {
+    } else if (isAuth && (location.pathname === '/signin' || location.pathname === '/signup')) {
       navigate('/dashboard');
     }
   }, [isLoading, isAuth]);

@@ -1,0 +1,11 @@
+{
+    "title": "Транзакции",
+    "table": {
+        "columnDate": "Дата",
+        "columnWallet": "Кошелек",
+        "columnCategory": "Категория",
+        "columnDescription": "Описание",
+        "columnAmount": "Сумма"
+    },
+    "emptyList": "Транзакции не найдены. Создайте новую транзакцию на главной странице"
+}

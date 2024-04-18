@@ -8,6 +8,7 @@ export enum ThemeButton {
   OUTLINE = 'outline',
   OUTLINE_DARK = 'outlineDark',
   CLEAR = 'clear',
+  ICON = 'iconTheme'
 }
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
