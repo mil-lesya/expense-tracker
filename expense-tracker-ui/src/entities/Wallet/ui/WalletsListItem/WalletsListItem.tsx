@@ -41,7 +41,7 @@ const WalletsListItem: FC<WalletsListItemProps> = (props) => {
     >
       <div className={cls.infoWrapper}>
         <div className={cls.name}>{ wallet.name }</div>
-        <div className={cls.balance}>{ wallet.balance } { wallet.currency }</div>
+        <div className={cls.balance}>{ wallet.isShowBalance ? wallet.balance : '*****' } { wallet.currency }</div>
       </div>
 
       <div className={cls.buttonWrapper}>

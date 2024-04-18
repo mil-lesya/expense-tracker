@@ -44,7 +44,6 @@ const Navbar: FC<NavbarProps> = (props) => {
   // Контент выпадающего списка
   const dropdownContent = (
     <ul className={cls.dropdownMenu}>
-      <li onClick={() => {}}>{t('profile')}</li>
       <li onClick={onLogoutClick}>{t('logout')}</li>
     </ul>
   );

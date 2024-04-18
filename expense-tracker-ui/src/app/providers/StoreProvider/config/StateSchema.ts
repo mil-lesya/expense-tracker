@@ -1,5 +1,6 @@
 import { AnyAction, CombinedState, EnhancedStore, Reducer, ReducersMapObject } from '@reduxjs/toolkit';
 import { AxiosInstance } from 'axios';
+import { TransactionSchema } from 'entities/Transaction';
 import { UserSchema } from 'entities/User';
 import { WalletSchema } from 'entities/Wallet';
 import { AddEditWalletSchema } from 'features/AddEditWallet';
@@ -12,12 +13,16 @@ import { WalletsTotalBalanceSchema } from 'widgets/WalletsTotalBalance';
 
 export interface StateSchema {
   user: UserSchema
+  // Асинхронные редьюсеры
   loginForm?: LoginSchema
   registrationForm?: RegistrationSchema
+  // Кошельки
   wallets?: WalletSchema
   addEditWallet?: AddEditWalletSchema
   deleteWallet?: DeleteWalletSchema
   walletsTotalBalance?: WalletsTotalBalanceSchema
+  // Транзакции
+  transactions?: TransactionSchema
 }
 
 export type StateSchemaKey = keyof StateSchema;

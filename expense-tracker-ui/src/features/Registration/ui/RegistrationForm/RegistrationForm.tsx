@@ -17,6 +17,13 @@ import { getRegistrationEmail } from 'features/Registration/model/selectors/getR
 import { getRegistrationPassword } from 'features/Registration/model/selectors/getRegistrationPassword/getRegistrationPassword';
 import { getRegistrationIsLoading } from 'features/Registration/model/selectors/getRegistrationIsLoading/getRegistrationIsLoading';
 import { getRegistrationError } from 'features/Registration/model/selectors/getRegistrationError/getRegistrationError';
+import { useMediaWidth } from 'shared/lib/hooks/useMediaWidth';
+import { MOBILE_SIZE } from 'shared/const/windowSizes';
+import { useNavigate } from 'react-router-dom';
+import Select from 'shared/ui/Select/ui/Select';
+import { currencyOptions } from 'shared/lib/enumToSelect/enumToSelect';
+import { getRegistrationDefaultCurrency } from 'features/Registration/model/selectors/getRegistrationDefaultCurrency/getRegistrationDefaultCurrency';
+import { CurrencyCode } from 'shared/const/common';
 
 const initialReducers: ReducersList = {
   registrationForm: registrationReducer
@@ -29,10 +36,13 @@ export interface RegistrationFormProps {
 const RegistrationForm = ({ className }: RegistrationFormProps) => {
   const { t } = useTranslation('unauthorized');
   const dispatch = useDispatch();
+  const { currentStyle } = useMediaWidth();
+  const navigate = useNavigate();
 
   const username = useSelector(getRegistrationUsername);
   const email = useSelector(getRegistrationEmail);
   const password = useSelector(getRegistrationPassword);
+  const defaultCurrency = useSelector(getRegistrationDefaultCurrency);
   const isLoading = useSelector(getRegistrationIsLoading);
   const error = useSelector(getRegistrationError);
 
@@ -42,6 +52,16 @@ const RegistrationForm = ({ className }: RegistrationFormProps) => {
   const [repeatPasswordError, setRepeatPasswordError] = useState('');
   const [repeatPassword, setRepeatPassword] = useState('');
   const [disabledBtn, setDisabledBtn] = useState(true);
+
+  const [isMobile, setIsMobile] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (currentStyle === MOBILE_SIZE) {
+      setIsMobile(true);
+    } else {
+      setIsMobile(false);
+    }
+  }, [currentStyle]);
 
   useEffect(() => {
     if (!username || !email ||
@@ -81,9 +101,16 @@ const RegistrationForm = ({ className }: RegistrationFormProps) => {
     [dispatch]
   );
 
+  const onChangeDefaultCurrency = useCallback(
+    (value: CurrencyCode) => {
+      dispatch(registrationActions.setDefaultCurrency(value));
+    },
+    [dispatch]
+  );
+
   const onRegistrationClick = useCallback(() => {
-    dispatch(registrationByEmail({ username, email, password }));
-  }, [dispatch, username, email, password]);
+    dispatch(registrationByEmail({ username, email, password, defaultCurrency }));
+  }, [dispatch, username, email, password, defaultCurrency]);
 
   const onChangeReapetPassword = (val: string) => {
     setRepeatPassword(val);
@@ -92,6 +119,10 @@ const RegistrationForm = ({ className }: RegistrationFormProps) => {
     } else {
       setRepeatPasswordError(null);
     }
+  };
+
+  function handleClickSignIn () {
+    navigate('/signin');
   };
 
   return (
@@ -104,15 +135,18 @@ const RegistrationForm = ({ className }: RegistrationFormProps) => {
             value={username}
             onChange={onChangeUsername}
             mask={TEXT_MASK}
-            // maskOptions={{
-            //   mask: TEXT_MASK
-            // }}
             required
             errorText={t('registration.usernameError')}
             error={usernameError}
             setError={setUsernameError}
             label={t('registration.username')}
             placeholder={t('registration.placeholderUsername')}
+          />
+          <Select
+            value={defaultCurrency}
+            options={currencyOptions}
+            onChange={onChangeDefaultCurrency}
+            label={t('registration.defaultCurrency')}
           />
           <Input
             value={email}
@@ -155,6 +189,12 @@ const RegistrationForm = ({ className }: RegistrationFormProps) => {
         >
           {t('registration.button')}
         </Button>
+        {isMobile && (
+          <div className={cls.goToLogin}>
+            {t('registration.alreadyAccount')}
+            <Button theme={ThemeButton.CLEAR} onClick={handleClickSignIn}>{t('registration.signIn')}</Button>
+          </div>
+        )}
       </div>
     </DynamicModuleLoader>
   );

@@ -30,6 +30,11 @@
     &:focus-within {
       border-color: var(--color-primary);
     }
+
+    &.clear {
+      height: auto;
+      border: none;
+    }
 }
 
 .select {
@@ -41,10 +46,31 @@
   background: none;
   outline: none;
   font: var(--font-main-text);
-  text-align: start;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 
   &::placeholder {
     color: var(--color-placeholder);
+  }
+}
+
+.clear .select {
+  width: fit-content;
+  justify-content: flex-start;
+  padding: 0;
+  gap: 5px;
+}
+
+.selectTriangle {
+  width: 15px;
+  height: 15px;
+  color: var(--color-border);
+  rotate: 180deg;
+  transition: rotate 0.3s ease;
+
+  &.open {
+    rotate: 0deg;
   }
 }
 
@@ -63,4 +89,9 @@
   &:hover {
     background-color: var(--color-light-blue);
   }
+}
+
+.clear.option {
+  padding: 5px;
+  text-align: center;
 }

@@ -1,0 +1,11 @@
+{
+    "title": "Transactions",
+    "table": {
+        "columnDate": "Date",
+        "columnWallet": "Wallet",
+        "columnCategory": "Category",
+        "columnDescription": "Description",
+        "columnAmount": "Amount"
+    },
+    "emptyList": "No transactions found. Create a new transaction on the Dashboard page"
+}

@@ -1,13 +1,14 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { RegistrationSchema } from '../types/registrationSchema';
 import { registrationByEmail } from '../services/registrationByEmail/registrationByEmail';
+import { CurrencyCode } from 'shared/const/common';
 
 const initialState: RegistrationSchema = {
   isLoading: false,
   email: '',
   password: '',
   username: '',
-  defaultCurrency: ''
+  defaultCurrency: CurrencyCode.USD
 };
 
 export const registrationSlice = createSlice({
@@ -23,7 +24,7 @@ export const registrationSlice = createSlice({
     setPassword: (state, action: PayloadAction<string>) => {
       state.password = action.payload;
     },
-    setDefaultCurrency: (state, action: PayloadAction<string>) => {
+    setDefaultCurrency: (state, action: PayloadAction<CurrencyCode>) => {
       state.defaultCurrency = action.payload;
     }
   },

@@ -5,5 +5,9 @@
     },
     "inputs": {
         "requiredMessage": "Required field"
+    },
+    "pagination": {
+        "showRows": "Show rows",
+        "of": "of"
     }
 }

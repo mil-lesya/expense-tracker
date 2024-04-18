@@ -1,0 +1,27 @@
+.pagination {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+}
+
+.showRows {
+    font: var(--font-main-text);
+}
+
+.selectRows {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.info {
+    font: var(--font-main-text); 
+}
+
+.buttons {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
