@@ -32,14 +32,14 @@ export class CategoryController {
   @Get()
   async find(
     @Req() req: any,
-    @Query('page') page: number = 1,
-    @Query('limit') limit: number = 10,
+    @Query('page') page: number,
+    @Query('limit') limit: number,
   ) {
     return this.categoriesService.findAll(req.user.id, page, limit);
   }
 
   @Get('/:id')
-  async findOne(@Param('id') id: string, @Req() req: any) {
+  async findOne(@Param('id') id: string) {
     const category = await this.categoriesService.findById(id);
     if (!category) {
       throw new NotFoundException('Category not found');

@@ -5,7 +5,7 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { HttpService } from '@nestjs/axios';
-import { Repository } from 'typeorm';
+import { FindManyOptions, Repository } from 'typeorm';
 import { Wallet } from './entities/wallet.entity';
 import { CreateWalletDto } from './dto/create-wallet.dto';
 import { UserService } from '../users/user.service';
@@ -37,12 +37,17 @@ export class WalletService {
     return this.walletRepository.save(wallet);
   }
 
-  async findAll(userId: string, page: number, limit: number) {
-    const [results, total] = await this.walletRepository.findAndCount({
-      where: { user: { id: userId } },
-      take: limit,
-      skip: limit * (page - 1),
-    });
+  async findAll(userId: string, page?: number, limit?: number) {
+    const where = { user: { id: userId } };
+
+    const options: FindManyOptions = { where };
+
+    if (limit != null && page != null) {
+      options.take = limit;
+      options.skip = limit * (page - 1);
+    }
+
+    const [results, total] = await this.walletRepository.findAndCount(options);
     return {
       wallets: results,
       count: total,

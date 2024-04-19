@@ -1,6 +1,10 @@
-import { IsBoolean, IsNumber, IsOptional } from 'class-validator';
+import { IsBoolean, IsNumber, IsOptional, IsString } from 'class-validator';
 
 export class UpdateWalletDto {
+  @IsString()
+  @IsOptional()
+  name: string;
+
   @IsBoolean()
   @IsOptional()
   isDefault: boolean;
