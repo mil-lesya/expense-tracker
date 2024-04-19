@@ -2,4 +2,38 @@
     position: relative;
     width: 100%;
     height: 100%;
+    display: flex;
+    gap: 10px;
+
+    @include only-mobile {
+        margin-top: 20px;
+        flex-direction: column;
+    }
+}
+
+.leftBlock,
+.rightBlock {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.leftBlock {
+    width: 30%;
+
+    @include only-mobile {
+        width: 100%;
+    }
+}
+
+.rightBlock {
+    width: 70%;
+
+    @include only-mobile {
+        width: 100%;
+    }
+}
+
+.totalBalance {
+    background-color: var(--color-primary-dark);
 }

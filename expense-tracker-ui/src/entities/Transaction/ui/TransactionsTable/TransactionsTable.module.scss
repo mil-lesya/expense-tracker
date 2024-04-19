@@ -1,3 +1,45 @@
 .transactionsTable {
     width: 100%;
 }
+
+.date {
+    color: var(--color-middle-grey);
+}
+
+.category {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.description {
+    color: var(--color-middle-grey);
+}
+
+.actions {
+    display: flex;
+    justify-content: end;
+    color: var(--color-disabled-text);
+    cursor: pointer;
+}
+
+.dropdownMenu {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    background-color: white;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 20%);
+    border-radius: 10px;
+    overflow: hidden;
+  
+    li {
+      cursor: pointer;
+      padding: 10px 20px;
+      font: var(--font-main-text);
+      transition: background-color 0.3s ease;
+  
+      &:hover {
+        background-color: #DEDFFB;
+      }
+    }
+  }

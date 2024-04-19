@@ -1,11 +1,14 @@
 import { AnyAction, CombinedState, EnhancedStore, Reducer, ReducersMapObject } from '@reduxjs/toolkit';
 import { AxiosInstance } from 'axios';
+import { CategorySchema } from 'entities/Category';
 import { TransactionSchema } from 'entities/Transaction';
 import { UserSchema } from 'entities/User';
 import { WalletSchema } from 'entities/Wallet';
 import { AddEditWalletSchema } from 'features/AddEditWallet';
 import { LoginSchema } from 'features/Auth';
+import { DeleteTransactionSchema } from 'features/DeleteTransaction';
 import { DeleteWalletSchema } from 'features/DeleteWallet';
+import { EditTransactionSchema } from 'features/EditTransaction';
 import { RegistrationSchema } from 'features/Registration';
 import { NavigateOptions } from 'react-router';
 import { To } from 'react-router-dom';
@@ -23,6 +26,10 @@ export interface StateSchema {
   walletsTotalBalance?: WalletsTotalBalanceSchema
   // Транзакции
   transactions?: TransactionSchema
+  deleteTransaction?: DeleteTransactionSchema
+  editTransaction?: EditTransactionSchema
+  // Категории
+  category?: CategorySchema
 }
 
 export type StateSchemaKey = keyof StateSchema;

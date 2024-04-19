@@ -36,6 +36,14 @@ export function buildLoaders ({ isDev }: BuildOptions): webpack.RuleSetRule[] {
     ]
   };
 
+  const cssRule = {
+    test: /\.css$/i,
+    use: [
+      isDev ? 'style-loader' : MiniCssExtractPlugin.loader,
+      'css-loader'
+    ]
+  };
+
   const cssLoader = {
     test: /\.s[ac]ss$/i,
     use: [
@@ -60,5 +68,5 @@ export function buildLoaders ({ isDev }: BuildOptions): webpack.RuleSetRule[] {
     ]
   };
 
-  return [fileLoader, svgLoader, typescriptLoader, cssLoader];
+  return [fileLoader, svgLoader, typescriptLoader, cssRule, cssLoader];
 }

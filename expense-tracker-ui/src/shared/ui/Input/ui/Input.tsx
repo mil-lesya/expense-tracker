@@ -47,16 +47,18 @@ const Input: FC<InputProps> = (props) => {
   const { t } = useTranslation();
 
   const onAccept = (value: string) => {
-    if (!value && required) {
-      setError(t('inputs.requiredMessage'));
-      onChange(value);
-      return;
-    }
+    if (setError) {
+      if (!value && required) {
+        setError(t('inputs.requiredMessage'));
+        onChange(value);
+        return;
+      }
 
-    if (mask && !mask.test(value)) {
-      setError(errorText);
-    } else {
-      setError(null);
+      if (mask && !mask.test(value)) {
+        setError(errorText);
+      } else {
+        setError(null);
+      }
     }
 
     onChange(value);

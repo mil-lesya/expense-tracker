@@ -7,5 +7,30 @@
         "columnDescription": "Description",
         "columnAmount": "Amount"
     },
-    "emptyList": "No transactions found. Create a new transaction on the Dashboard page"
+    "emptyList": "No transactions found. Create a new transaction on the Dashboard page",
+    "buttons": {
+        "create": "Create a transaction",
+        "edit": "Edit",
+        "delete": "Delete"
+    },
+    "modal": {
+        "buttonEdit": "Edit",
+        "buttonCancel": "Cancel",
+        "buttonDelete": "Delete",
+        "titleEdit": "Edit a transaction",
+        "titleDelete": "Delete a transaction",
+        "subtitle": "Taking control of your finances",
+        "deleteQuestion": "Are you sure you want to delete your transaction",
+        "deleteWarning": "This action cannot be undone",
+        "labelExpenseWallet": "From wallet",
+        "labelIncomeWallet": "To wallet",
+        "labelCategory": "Category",
+        "labelAmount": "Amount",
+        "placeholderAmount": "0,00",
+        "errorAmount": "The field can only contain numeric values",
+        "labelCurrency": "Currency",
+        "labelDescription": "Description",
+        "placeholderDescription": "Enter transaction details",
+        "labelDate": "Date"
+    }
 }

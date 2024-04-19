@@ -7,9 +7,9 @@ export type TransactionType = 'expense' | 'income' | 'transfer';
 
 export interface Transaction {
   id: string
-  date: Date
+  date: string
   description: string
-  amount: string
+  amount: number
   currency: CurrencyCode
   type: TransactionType
   category: Category | null

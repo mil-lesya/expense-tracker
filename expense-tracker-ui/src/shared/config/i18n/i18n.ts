@@ -20,6 +20,8 @@ i18n
     }
   });
 
-dayjs.locale(i18n.language);
+i18n.on('languageChanged', lng => {
+  dayjs.locale(lng);
+});
 
 export default i18n;

@@ -20,12 +20,16 @@ const initialReducers: ReducersList = {
   walletsTotalBalance: walletsTotalBalanceReducer
 };
 
+export enum ThemeWalletsTotalBalance {
+  DARK = 'dark',
+}
 export interface WalletsTotalBalanceProps {
   className?: string
+  theme?: ThemeWalletsTotalBalance
 }
 
 const WalletsTotalBalance: FC<WalletsTotalBalanceProps> = (props) => {
-  const { className } = props;
+  const { className, theme } = props;
   const { t } = useTranslation('wallets');
 
   const dispatch = useAppDispatch();
@@ -81,7 +85,7 @@ const WalletsTotalBalance: FC<WalletsTotalBalanceProps> = (props) => {
                 ]
               }}
             >
-                <div ref={infoRef} className={classNames(cls.walletsTotalBalance, {}, [className])}>
+                <div ref={infoRef} className={classNames(cls.walletsTotalBalance, {}, [className, cls[theme]])}>
                     <h2 className={cls.title}>{t('totalBalance')}</h2>
                     <div>{totalBalance} {currency}</div>
                 </div>

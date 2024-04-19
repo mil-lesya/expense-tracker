@@ -85,6 +85,8 @@
   padding: 8px 20px;
   background-color: var(--color-white);
   transition: background-color 0.3s ease;
+  display: flex;
+  align-items: center;
 
   &:hover {
     background-color: var(--color-light-blue);
@@ -94,4 +96,13 @@
 .clear.option {
   padding: 5px;
   text-align: center;
+}
+
+.icon {
+  margin-right: 8px;
+}
+
+.content {
+  display: flex;
+  align-items: center;
 }
