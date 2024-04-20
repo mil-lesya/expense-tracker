@@ -33,8 +33,8 @@ export class WalletController {
   @Get()
   async find(
     @Req() req: any,
-    @Query('page') page: number = 1,
-    @Query('limit') limit: number = 10,
+    @Query('page') page: number,
+    @Query('limit') limit: number,
   ) {
     return await this.walletService.findAll(req.user.id, page, limit);
   }
@@ -45,7 +45,7 @@ export class WalletController {
   }
 
   @Get('/:id')
-  async findOne(@Param('id') id: string, @Req() req: any): Promise<Wallet> {
+  async findOne(@Param('id') id: string): Promise<Wallet> {
     const wallet = await this.walletService.findById(id);
     if (!wallet) {
       throw new NotFoundException('Wallet not found');
@@ -65,20 +65,5 @@ export class WalletController {
     @Req() req: any,
   ) {
     return this.walletService.update(id, req.user.id, body);
-  }
-
-  @Get('/:id/transactions')
-  async findTransactions(
-    @Param('id') id: string,
-    @Req() req: any,
-    @Query('page') page: number = 1,
-    @Query('limit') limit: number = 10,
-  ) {
-    return await this.walletService.findTransactionByWallet(
-      id,
-      req.user.id,
-      page,
-      limit,
-    );
   }
 }

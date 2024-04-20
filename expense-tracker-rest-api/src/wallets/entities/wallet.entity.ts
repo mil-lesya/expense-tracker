@@ -19,7 +19,7 @@ export class Wallet {
   @Column({ nullable: false })
   name: string;
 
-  @Column()
+  @Column('numeric')
   balance: number;
 
   @Column({ name: 'is_default' })

@@ -15,6 +15,7 @@ import { Category } from '../categories/entities/category.entity';
 import { User } from '../users/entities/user.entity';
 import { Wallet } from '../wallets/entities/wallet.entity';
 import { HttpModule } from '@nestjs/axios';
+import { CurrencyService } from '../currency/currency.service';
 
 @Module({
   imports: [
@@ -31,6 +32,7 @@ import { HttpModule } from '@nestjs/axios';
     CategoryService,
     WalletService,
     UserService,
+    CurrencyService,
   ],
   controllers: [TransactionController],
 })

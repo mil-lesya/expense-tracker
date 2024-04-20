@@ -36,12 +36,17 @@ export class CategoryService {
   }
 
   async findAll(userId: string, page: number, limit: number) {
-    const [results, total] = await this.categoryRepository
+    const queryBuilder = this.categoryRepository
       .createQueryBuilder('category')
-      .where('user_id = :userId OR user_id IS NULL', { userId })
-      .take(limit)
-      .skip(limit * (page - 1))
-      .getManyAndCount();
+      .where('user_id = :userId OR user_id IS NULL', { userId });
+
+    if (limit != null && page != null) {
+      queryBuilder.take(limit);
+      queryBuilder.skip(limit * (page - 1));
+    }
+
+    const [results, total] = await queryBuilder.getManyAndCount();
+
     return {
       categories: results,
       count: total,

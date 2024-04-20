@@ -1,4 +1,5 @@
-import { IsString } from 'class-validator';
+import { IsEnum, IsString } from 'class-validator';
+import { CategoryType } from '../enum/category.type';
 
 export class CreateCategoryDto {
   @IsString()
@@ -6,4 +7,7 @@ export class CreateCategoryDto {
 
   @IsString()
   icon: string;
+
+  @IsEnum(CategoryType)
+  type: CategoryType;
 }

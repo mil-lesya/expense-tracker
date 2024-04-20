@@ -6,17 +6,17 @@ import { Wallet } from './entities/wallet.entity';
 import { UserModule } from '../users/user.module';
 import { AuthService } from '../auth/auth.service';
 import { AuthModule } from '../auth/auth.module';
-import { Transaction } from '../transactions/entities/transaction.entity';
 import { HttpModule } from '@nestjs/axios';
+import { CurrencyService } from '../currency/currency.service';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([Wallet, Transaction]),
+    TypeOrmModule.forFeature([Wallet]),
     UserModule,
     AuthModule,
     HttpModule,
   ],
   controllers: [WalletController],
-  providers: [WalletService, AuthService],
+  providers: [WalletService, AuthService, CurrencyService],
 })
 export class WalletModule {}

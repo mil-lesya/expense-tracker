@@ -15,7 +15,8 @@ export class UserService {
 
   async create(createUserDto: CreateUserDto) {
     createUserDto.password = await this.hashPassword(createUserDto.password);
-    createUserDto.defaultCurrency = CurrencyCode.USD;
+    createUserDto.defaultCurrency =
+      createUserDto.defaultCurrency || CurrencyCode.USD;
     const user = this.userRepository.create(createUserDto);
     return this.userRepository.save(user);
   }

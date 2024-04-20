@@ -10,6 +10,7 @@ import { Transaction } from '../../transactions/entities/transaction.entity';
 import { User } from '../../users/entities/user.entity';
 import { Exclude } from 'class-transformer';
 import { Limit } from '../../limit/entity/limit.entity';
+import { CategoryType } from '../enum/category.type';
 
 @Entity()
 export class Category {
@@ -21,6 +22,9 @@ export class Category {
 
   @Column()
   icon: string;
+
+  @Column()
+  type: CategoryType;
 
   @ManyToOne(() => User, (user) => user.categories, {
     eager: true,
