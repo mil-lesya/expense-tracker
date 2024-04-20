@@ -66,19 +66,4 @@ export class WalletController {
   ) {
     return this.walletService.update(id, req.user.id, body);
   }
-
-  @Get('/:id/transactions')
-  async findTransactions(
-    @Param('id') id: string,
-    @Req() req: any,
-    @Query('page') page: number = 1,
-    @Query('limit') limit: number = 10,
-  ) {
-    return await this.walletService.findTransactionByWallet(
-      id,
-      req.user.id,
-      page,
-      limit,
-    );
-  }
 }

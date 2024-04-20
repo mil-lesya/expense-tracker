@@ -23,6 +23,7 @@ import { TransactionResponseDto } from './interfaces/transaction.response.dto';
 import { UpdateTransactionDto } from './dto/update-transaction.dto';
 import { TransactionType } from './enums/transaction-type.enum';
 import { CurrencyCode } from '../currency/enums/currency-code.enum';
+import { CurrencyService } from '../currency/currency.service';
 
 @Injectable()
 export class TransactionService {
@@ -32,6 +33,7 @@ export class TransactionService {
     private readonly authService: AuthService,
     private readonly walletService: WalletService,
     private readonly categoryService: CategoryService,
+    private readonly currencyService: CurrencyService,
   ) {}
 
   async create(createTransactionDto: CreateTransactionDto, userId: string) {
@@ -44,7 +46,7 @@ export class TransactionService {
     const category = await this.categoryService.findById(
       createTransactionDto.categoryId,
     );
-    if (!wallet) throw new BadRequestException();
+    if (!category) throw new BadRequestException();
     if (category?.user) {
       this.authService.checkAuthorization(userId, category.user.id);
     }
@@ -59,6 +61,23 @@ export class TransactionService {
     });
     const createdTransaction =
       await this.transactionRepository.save(transaction);
+
+    let amount =
+      transaction.currency === wallet.currency
+        ? transaction.amount
+        : await this.currencyService.getPairConversion(
+            transaction.currency,
+            wallet.currency,
+            transaction.amount,
+          );
+
+    console.log(amount);
+
+    amount = transaction.type === TransactionType.expense ? -amount : amount;
+    console.log(amount);
+
+    await this.walletService.updateBalance(wallet.id, amount);
+
     return this.getTransactionResponse(createdTransaction);
   }
 
@@ -137,7 +156,6 @@ export class TransactionService {
       currentPage: page,
     };
   }
-
   async findOne(id: string) {
     const transaction = await this.transactionRepository.findOneBy({ id });
     if (!transaction) {

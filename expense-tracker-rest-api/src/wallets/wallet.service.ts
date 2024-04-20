@@ -4,29 +4,29 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { HttpService } from '@nestjs/axios';
 import { FindManyOptions, Repository } from 'typeorm';
 import { Wallet } from './entities/wallet.entity';
 import { CreateWalletDto } from './dto/create-wallet.dto';
 import { UserService } from '../users/user.service';
 import { AuthService } from '../auth/auth.service';
 import { UpdateWalletDto } from './dto/update-wallet.dto';
-import { Transaction } from '../transactions/entities/transaction.entity';
-import { firstValueFrom } from 'rxjs';
-import { ConfigService } from '@nestjs/config';
+import { CurrencyService } from '../currency/currency.service';
 
 @Injectable()
 export class WalletService {
   constructor(
     @InjectRepository(Wallet)
     private walletRepository: Repository<Wallet>,
-    @InjectRepository(Transaction)
-    private readonly transactionRepository: Repository<Transaction>,
     private readonly userService: UserService,
     private readonly authService: AuthService,
-    private readonly httpService: HttpService,
-    private readonly configService: ConfigService,
+    private readonly currencyService: CurrencyService,
   ) {}
+
+  async updateBalance(walletId: string, amount: number) {
+    const wallet = await this.findById(walletId);
+    wallet.balance = wallet.balance + amount;
+    await this.walletRepository.save(wallet);
+  }
 
   async create(createWalletDto: CreateWalletDto, userId: string) {
     const user = await this.userService.findById(userId);
@@ -56,30 +56,6 @@ export class WalletService {
     };
   }
 
-  async findTransactionByWallet(
-    walletId: string,
-    userId: string,
-    page: number,
-    limit: number,
-  ) {
-    const wallet = await this.findById(walletId);
-    if (!wallet) {
-      throw new NotFoundException('Wallet not found');
-    }
-    this.authService.checkAuthorization(userId, wallet.user.id);
-    const [results, total] = await this.transactionRepository.findAndCount({
-      where: { wallet: { id: walletId } },
-      take: limit,
-      skip: limit * (page - 1),
-    });
-    return {
-      transactions: results,
-      count: total,
-      totalPages: Math.ceil(total / limit),
-      currentPage: page,
-    };
-  }
-
   findById(id: string) {
     return this.walletRepository.findOneBy({ id });
   }
@@ -100,21 +76,16 @@ export class WalletService {
       if (wallet.currency === wallet.user.defaultCurrency) {
         return acc + wallet.balance;
       } else {
-        const convertedBalance = await this.convertCurrency(wallet);
+        const convertedBalance = await this.currencyService.getPairConversion(
+          wallet.currency,
+          wallet.user.defaultCurrency,
+          wallet.balance,
+        );
         return acc + convertedBalance;
       }
     }, Promise.resolve(0));
 
     return { totalBalance, currency: user.defaultCurrency };
-  }
-
-  private async convertCurrency(wallet: Wallet) {
-    const response = await firstValueFrom(
-      this.httpService.get(
-        `https://v6.exchangerate-api.com/v6/${this.configService.get('API_KEY')}/pair/${wallet.currency}/${wallet.user.defaultCurrency}/${wallet.balance}`,
-      ),
-    );
-    return response.data.conversion_result;
   }
 
   async update(id: string, userId: string, updateWalletDto: UpdateWalletDto) {
