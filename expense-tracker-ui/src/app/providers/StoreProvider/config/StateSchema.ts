@@ -5,6 +5,7 @@ import { TransactionSchema } from 'entities/Transaction';
 import { UserSchema } from 'entities/User';
 import { WalletSchema } from 'entities/Wallet';
 import { AddEditWalletSchema } from 'features/AddEditWallet';
+import { AddTransactionSchema } from 'features/AddTransaction';
 import { LoginSchema } from 'features/Auth';
 import { DeleteTransactionSchema } from 'features/DeleteTransaction';
 import { DeleteWalletSchema } from 'features/DeleteWallet';
@@ -26,6 +27,7 @@ export interface StateSchema {
   walletsTotalBalance?: WalletsTotalBalanceSchema
   // Транзакции
   transactions?: TransactionSchema
+  addTransaction?: AddTransactionSchema
   deleteTransaction?: DeleteTransactionSchema
   editTransaction?: EditTransactionSchema
   // Категории

@@ -126,6 +126,27 @@
   }
 }
 
+.grey {
+  @extend %base;
+
+  padding: 10px;
+  height: auto;
+  border: none;
+  border-radius: 10px;
+  color: var(--color-primary-dark);
+  background-color: var(--color-light-grey2);
+
+  & .text {
+    line-height: normal;
+    font-size: 14px;
+  }
+
+  &.active {
+    background-color: var(--color-light-blue);
+    border: 0.5px solid var(--color-primary)
+  }
+}
+
 .loading .text {
   visibility: hidden;
   opacity: 0;

@@ -37,3 +37,15 @@
 .totalBalance {
     background-color: var(--color-primary-dark);
 }
+
+.tableWrapper {
+    padding: 20px;
+    border-radius: 20px;
+    background-color: var(--color-light-grey);
+}
+
+.title {
+    font: var(--font-title-l);
+    font-size: 30px;
+    margin-bottom: 20px;
+}

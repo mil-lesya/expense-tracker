@@ -11,7 +11,10 @@
     "buttons": {
         "create": "Создать транзакцию",
         "edit": "Редактировать",
-        "delete": "Удалить"
+        "delete": "Удалить",
+        "add": "Добавить",
+        "expense": "Расходы",
+        "income": "Доходы"
     },
     "modal": {
         "buttonEdit": "Редактировать",
@@ -32,5 +35,6 @@
         "labelDescription": "Описание",
         "placeholderDescription": "Введите детали транзакции",
         "labelDate": "Дата"
-    }
+    },
+    "addTitle": "Добавить транзакцию"
 }

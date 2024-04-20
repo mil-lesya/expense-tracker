@@ -8,7 +8,7 @@ export interface RecordsPagesDto {
   page: number
   limit: number
   sort?: string
-  order?: boolean
+  order?: string
 }
 
 export interface decodedToken {

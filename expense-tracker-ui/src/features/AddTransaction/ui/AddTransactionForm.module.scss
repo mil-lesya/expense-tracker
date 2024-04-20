@@ -1,0 +1,50 @@
+.addTransactionForm {
+    width: 100%;
+    background-color: var(--color-light-grey);
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    border-radius: 20px;
+}
+
+.titleWrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.title {
+    font: var(--font-title-l);
+    font-size: 30px;
+    margin-bottom: 20px;
+}
+
+.controlsWrapper {
+    display: flex;
+    align-items: center;
+    gap: 8px
+}
+
+.block {
+    display: flex;
+    width: 100%;
+    gap: 10px
+}
+
+.buttonWrapper {
+    width: 100%;
+    display: flex;
+    justify-content: end;
+}
+
+.button {
+    width: 35%;
+}
+
+.formWrapper {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 20px;
+    margin-bottom: 30px;
+}
