@@ -6,7 +6,6 @@ import {
   Get,
   NotFoundException,
   Param,
-  Patch,
   Post,
   Query,
   Req,
@@ -16,7 +15,6 @@ import {
 import { CategoryService } from './category.service';
 import { CreateCategoryDto } from './dto/create-category.dto';
 import { AuthGuard } from '@nestjs/passport';
-import { UpdateCategoryDto } from './dto/update-category.dto';
 
 @UseGuards(AuthGuard('jwt'))
 @UseInterceptors(ClassSerializerInterceptor)
@@ -45,15 +43,6 @@ export class CategoryController {
       throw new NotFoundException('Category not found');
     }
     return category;
-  }
-
-  @Patch('/:id')
-  update(
-    @Param('id') id: string,
-    @Body() body: UpdateCategoryDto,
-    @Req() req: any,
-  ) {
-    return this.categoriesService.update(id, req.user.id, body);
   }
 
   @Delete('/:id')
