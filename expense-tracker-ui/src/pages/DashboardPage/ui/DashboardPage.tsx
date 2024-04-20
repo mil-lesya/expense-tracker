@@ -12,6 +12,7 @@ import DynamicModuleLoader, { ReducersList } from 'shared/lib/components/Dynamic
 import { fetchWallets, getWalletsIsLoading, walletsReducer } from 'entities/Wallet';
 import { categoryReducer, fetchCategory } from 'entities/Category';
 import { TransactionsTable, fetchTransactions, getTransactionsIsLoading, transactionsReducer } from 'entities/Transaction';
+import { WalletsWidget } from 'widgets/WalletsWidget';
 
 const reducers: ReducersList = {
   wallets: walletsReducer,
@@ -48,6 +49,7 @@ const DashboardPage: FC<DashboardPageProps> = (props) => {
           <>
           <div className={cls.leftBlock}>
             <WalletsTotalBalance theme={ThemeWalletsTotalBalance.DARK} />
+            <WalletsWidget />
           </div>
           <div className={cls.rightBlock}>
             <AddTransactionForm />

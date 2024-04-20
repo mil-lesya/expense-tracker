@@ -1,0 +1,36 @@
+.walletsWidget {
+    width: 100%;
+    padding: 20px;
+    border-radius: 20px;
+    background-color: var(--color-light-blue);
+}
+
+.title {
+    font-family: var(--font-family-main);
+    font-size: 28px;
+    padding: 2px;
+    border-bottom: 1px solid var(--color-white);
+    margin-bottom: 10px;
+}
+
+.wallets {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.walletWrapper {
+    display: flex;
+    flex-direction: column;
+}
+
+.walletName {
+    font: var(--font-title-l);
+    line-height: normal;
+}
+
+.walletBalance {
+    font: var(--font-main-text);
+    font-size: 16px;
+    color: var(--color-middle-grey);
+}

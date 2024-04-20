@@ -74,9 +74,10 @@ const UnauthorizedLayout: FC<UnauthorizedLayoutProps> = (props) => {
           </Button>
         </div>
       </div>
-      <img src={Background} className={cls.background}></img>
-      <div className={cls.backgroundFilter}></div>
+      {/* <img src={Background} className={cls.background}></img>
+      <div className={cls.backgroundFilter}></div> */}
       <div className={cls.wrapper}>
+        <img src={Background} className={cls.background}></img>
         <div className={cls.pageWrapper}>{children}</div>
         <div className={cls.cardsWrapper}>
           <LayoutBadge className={cls.badgeDone}>
