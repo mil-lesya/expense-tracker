@@ -21,15 +21,15 @@ import { addTransaction } from '../model/services/addTransaction';
 import { Transaction, TransactionType } from 'entities/Transaction';
 import { addTransactionActions, addTransactionReducer } from '../model/slice/addTransactionSlice';
 import { AddTransactionDto } from '../model/types/addTransactionSchema';
-import Select from 'shared/ui/Select/ui/Select';
+import Select, { SelectOption } from 'shared/ui/Select/ui/Select';
 import { getUserWallets } from 'entities/Wallet';
 import { transformToSelectOptions } from 'shared/lib/transformToSelect/transformToSelect';
 import DynamicModuleLoader, { ReducersList } from 'shared/lib/components/DynamicModuleLoader/DinamicModuleLoader';
-import { getUserCategories } from 'entities/Category';
+import { Category, CategoryDto, getUserCategories } from 'entities/Category';
 import Input from 'shared/ui/Input/ui/Input';
 import { currencyOptions } from 'shared/lib/enumToSelect/enumToSelect';
 import DatePicker from 'shared/ui/DatePicker/DatePicker';
-import { CurrencyCode } from 'shared/const/common';
+import { CurrencyCode, categoryIconOptions } from 'shared/const/common';
 
 const initialReducers: ReducersList = {
   addTransaction: addTransactionReducer
@@ -41,7 +41,7 @@ export interface AddTransactionFormProps {
 
 const AddTransactionForm: FC<AddTransactionFormProps> = (props) => {
   const { className } = props;
-  const { t } = useTranslation('transactions');
+  const { t } = useTranslation(['transactions', 'category']);
 
   const dispatch = useAppDispatch();
 
@@ -63,15 +63,18 @@ const AddTransactionForm: FC<AddTransactionFormProps> = (props) => {
   const [amountError, setAmountError] = useState('');
   const [disabledBtn, setDisabledBtn] = useState(false);
   const [walletOptions, setWalletOptions] = useState(null);
-  const [categoryOptions, setCategoryOptions] = useState(null);
+  const [categoryOptions, setCategoryOptions] = useState<SelectOption[]>();
+  const [isNewCategory, setIsNewCategory] = useState(false);
+  const [newCategoryName, setNewCategoryName] = useState('');
+  const [newCategoryIcon, setNewCategoryIcon] = useState('');
 
   useEffect(() => {
-    if (amount) {
+    if (amount && walletId) {
       setDisabledBtn(false);
     } else {
       setDisabledBtn(true);
     }
-  }, [amount]);
+  }, [amount, walletId]);
 
   useEffect(() => {
     if (wallets.length > 0) {
@@ -80,19 +83,34 @@ const AddTransactionForm: FC<AddTransactionFormProps> = (props) => {
   }, [wallets]);
 
   useEffect(() => {
+    let options = [{
+      value: 'new', content: t('category:newCategory'), icon: 'plus'
+    }];
     if (categories.length > 0) {
-      setCategoryOptions(transformToSelectOptions(categories, 'id', 'name', 'icon'));
+      const categoryByType = categories.filter((item) => item.type === type).map(item => ({
+        value: item.id,
+        content: t(`category:${item.name}`),
+        icon: item.icon ? item.icon : undefined
+      }));
+      options = [...options, ...categoryByType];
     }
-  }, [categories]);
+    setCategoryOptions(options);
+  }, [categories, type]);
+
+  useEffect(() => {
+    if (wallets.length > 0) {
+      setWalletOptions(transformToSelectOptions(wallets, 'id', 'name'));
+    }
+  }, [wallets]);
 
   useEffect(() => {
     if (wallets.length > 0) {
       dispatch(addTransactionActions.setWalletId(wallets[0].id));
     }
-    if (categories.length > 0) {
-      dispatch(addTransactionActions.setCategoryId(categories[0].id));
+    if (categories.length > 0 && categoryOptions && categoryOptions.length > 1) {
+      dispatch(addTransactionActions.setCategoryId(categoryOptions[1].value));
     }
-  }, [wallets, categories]);
+  }, [wallets, categories, categoryOptions]);
 
   useEffect(() => {
     if (error) {
@@ -102,6 +120,11 @@ const AddTransactionForm: FC<AddTransactionFormProps> = (props) => {
 
   const onChangeCategoryId = useCallback(
     (value: string) => {
+      if (value === 'new') {
+        setIsNewCategory(true);
+      } else {
+        setIsNewCategory(false);
+      }
       dispatch(addTransactionActions.setCategoryId(value));
     },
     [dispatch]
@@ -143,7 +166,8 @@ const AddTransactionForm: FC<AddTransactionFormProps> = (props) => {
   );
 
   const onAdd = () => {
-    dispatch(addTransaction({ date, type, walletId, categoryId, currency, description, amount })).finally(() => {
+    const newCategory = isNewCategory ? { name: newCategoryName, type, icon: newCategoryIcon } : undefined;
+    dispatch(addTransaction({ date, type, walletId, categoryId, currency, description, amount, category: newCategory })).finally(() => {
       dispatch(addTransactionActions.setAmount(null));
     });
   };
@@ -154,6 +178,20 @@ const AddTransactionForm: FC<AddTransactionFormProps> = (props) => {
 
     dispatch(addTransactionActions.setDate(isoString));
   };
+
+  const onChangeNewCategoryName = useCallback(
+    (value: string) => {
+      setNewCategoryName(value);
+    },
+    []
+  );
+
+  const onChangeNewCategoryIcon = useCallback(
+    (value: string) => {
+      setNewCategoryIcon(value);
+    },
+    []
+  );
 
   return (
     <DynamicModuleLoader reducers={initialReducers}>
@@ -166,7 +204,6 @@ const AddTransactionForm: FC<AddTransactionFormProps> = (props) => {
           </div>
         </div>
         <div className={cls.formWrapper}>
-          <div className={cls.block}>
             <Select
               label={t(type === 'expense' ? 'modal.labelExpenseWallet' : 'modal.labelIncomeWallet')}
               value={walletId}
@@ -179,6 +216,22 @@ const AddTransactionForm: FC<AddTransactionFormProps> = (props) => {
               options={categoryOptions}
               onChange={onChangeCategoryId}
             />
+            {isNewCategory && (
+              <>
+                <Input
+                  value={newCategoryName}
+                  onChange={onChangeNewCategoryName}
+                  label={t('category:labelName')}
+                  placeholder={t('category:placeholderName')}
+                />
+                <Select
+                  label={t('category:labelIcon')}
+                  value={newCategoryIcon}
+                  options={categoryIconOptions}
+                  onChange={onChangeNewCategoryIcon}
+                />
+              </>
+            )}
             <Input
               value={amount}
               onChange={onChangeAmount}
@@ -194,8 +247,6 @@ const AddTransactionForm: FC<AddTransactionFormProps> = (props) => {
               label={t('modal.labelAmount')}
               placeholder={t('modal.placeholderAmount')}
             />
-          </div>
-          <div className={cls.block}>
             <Select
               label={t('modal.labelCurrency')}
               value={currency}
@@ -214,7 +265,6 @@ const AddTransactionForm: FC<AddTransactionFormProps> = (props) => {
               label={t('modal.labelDate')}
               maxDate={today}
             />
-          </div>
         </div>
         <div className={cls.buttonWrapper}>
           <Button

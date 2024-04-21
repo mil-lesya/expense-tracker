@@ -42,9 +42,13 @@
 }
 
 .formWrapper {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
     gap: 20px;
+    width: 100%;
     margin-bottom: 30px;
+
+    @include min-desktop-xl {
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    }
 }

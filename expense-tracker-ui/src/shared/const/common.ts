@@ -119,3 +119,26 @@ export enum CurrencyCode {
   ZMK = 'ZMK',
   ZWL = 'ZWL',
 }
+
+export const categoryIconOptions = [
+  {
+    value: 'sun',
+    content: 'Sun',
+    icon: 'sun'
+  },
+  {
+    value: 'moon',
+    content: 'Moon',
+    icon: 'moon'
+  },
+  {
+    value: 'cherry',
+    content: 'Cherry',
+    icon: 'cherry'
+  },
+  {
+    value: 'doc',
+    content: 'Document',
+    icon: 'doc'
+  }
+];

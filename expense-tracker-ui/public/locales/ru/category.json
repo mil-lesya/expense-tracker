@@ -25,5 +25,9 @@
     "onlineShopping": "Онлайн покупки",
     "subscriptions": "Подписки",
     "salary": "Зарплата",
-    "prepaidExpense": "Аванс"
+    "prepaidExpense": "Аванс",
+    "newCategory": "Новая категория",
+    "labelName": "Название новой категории",
+    "placeholderName": "Введите название новой категории",
+    "labelIcon": "Иконка новой категории"
 }

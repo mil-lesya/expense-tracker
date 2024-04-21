@@ -25,5 +25,9 @@
     "onlineShopping": "Online shopping",
     "subscriptions": "Subscriptions",
     "salary": "Salary",
-    "prepaidExpense": "Prepaid expense"
+    "prepaidExpense": "Prepaid expense",
+    "newCategory": "Add new category",
+    "labelName": "Name new category",
+    "placeholderName": "Enter name new category",
+    "labelIcon": "Icon new category"
 }

@@ -89,6 +89,7 @@
   transition: background-color 0.3s ease;
   display: flex;
   align-items: center;
+  cursor: pointer;
 
   &:hover {
     background-color: var(--color-light-blue);
@@ -102,6 +103,8 @@
 
 .icon {
   margin-right: 8px;
+  min-width: 24px;
+
 }
 
 .content {

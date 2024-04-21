@@ -11,8 +11,9 @@ import { AddTransactionForm } from 'features/AddTransaction';
 import DynamicModuleLoader, { ReducersList } from 'shared/lib/components/DynamicModuleLoader/DinamicModuleLoader';
 import { fetchWallets, getWalletsIsLoading, walletsReducer } from 'entities/Wallet';
 import { categoryReducer, fetchCategory } from 'entities/Category';
-import { TransactionsTable, fetchTransactions, getTransactionsIsLoading, transactionsReducer } from 'entities/Transaction';
+import { TransactionsTable, fetchTransactions, getTransactionsCount, getTransactionsIsLoading, transactionsReducer } from 'entities/Transaction';
 import { WalletsWidget } from 'widgets/WalletsWidget';
+import { EmptyBlock } from 'shared/ui/EmptyBlock';
 
 const reducers: ReducersList = {
   wallets: walletsReducer,
@@ -30,6 +31,7 @@ const DashboardPage: FC<DashboardPageProps> = (props) => {
 
   const isLoadingWallets = useSelector(getWalletsIsLoading);
   const isLoadingTransactions = useSelector(getTransactionsIsLoading);
+  const transactionsCount = useSelector(getTransactionsCount);
 
   useEffect(() => {
     dispatch(fetchWallets({ page: 1, limit: 100 }));
@@ -55,7 +57,13 @@ const DashboardPage: FC<DashboardPageProps> = (props) => {
             <AddTransactionForm />
             <div className={cls.tableWrapper}>
               <h2 className={cls.title}>{t('titleTransactions')}</h2>
-              <TransactionsTable isPanel />
+              {transactionsCount > 0
+                ? (
+                <TransactionsTable isPanel />
+                  )
+                : (
+                <EmptyBlock>{t('emptyTransaction')}</EmptyBlock>
+                  )}
             </div>
           </div>
         </>

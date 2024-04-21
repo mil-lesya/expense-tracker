@@ -3,7 +3,7 @@ import { Category } from 'entities/Category';
 import { CurrencyCode } from 'shared/const/common';
 import { RecordsPagesDto, RecordsPagesResponse } from 'shared/types/requestTypes';
 
-export type TransactionType = 'expense' | 'income' | 'transfer';
+export type TransactionType = 'expense' | 'income';
 
 export interface Transaction {
   id: string

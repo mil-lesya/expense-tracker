@@ -1,3 +1,4 @@
+import { CategoryDto } from 'entities/Category';
 import { TransactionType } from 'entities/Transaction';
 import { CurrencyCode } from 'shared/const/common';
 
@@ -21,4 +22,5 @@ export interface AddTransactionDto {
   description: string
   amount: number
   currency: CurrencyCode
+  category?: CategoryDto
 }
