@@ -118,13 +118,16 @@ const AddTransactionForm: FC<AddTransactionFormProps> = (props) => {
     }
   }, [error]);
 
+  useEffect(() => {
+    if (categoryId === 'new') {
+      setIsNewCategory(true);
+    } else {
+      setIsNewCategory(false);
+    }
+  }, [categoryId]);
+
   const onChangeCategoryId = useCallback(
     (value: string) => {
-      if (value === 'new') {
-        setIsNewCategory(true);
-      } else {
-        setIsNewCategory(false);
-      }
       dispatch(addTransactionActions.setCategoryId(value));
     },
     [dispatch]
