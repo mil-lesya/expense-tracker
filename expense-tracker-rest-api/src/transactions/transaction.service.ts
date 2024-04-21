@@ -24,6 +24,7 @@ import { UpdateTransactionDto } from './dto/update-transaction.dto';
 import { TransactionType } from './enums/transaction-type.enum';
 import { CurrencyCode } from '../currency/enums/currency-code.enum';
 import { CurrencyService } from '../currency/currency.service';
+import { UserService } from '../users/user.service';
 
 @Injectable()
 export class TransactionService {
@@ -31,6 +32,7 @@ export class TransactionService {
     @InjectRepository(Transaction)
     private transactionRepository: Repository<Transaction>,
     private readonly authService: AuthService,
+    private readonly userService: UserService,
     private readonly walletService: WalletService,
     private readonly categoryService: CategoryService,
     private readonly currencyService: CurrencyService,
@@ -69,9 +71,7 @@ export class TransactionService {
           );
 
     amount = transaction.type === TransactionType.expense ? -amount : amount;
-
     await this.walletService.updateBalance(wallet.id, amount);
-
     return this.getTransactionResponse(createdTransaction);
   }
 
@@ -115,9 +115,7 @@ export class TransactionService {
       wallet: { user: { id: userId } },
       ...(type && { type: Any(transactionTypes) }),
       ...(currency && { currency: Any(currencyCodes) }),
-      ...(category && {
-        category: { id: Any(categories), user: { id: userId } },
-      }),
+      ...(category && { category: { id: Any(categories) } }),
       ...(wallet && { wallet: { id: Any(wallets), user: { id: userId } } }),
       ...(startDate && endDate && { date: Between(startDate, endDate) }),
       ...(startDate && !endDate && { date: MoreThanOrEqual(startDate) }),
@@ -148,6 +146,70 @@ export class TransactionService {
       count: total,
       totalPages: Math.ceil(total / limit),
       currentPage: page,
+    };
+  }
+
+  async getAnalyticData(
+    userId: string,
+    startDate: Date,
+    endDate: Date,
+    wallet?: string,
+    category?: string,
+    type?: string,
+  ) {
+    const user = await this.userService.findById(userId);
+
+    const transactionTypes: TransactionType[] = type
+      ?.split(',')
+      .reduce((acc, s) => {
+        const type = TransactionType[s as keyof typeof TransactionType];
+        if (type) acc.push(type);
+        return acc;
+      }, [] as TransactionType[]);
+
+    const categories = category?.split(',');
+    const wallets = wallet?.split(',');
+
+    const whereCondition: FindOptionsWhere<Transaction> = {
+      wallet: { user: { id: userId } },
+      ...(type && { type: Any(transactionTypes) }),
+      ...(category && { category: { id: Any(categories) } }),
+      ...(wallet && { wallet: { id: Any(wallets), user: { id: userId } } }),
+      ...(startDate && endDate && { date: Between(startDate, endDate) }),
+      ...(startDate && !endDate && { date: MoreThanOrEqual(startDate) }),
+      ...(!startDate && endDate && { date: LessThanOrEqual(endDate) }),
+    };
+
+    const results = await this.transactionRepository.find({
+      where: whereCondition,
+    });
+
+    const responsePromises = results.map(async (transaction) => {
+      const amount =
+        transaction.currency === user.defaultCurrency
+          ? transaction.amount
+          : await this.currencyService.getPairConversion(
+              transaction.currency,
+              user.defaultCurrency,
+              transaction.amount,
+            );
+      return {
+        walletId: transaction.wallet.id,
+        categoryId: transaction.category,
+        amount: amount,
+      };
+    });
+
+    const analytic = await Promise.all(responsePromises);
+
+    const totalBalance = analytic.reduce((acc, t) => {
+      return acc + t.amount;
+    }, 0);
+
+    return {
+      analytic,
+      totalBalance,
+      currency: user.defaultCurrency,
     };
   }
 

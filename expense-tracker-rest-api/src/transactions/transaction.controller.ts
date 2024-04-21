@@ -63,6 +63,25 @@ export class TransactionController {
     );
   }
 
+  @Get('/analytic')
+  async getAnalyticData(
+    @Req() req: any,
+    @Query('startDate') startDate: Date,
+    @Query('endDate') endDate: Date,
+    @Query('type') type: string,
+    @Query('category') category: string,
+    @Query('wallet') wallet: string,
+  ) {
+    return this.transactionsService.getAnalyticData(
+      req.user.id,
+      startDate,
+      endDate,
+      wallet,
+      category,
+      type,
+    );
+  }
+
   @Get('/:id')
   async findOne(@Param('id') id: string) {
     return this.transactionsService.findOne(id);
