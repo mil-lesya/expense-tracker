@@ -10,12 +10,24 @@
     font-weight: 300;
     font-size: 30px;
     margin-bottom: 20px;
+
+    &.dark {
+        background-color: var(--color-primary-dark);
+        color: var(--color-white);
+        flex-direction: column-reverse;
+        align-items: flex-start;
+        margin-bottom: 0;
+    }
 }
 
 .title {
     font-family: var(--font-family-main);
     font-size: 30px;
     font-weight: 300;
+}
+
+.dark .title {
+    font: var(--font-main-text);
 }
 
 .info {

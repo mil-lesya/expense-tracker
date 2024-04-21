@@ -7,5 +7,34 @@
         "columnDescription": "Описание",
         "columnAmount": "Сумма"
     },
-    "emptyList": "Транзакции не найдены. Создайте новую транзакцию на главной странице"
+    "emptyList": "Транзакции не найдены. Создайте новую транзакцию на главной странице",
+    "buttons": {
+        "create": "Создать транзакцию",
+        "edit": "Редактировать",
+        "delete": "Удалить",
+        "add": "Добавить",
+        "expense": "Расходы",
+        "income": "Доходы"
+    },
+    "modal": {
+        "buttonEdit": "Редактировать",
+        "buttonCancel": "Отмена",
+        "buttonDelete": "Удалить",
+        "titleEdit": "Редактировать транзакцию",
+        "titleDelete": "Удалить транзакцию",
+        "subtitle": "Возьмите под контроль свои финансы",
+        "deleteQuestion": "Вы уверены, что хотите удалить транзакцию",
+        "deleteWarning": "Это действие нельзя отменить",
+        "labelExpenseWallet": "С кошелька",
+        "labelIncomeWallet": "На кошелек",
+        "labelCategory": "Категория",
+        "labelAmount": "Сумма",
+        "placeholderAmount": "0,00",
+        "errorAmount": "Поле может содержать только числовые значения",
+        "labelCurrency": "Валюта",
+        "labelDescription": "Описание",
+        "placeholderDescription": "Введите детали транзакции",
+        "labelDate": "Дата"
+    },
+    "addTitle": "Добавить транзакцию"
 }

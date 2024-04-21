@@ -1,21 +1,18 @@
 import { FC, useEffect, useState } from 'react';
 import { classNames } from 'shared/lib/classNames/classNames';
 import cls from './TransactionsTable.module.scss';
-import { useAppDispatch } from 'shared/lib/hooks/useAppDispatch';
-import { useSelector, useStore } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { getUserTransactions } from 'entities/Transaction/model/slice/transactionSlice';
-import { getTransactionsError, getTransactionsIsLoading } from 'entities/Transaction/model/selectors/transactions';
-import { fetchTransactions } from 'entities/Transaction/model/services/fetchTransactions';
 import dayjs from 'dayjs';
 import { Transaction, TransactionType } from 'entities/Transaction/model/types/transaction';
 import { useTranslation } from 'react-i18next';
 import { Category } from 'entities/Category';
 import { SvgIcon } from 'shared/ui/SvgIcon';
 import Table from 'shared/ui/Table/Table';
-import { Wallet, getUserWallets } from 'entities/Wallet';
-import { ReduxStoreWidthManager } from 'app/providers/StoreProvider';
+import { Wallet } from 'entities/Wallet';
 import { getWalletsEntities } from 'entities/Wallet/model/selectors/wallets';
 import { CurrencyCode } from 'shared/const/common';
+import Tippy from '@tippyjs/react';
 
 interface AmountType {
   sum: string
@@ -23,23 +20,49 @@ interface AmountType {
   type: TransactionType
 }
 
+interface ActionsType {
+  onEditTransaction: () => void
+  onDeleteTransaction: () => void
+  transactionId: string
+}
+type TippyVisibilityMap = Record<string, boolean>;
+
 interface TransactionsTableProps {
   className?: string
+  isPanel?: boolean
+  onEdit?: (transaction: Transaction) => void
+  onDelete?: (transaction: Transaction) => void
 }
 
 const TransactionsTable: FC<TransactionsTableProps> = (props) => {
-  const { className } = props;
-  // const dispatch = useAppDispatch();
+  const { className, isPanel = false, onEdit, onDelete } = props;
+
   const { t } = useTranslation('transactions');
 
   const wallets = useSelector(getWalletsEntities);
 
   const transactions = useSelector(getUserTransactions.selectAll);
-  // const isLoading = useSelector(getTransactionsIsLoading);
-  // const error = useSelector(getTransactionsError);
+
+  const initialVisibility = transactions.reduce((acc: TippyVisibilityMap, transaction) => {
+    acc[transaction.id] = false; // Инициализируйте все как закрытые
+    return acc;
+  }, {});
 
   const [prepareData, setPrepareData] = useState([]);
   const [prepareColumns, setPrepareColumns] = useState([]);
+  const [tippyVisibility, setTippyVisibility] = useState<TippyVisibilityMap>(initialVisibility);
+
+  const handleTippyOpen = (transactionId: string) => {
+    setTippyVisibility(prev => {
+      return { ...prev, [transactionId]: true };
+    });
+  };
+
+  const handleTippyClose = (transactionId: string) => {
+    setTippyVisibility(prev => {
+      return { ...prev, [transactionId]: false };
+    });
+  };
 
   useEffect(() => {
     if (Object.keys(transactions).length > 0 && Object.keys(wallets).length > 0) {
@@ -51,9 +74,16 @@ const TransactionsTable: FC<TransactionsTableProps> = (props) => {
           currency: transaction.currency,
           type: transaction.type
         };
-        const actions = {
-          onEditTransaction: () => {},
-          onDeleteTransaction: () => {}
+        const actions: ActionsType = {
+          onEditTransaction: () => {
+            onEdit(transaction);
+            handleTippyClose(transaction.id);
+          },
+          onDeleteTransaction: () => {
+            onDelete(transaction);
+            handleTippyClose(transaction.id);
+          },
+          transactionId: transaction.id
         };
 
         return {
@@ -62,7 +92,7 @@ const TransactionsTable: FC<TransactionsTableProps> = (props) => {
           amount,
           category: transaction.category,
           description: transaction.description,
-          actions
+          actions: isPanel ? undefined : actions
         };
       });
 
@@ -70,7 +100,12 @@ const TransactionsTable: FC<TransactionsTableProps> = (props) => {
       setPrepareColumns([
         {
           key: 'date',
-          title: t('table.columnDate')
+          title: t('table.columnDate'),
+          render: (date: string) => {
+            return (
+                <span className={cls.date}>{date}</span>
+            );
+          }
         },
         {
           key: 'wallet',
@@ -89,13 +124,18 @@ const TransactionsTable: FC<TransactionsTableProps> = (props) => {
               return <></>;
             }
             return (
-                <span><SvgIcon name={category.icon} />{category.name}</span>
+                <span className={cls.category}><SvgIcon name={category.icon} />{category.name}</span>
             );
           }
         },
         {
           key: 'description',
-          title: t('table.columnDescription')
+          title: t('table.columnDescription'),
+          render: (description: string) => {
+            return (
+                <span className={cls.description}>{description}</span>
+            );
+          }
         },
         {
           key: 'amount',
@@ -105,17 +145,35 @@ const TransactionsTable: FC<TransactionsTableProps> = (props) => {
                 <span>{amount.type === 'income' ? '+' : '-'}{amount.sum} {amount.currency}</span>
             );
           }
-        },
-        {
-          key: 'actions',
-          title: '',
-          render: () => {
-            return <SvgIcon name='menu-kebab'></SvgIcon>;
-          }
         }
       ]);
+
+      if (!isPanel) {
+        setPrepareColumns((prev) => ([...prev, {
+          key: 'actions',
+          title: '',
+          render: (actions: ActionsType) => {
+            return (
+          <Tippy
+            content={(
+              <ul className={cls.dropdownMenu}>
+                <li onClick={() => { actions.onEditTransaction(); }}>{t('buttons.edit')}</li>
+                <li onClick={() => { actions.onDeleteTransaction(); }}>{t('buttons.delete')}</li>
+              </ul>
+            )}
+            interactive
+            placement='bottom'
+            visible={tippyVisibility[actions.transactionId] || false}
+            onClickOutside={() => { handleTippyClose(actions.transactionId); }}
+          >
+          <div onClick={() => { handleTippyOpen(actions.transactionId); }} className={cls.actions}><SvgIcon name='menu-kebab'></SvgIcon></div>
+        </Tippy>
+            );
+          }
+        }]));
+      }
     }
-  }, [transactions, wallets]);
+  }, [transactions, wallets, tippyVisibility]);
 
   return (
     <div className={classNames(cls.transactionsTable, {}, [className])}>

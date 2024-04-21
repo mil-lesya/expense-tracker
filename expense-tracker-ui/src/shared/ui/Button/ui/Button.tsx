@@ -8,7 +8,8 @@ export enum ThemeButton {
   OUTLINE = 'outline',
   OUTLINE_DARK = 'outlineDark',
   CLEAR = 'clear',
-  ICON = 'iconTheme'
+  ICON = 'iconTheme',
+  GREY = 'grey'
 }
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
@@ -16,14 +17,16 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   theme?: ThemeButton
   disabled?: boolean
   loading?: boolean
+  active?: boolean
 }
 
 const Button: FC<ButtonProps> = (props) => {
-  const { className, theme, children, disabled, loading, ...otherProps } = props;
+  const { className, theme, children, disabled, loading, active, ...otherProps } = props;
 
   const mods: Record<string, boolean> = {
     [cls.disabled]: disabled,
-    [cls.loading]: loading
+    [cls.loading]: loading,
+    [cls.active]: active
   };
 
   return (

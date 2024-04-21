@@ -1,0 +1,21 @@
+.editTransactionModal {
+    width: 100%;
+}
+
+.buttonWrapper {
+    width: 100%;
+    display: flex;
+    justify-content: end;
+}
+
+.button {
+    width: 50%;
+}
+
+.formWrapper {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 20px;
+    margin-bottom: 30px;
+}

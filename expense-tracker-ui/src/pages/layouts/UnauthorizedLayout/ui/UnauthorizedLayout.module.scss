@@ -35,10 +35,10 @@
 .wrapper {
   display: flex;
   width: 100%;
-  height: calc(100vh - 165px);
+  height: fit-content;
 
-  @include only-mobile {
-    height: fit-content;
+  @include only-tablet {
+    height: 100%;
   }
 }
 
@@ -46,8 +46,11 @@
   position: absolute;
   z-index: var(--unauth-bg-z-index);
   width: calc(100vw - 60px);
-  height: calc(100vh - 165px);
   border-radius: 20px;
+
+  @include only-tablet {
+    height: 100%;
+  }
 
   @include only-mobile {
     display: none;
@@ -69,7 +72,6 @@
 
 .pageWrapper {
   width: 50%;
-  height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -107,6 +109,7 @@
   align-items: center;
   width: 50%;
   gap: 40px;
+  margin-top: 50px;
 
   @include max-tablet {
       display: none;
