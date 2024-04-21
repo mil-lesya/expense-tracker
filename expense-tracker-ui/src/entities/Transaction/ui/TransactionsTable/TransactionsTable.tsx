@@ -37,7 +37,7 @@ interface TransactionsTableProps {
 const TransactionsTable: FC<TransactionsTableProps> = (props) => {
   const { className, isPanel = false, onEdit, onDelete } = props;
 
-  const { t } = useTranslation('transactions');
+  const { t } = useTranslation(['transactions', 'category']);
 
   const wallets = useSelector(getWalletsEntities);
 
@@ -124,7 +124,7 @@ const TransactionsTable: FC<TransactionsTableProps> = (props) => {
               return <></>;
             }
             return (
-                <span className={cls.category}><SvgIcon name={category.icon} />{category.name}</span>
+                <span className={cls.category}><SvgIcon name={category.icon} />{t(`category:${category.name}`)}</span>
             );
           }
         },

@@ -5,8 +5,8 @@ export interface RecordsPagesResponse {
 }
 
 export interface RecordsPagesDto {
-  page: number
-  limit: number
+  page?: number
+  limit?: number
   sort?: string
   order?: string
 }

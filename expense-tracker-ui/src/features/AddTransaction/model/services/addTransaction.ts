@@ -3,6 +3,7 @@ import { ThunkConfig } from 'app/providers/StoreProvider';
 import { AddTransactionDto } from '../types/addTransactionSchema';
 import { Transaction, fetchTransactions } from 'entities/Transaction';
 import { addCategory, fetchCategory } from 'entities/Category';
+import { fetchWallets } from 'entities/Wallet';
 
 export const addTransaction = createAsyncThunk<
 Transaction,
@@ -31,6 +32,7 @@ ThunkConfig<string>
 
       await dispatch(fetchTransactions({ page: 1, limit: 10 }));
       await dispatch(fetchCategory());
+      await dispatch(fetchWallets({}));
       return transactionResponse.data;
     } catch (e) {
       return rejectWithValue(e.message || 'Unknown error');
