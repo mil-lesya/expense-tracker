@@ -1,5 +1,11 @@
 import { CurrencyCode } from '../../currency/enums/currency-code.enum';
-import { IsEnum, IsNumber, IsString, IsUUID } from 'class-validator';
+import {
+  IsDateString,
+  IsEnum,
+  IsNumber,
+  IsString,
+  IsUUID,
+} from 'class-validator';
 import { TransactionType } from '../enums/transaction-type.enum';
 
 export class CreateTransactionDto {
@@ -20,4 +26,7 @@ export class CreateTransactionDto {
 
   @IsEnum(TransactionType)
   type: TransactionType;
+
+  @IsDateString()
+  date: Date;
 }

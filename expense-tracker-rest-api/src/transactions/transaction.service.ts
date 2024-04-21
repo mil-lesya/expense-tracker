@@ -51,13 +51,10 @@ export class TransactionService {
       this.authService.checkAuthorization(userId, category.user.id);
     }
 
-    const date = new Date();
-
     const transaction = this.transactionRepository.create({
       ...createTransactionDto,
       wallet,
       category,
-      date,
     });
     const createdTransaction =
       await this.transactionRepository.save(transaction);
@@ -71,10 +68,7 @@ export class TransactionService {
             transaction.amount,
           );
 
-    console.log(amount);
-
     amount = transaction.type === TransactionType.expense ? -amount : amount;
-    console.log(amount);
 
     await this.walletService.updateBalance(wallet.id, amount);
 
@@ -156,6 +150,7 @@ export class TransactionService {
       currentPage: page,
     };
   }
+
   async findOne(id: string) {
     const transaction = await this.transactionRepository.findOneBy({ id });
     if (!transaction) {
