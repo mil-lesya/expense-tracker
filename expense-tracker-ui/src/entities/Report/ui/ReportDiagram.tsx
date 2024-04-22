@@ -181,7 +181,7 @@ const ReportDiagram: FC<ReportDiagramProps> = (props) => {
                                 <span className={cls.categoryName}>{t(`category:${item.category}`)}</span>
                                 <span className={cls.percent}>{(item.amount / reportTotalBalance * 100).toFixed(2) + '%'}</span>
                             </div>
-                            <span className={cls.amount}>{reportType === 'expense' ? '-' : '+'}{item.amount} {reportCurrency}</span>
+                            <span className={cls.amount}>{reportType === 'expense' ? '' : '+'}{item.amount} {reportCurrency}</span>
                         </div>
                     </li>))}
                 </>

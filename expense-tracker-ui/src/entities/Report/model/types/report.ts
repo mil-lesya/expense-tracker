@@ -6,8 +6,7 @@ export type ReportType = 'expense' | 'income' | 'expense,income';
 
 export interface Report {
   amount: number
-  categoryId: Category
-  walletId: string
+  category: Category
 }
 
 export interface Period {

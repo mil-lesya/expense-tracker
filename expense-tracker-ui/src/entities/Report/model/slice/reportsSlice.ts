@@ -9,7 +9,7 @@ import { Report, ReportsResponseDto, ReportSchema, ReportType, Period } from '..
 import dayjs from 'dayjs';
 
 const reportsAdapter = createEntityAdapter<Report>({
-  selectId: (report) => report.categoryId.id
+  selectId: (report) => report.category.id
 });
 
 export const getUserReports = reportsAdapter.getSelectors<StateSchema>(

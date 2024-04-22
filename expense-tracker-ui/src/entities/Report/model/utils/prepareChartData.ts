@@ -3,7 +3,7 @@ import { ChartData, ExpenseItem, Report } from '../types/report';
 
 export function prepareChartData (response: Report[]): { chartData: ChartData, expenses: ExpenseItem[] } {
   // Извлекаем категории и соответствующие им суммы
-  const categories = response.map(report => report.categoryId.name);
+  const categories = response.map(report => report.category.name);
   const amounts = response.map(report => Math.round(report.amount * 100) / 100);
 
   // Генерируем случайные цвета для каждой категории
