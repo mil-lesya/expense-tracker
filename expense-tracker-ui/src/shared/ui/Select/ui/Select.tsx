@@ -3,6 +3,7 @@ import { useState, useRef, memo, useEffect } from 'react';
 import cls from './Select.module.scss';
 import Tippy from '@tippyjs/react';
 import { SvgIcon } from 'shared/ui/SvgIcon';
+import OptionControl from 'shared/ui/OptionControl/OptionControl';
 
 export enum ThemeSelect {
   CLEAR = 'clear',
@@ -11,6 +12,7 @@ export interface SelectOption {
   value: string
   content: any
   icon?: string
+  multiple?: boolean
 }
 
 interface SelectProps {
@@ -40,11 +42,77 @@ const Select = (props: SelectProps) => {
   const selectedOptionContent = options?.find(opt => opt.value === value)?.content || '';
   const selectedOptionIcon = options?.find(opt => opt.value === value)?.icon;
 
-  const handleOptionClick = (value: string) => {
-    if (onChange) {
-      onChange(value);
+  const [selectedValues, setSelectedValues] = useState(new Set<string>());
+
+  useEffect(() => {
+    if (value && options) {
+      setSelectedValues(new Set(value.split(',')));
     }
-    setIsOpen(false);
+  }, [value, options]);
+
+  const handleOptionClick = (value: string, isMultiSelect: boolean) => {
+    setSelectedValues(prevSelectedValues => {
+      const newSelectedValues = new Set(prevSelectedValues);
+
+      if (isMultiSelect) {
+        // Проверяем, есть ли в выбранных значениях опции без множественного выбора
+        const nonMultiSelectSelected = Array.from(newSelectedValues).find(val => {
+          const opt = options.find(opt => opt.value === val);
+          return opt && !opt.multiple; // Опция без поддержки множественного выбора
+        });
+
+        if (nonMultiSelectSelected) {
+        // Если такие опции есть, очищаем все выбранные значения
+          newSelectedValues.clear();
+        }
+        // Если опция поддерживает множественный выбор
+        if (newSelectedValues.has(value)) {
+          newSelectedValues.delete(value); // Убираем значение, если оно уже выбрано
+        } else {
+          newSelectedValues.add(value); // Добавляем значение, если его нет в выбранных
+        }
+      } else {
+        newSelectedValues.clear();
+        newSelectedValues.add(value); // Очищаем выбранные и добавляем текущую опцию
+      }
+
+      if (onChange) {
+        onChange(Array.from(newSelectedValues).join(',')); // Обновляем внешний стейт
+      }
+
+      return newSelectedValues;
+    });
+  };
+
+  const selectDisplayContent = () => {
+    // Проверяем, есть ли выбранные множественные опции
+    const multiSelectOptions = Array.from(selectedValues).filter(val => {
+      const opt = options.find(opt => opt.value === val && opt.multiple);
+      return opt !== undefined;
+    });
+
+    if (multiSelectOptions.length > 0) {
+      // Множественный выбор: отображаем количество и иконку для очистки
+      return (
+        <span className={cls.content}>
+          {`Выбрано: ${multiSelectOptions.length} `}
+          <div onClick={() => { setSelectedValues(new Set()); }}><SvgIcon name="close" className={cls.icon} /></div>
+        </span>
+      );
+    } else if (selectedValues.size === 1) {
+      // Одиночный выбор: отображаем иконку и содержимое выбранной опции
+      const selectedValue = Array.from(selectedValues)[0];
+      const selectedOption = options.find(opt => opt.value === selectedValue);
+      return (
+        <span className={cls.content}>
+          {selectedOption?.icon && <SvgIcon name={selectedOption.icon} className={cls.icon} />}
+          {selectedOption?.content}
+        </span>
+      );
+    }
+
+    // Если ничего не выбрано
+    return <span className={cls.content}>Выберите опцию</span>;
   };
 
   return (
@@ -54,14 +122,33 @@ const Select = (props: SelectProps) => {
         content={
           <div className={cls.options}>
             {options?.map(opt => (
-              <div
-                key={opt.value}
-                className={classNames(cls.option, {}, [cls[theme]])}
-                onClick={() => { handleOptionClick(opt.value); }}
-              >
-                {opt.icon && <SvgIcon name={opt.icon} className={cls.icon} />}
-                {opt.content}
-              </div>
+              opt.multiple
+                ? (
+                  <div
+                  key={opt.value}
+                  className={classNames(cls.option, {}, [cls[theme]])}
+                  onClick={() => { handleOptionClick(opt.value, true); }}
+                >
+                  <OptionControl
+                    title={opt.content}
+                    inputType="checkbox"
+                    textPositionRight
+                    checked={selectedValues.has(opt.value)}
+                    onUpdateChecked={() => { handleOptionClick(opt.value, true); }}
+                  />
+                  {opt.icon && <SvgIcon name={opt.icon} className={cls.iconMultiple} />}
+                </div>
+                  )
+                : (
+                <div
+                  key={opt.value}
+                  className={classNames(cls.option, {}, [cls[theme]])}
+                  onClick={() => { handleOptionClick(opt.value, false); }}
+                >
+                  {opt.icon && <SvgIcon name={opt.icon} className={cls.icon} />}
+                  {opt.content}
+                </div>
+                  )
             ))}
           </div>
         }
@@ -101,8 +188,8 @@ const Select = (props: SelectProps) => {
             disabled={readonly}
             ref={selectRef}
           >
-            <span className={cls.content}>{selectedOptionIcon && <SvgIcon name={selectedOptionIcon} className={cls.icon} />}{selectedOptionContent}</span>
-            <SvgIcon name='triangle' className={classNames(cls.selectTriangle, { [cls.open]: isOpen }, [])} />
+            {selectDisplayContent()}
+            <SvgIcon name="triangle" className={classNames(cls.selectTriangle, { [cls.open]: isOpen }, [])} />
           </button>
         </div>
       </Tippy>

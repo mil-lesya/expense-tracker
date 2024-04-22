@@ -87,7 +87,7 @@ const WalletsTotalBalance: FC<WalletsTotalBalanceProps> = (props) => {
             >
                 <div ref={infoRef} className={classNames(cls.walletsTotalBalance, {}, [className, cls[theme]])}>
                     <h2 className={cls.title}>{t('totalBalance')}</h2>
-                    <div>{totalBalance} {currency}</div>
+                    <div>{Math.round(totalBalance * 100) / 100} {currency}</div>
                 </div>
             </Tippy>
             )}

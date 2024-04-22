@@ -30,7 +30,7 @@ ThunkConfig<string>
         throw new Error('Failed to add transaction');
       }
 
-      await dispatch(fetchTransactions({ page: 1, limit: 10 }));
+      await dispatch(fetchTransactions({ page: 1, limit: 10, sort: 'date', order: 'ASC' }));
       await dispatch(fetchCategory());
       await dispatch(fetchWallets({}));
       return transactionResponse.data;

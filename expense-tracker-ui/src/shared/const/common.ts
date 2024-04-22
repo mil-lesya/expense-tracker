@@ -142,3 +142,26 @@ export const categoryIconOptions = [
     icon: 'doc'
   }
 ];
+
+export const reportPeriodOptions = [
+  {
+    value: 'sun',
+    content: 'thisWeek'
+  },
+  {
+    value: 'moon',
+    content: 'thisMonth'
+  },
+  {
+    value: 'cherry',
+    content: 'thisYear'
+  },
+  {
+    value: 'doc',
+    content: 'lastWeek'
+  },
+  {
+    value: 'doc',
+    content: 'lastMonth'
+  }
+];

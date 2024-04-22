@@ -1,0 +1,20 @@
+{
+    "title": "Reports",
+    "buttons": {
+        "expense": "Expense",
+        "income": "Income",
+        "expenseAndIncome": "Expense and income"
+    },
+    "subtitle": {
+        "expense": "Expense analysis",
+        "income": "Income analysis",
+        "expense,income": "Expense and income analysis"
+    },
+    "filter": {
+        "labelPeriod": "Select period",
+        "labelWallet": "Wallets",
+        "labelCategory": "Category",
+        "allWallets": "All wallets",
+        "allCategory": "All category"
+    }
+}

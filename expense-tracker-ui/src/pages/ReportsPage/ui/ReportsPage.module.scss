@@ -2,4 +2,24 @@
     position: relative;
     width: 100%;
     height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.titleWrapper {
+    width: 100%;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+}
+
+.title {
+    font: var(--font-title-l);
+    font-size: 30px;
+}
+
+.controlsWrapper {
+    display: flex;
+    gap: 10px;
 }
