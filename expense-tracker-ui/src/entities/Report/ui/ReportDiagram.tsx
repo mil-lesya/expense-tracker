@@ -29,7 +29,7 @@ const ReportDiagram: FC<ReportDiagramProps> = (props) => {
   const [displayChartData, setDisplayChartData] = useState<ChartData>(); // Данные для отображения, изменяются при наведении
   const [expenses, setExpenses] = useState<ExpenseItem[]>();
 
-  const { t } = useTranslation(['reports', 'category']);
+  const { t, i18n } = useTranslation(['reports', 'category']);
 
   const reportType = useSelector(getReportsType);
   const reportTotalBalance = useSelector(getReportsTotalBalance);
@@ -95,7 +95,7 @@ const ReportDiagram: FC<ReportDiagramProps> = (props) => {
 
   return (
     <>
-    {loading
+    {loading || !reportPeriod
       ? <PageLoader />
       : (
         <>
@@ -126,7 +126,7 @@ const ReportDiagram: FC<ReportDiagramProps> = (props) => {
                         tooltip: {
                           callbacks: {
                             title: function (tooltipItems: Array<TooltipItem<'doughnut'>>) {
-                              return t(`category:${tooltipItems[0].label}`);
+                              return i18n.exists(`category:${tooltipItems[0].label}`) ? t(`category:${tooltipItems[0].label}`) : tooltipItems[0].label;
                             },
                             label: function (tooltipItem: TooltipItem<'doughnut'>) {
                               const percentage = (tooltipItem.parsed / reportTotalBalance * 100).toFixed(2) + '%';
@@ -178,7 +178,7 @@ const ReportDiagram: FC<ReportDiagramProps> = (props) => {
                         ></span>
                         <div className={cls.labelContent}>
                             <div className={cls.categoryWrapper}>
-                                <span className={cls.categoryName}>{t(`category:${item.category}`)}</span>
+                                <span className={cls.categoryName}>{i18n.exists(`category:${item.category}`) ? t(`category:${item.category}`) : item.category}</span>
                                 <span className={cls.percent}>{(item.amount / reportTotalBalance * 100).toFixed(2) + '%'}</span>
                             </div>
                             <span className={cls.amount}>{reportType === 'expense' ? '' : '+'}{item.amount} {reportCurrency}</span>
