@@ -5,7 +5,7 @@ import { Doughnut } from 'react-chartjs-2';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend, TooltipItem } from 'chart.js';
 import { useSelector } from 'react-redux';
 import { getReportsCurrency, getReportsPeriod, getReportsTotalBalance, getReportsType } from '../model/selectors/reports';
-import { ChartData, ExpenseItem, Report } from '../model/types/report';
+import { ChartData, ExpenseItem } from '../model/types/report';
 import { getUserReports } from '../model/slice/reportsSlice';
 import { useTranslation } from 'react-i18next';
 import { formatDate } from 'shared/lib/formatDate/formatDate';
