@@ -1,0 +1,159 @@
+.chartComponent {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    @include only-mobile {
+        flex-direction: column;
+        gap: 50px;
+    }
+  }
+
+  .chartComponentWrapper {
+    border-radius: 20px;
+    border: 1px solid var(--color-border);
+    padding: 20px;
+  }
+
+  .chartTitle {
+    font-size: 25px;
+    margin-bottom: 20px;
+  }
+  
+  .doughnutChartWrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 40%;
+    position: relative;
+
+    @include only-mobile {
+        height: 100%;
+        width: 100%;
+    }
+  }
+
+  .doughnutChart {
+    z-index: 2;
+  }
+
+  .labelList {
+    list-style-type: none;
+    padding: 0;
+    width: 50%;
+
+    @include only-mobile {
+        width: 100%;
+    }
+
+    .labelItem {
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+      border-bottom: 0.5px solid var(--color-border);
+      font: var(--font-main-text);
+      padding: 10px 5px;
+
+      &:hover {
+        font-weight: bold;
+      }
+
+      .labelColor {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        margin-right: 0.5em;
+      }
+
+      .labelContent {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+      }
+    }
+
+    .labelItemFooter {
+        border-top: 1px solid var(--color-border);
+        border-bottom: none;
+        cursor: default;
+
+        &:hover {
+            font-weight: normal;
+          }
+    }
+
+    .labelItemHeader {
+        color: var(--color-disabled-text);
+        cursor: default;
+
+        &:hover {
+            font-weight: normal;
+          }
+    }
+  }
+
+  .chartWrapper {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1;
+  }
+
+  .chartInfo {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .chartInfoTitle {
+    font: var(--font-main-text);
+    color: var(--color-disabled-text);
+    font-size: 19px;
+  }
+
+  .chartInfoTotal {
+    font: var(--font-title-l);
+    font-size: 30px;
+  }
+
+  .chartInfoDate {
+    font: var(--font-main-text);
+    color: var(--color-disabled-text);
+  }
+
+  .categoryWrapper {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .amount {
+    font-family: var(--font-family-main-bold);
+    font-size: 13px;
+  }
+
+  .percent {
+    font-size: 14px;
+    color: var(--color-disabled-text);
+  }
+
+  .totalText {
+    font-family: var(--font-family-title-second);
+    text-transform: uppercase;
+    font-size: 18px;
+  }
+
+  .totalBalance {
+    font-family: var(--font-family-main-bold);
+    font-size: 16px;
+  }

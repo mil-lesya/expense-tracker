@@ -36,7 +36,7 @@ const DashboardPage: FC<DashboardPageProps> = (props) => {
   useEffect(() => {
     dispatch(fetchWallets({ page: 1, limit: 100 }));
     dispatch(fetchCategory());
-    dispatch(fetchTransactions({ page: 1, limit: 10 }));
+    dispatch(fetchTransactions({ page: 1, limit: 10, sort: 'date', order: 'ASC' }));
   }, []);
 
   return (

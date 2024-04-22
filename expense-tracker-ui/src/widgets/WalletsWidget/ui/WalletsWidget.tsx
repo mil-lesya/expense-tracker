@@ -26,7 +26,7 @@ const WalletsWidget: FC<WalletsWidgetProps> = (props) => {
             className={cls.walletWrapper}
         >
             <p className={cls.walletName}>{wallet.name}</p>
-            <p className={cls.walletBalance}>{wallet.balance} {wallet.currency}</p>
+            <p className={cls.walletBalance}>{Math.round(wallet.balance * 100) / 100} {wallet.currency}</p>
         </div>
        ))}
        </div>

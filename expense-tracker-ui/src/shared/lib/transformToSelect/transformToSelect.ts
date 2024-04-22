@@ -4,11 +4,13 @@ export function transformToSelectOptions<T> (
   items: T[],
   valueKey: keyof T,
   contentKey: keyof T,
-  iconKey?: keyof T
+  iconKey?: keyof T,
+  multiselect?: boolean
 ): SelectOption[] {
   return items.map(item => ({
     value: String(item[valueKey]), // Преобразование значения в строку
     content: item[contentKey], // Использование значения как есть, ожидается, что это будет string или number
-    icon: iconKey ? String(item[iconKey]) : undefined // Преобразование значения иконки в строку, если ключ указан
+    icon: iconKey ? String(item[iconKey]) : undefined, // Преобразование значения иконки в строку, если ключ указан
+    multiple: multiselect || false
   }));
 }

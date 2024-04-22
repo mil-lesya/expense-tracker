@@ -24,11 +24,21 @@
   src: url('/src/shared/assets/fonts/HelveticaNeueLight.otf') format('truetype');
 }
 
+
+@font-face {
+  font-display: swap;
+  font-family: 'Helvetica Neue Bold';
+  font-weight: 800;
+  font-style: normal;
+  src: url('/src/shared/assets/fonts/HelveticaNeueBold.otf') format('truetype');
+}
+
 :root {
   --font-family-title: 'Arsenal', 'Helvetica Neue', serif;
   --font-family-title-second: 'ArsenalBold', 'Helvetica Neue', serif;
   --font-family-subtitle: 'Arsenal', 'Helvetica Neue', serif;
   --font-family-main: 'Helvetica Neue', serif;
+  --font-family-main-bold: 'Helvetica Neue Bold', serif;
 
   /** Fonts */
   --font-size-title-xl: 38px;
