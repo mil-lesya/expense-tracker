@@ -196,7 +196,7 @@ export class TransactionService {
       return {
         walletId: transaction.wallet.id,
         categoryId: transaction.category,
-        amount: amount,
+        amount: transaction.type === TransactionType.expense ? -amount : amount,
       };
     });
 
