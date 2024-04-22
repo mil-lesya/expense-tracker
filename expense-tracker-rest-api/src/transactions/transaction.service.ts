@@ -194,21 +194,29 @@ export class TransactionService {
               transaction.amount,
             );
       return {
-        walletId: transaction.wallet.id,
-        categoryId: transaction.category,
-        amount: amount,
+        category: transaction.category,
+        amount: transaction.type === TransactionType.expense ? -amount : amount,
       };
     });
 
     const analytic = await Promise.all(responsePromises);
 
-    const totalBalance = analytic.reduce((acc, t) => {
-      return acc + t.amount;
-    }, 0);
+    const result = analytic.reduce(
+      (acc, { category, amount }) => {
+        const categoryId = category.id;
+        if (!acc.categories[categoryId]) {
+          acc.categories[categoryId] = { category, amount: 0 };
+        }
+        acc.categories[categoryId].amount += amount;
+        acc.totalBalance += amount;
+        return acc;
+      },
+      { categories: {}, totalBalance: 0 },
+    );
 
     return {
-      analytic,
-      totalBalance,
+      analytic: Object.values(result.categories),
+      totalBalance: result.totalBalance,
       currency: user.defaultCurrency,
     };
   }
