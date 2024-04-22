@@ -5,4 +5,8 @@
     border-radius: 20px;
     padding: 20px;
     gap: 20px;
+
+    @include only-mobile {
+        flex-direction: column;
+    }
 }

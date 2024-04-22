@@ -4,6 +4,7 @@ import cls from './Select.module.scss';
 import Tippy from '@tippyjs/react';
 import { SvgIcon } from 'shared/ui/SvgIcon';
 import OptionControl from 'shared/ui/OptionControl/OptionControl';
+import { useTranslation } from 'react-i18next';
 
 export enum ThemeSelect {
   CLEAR = 'clear',
@@ -39,8 +40,10 @@ const Select = (props: SelectProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const selectRef = useRef<HTMLButtonElement>(null);
 
-  const selectedOptionContent = options?.find(opt => opt.value === value)?.content || '';
-  const selectedOptionIcon = options?.find(opt => opt.value === value)?.icon;
+  const { t } = useTranslation();
+
+  // const selectedOptionContent = options?.find(opt => opt.value === value)?.content || '';
+  // const selectedOptionIcon = options?.find(opt => opt.value === value)?.icon;
 
   const [selectedValues, setSelectedValues] = useState(new Set<string>());
 
@@ -95,8 +98,8 @@ const Select = (props: SelectProps) => {
       // Множественный выбор: отображаем количество и иконку для очистки
       return (
         <span className={cls.content}>
-          {`Выбрано: ${multiSelectOptions.length} `}
-          <div onClick={() => { setSelectedValues(new Set()); }}><SvgIcon name="close" className={cls.icon} /></div>
+          <span>{`${t('select')}: ${multiSelectOptions.length} `}</span>
+          <div onClick={() => { setSelectedValues(new Set()); }} className={classNames(cls.icon, {}, [cls.close])}><SvgIcon name="close" /></div>
         </span>
       );
     } else if (selectedValues.size === 1) {

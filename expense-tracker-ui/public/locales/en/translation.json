@@ -9,5 +9,6 @@
     "pagination": {
         "showRows": "Show rows",
         "of": "of"
-    }
+    },
+    "select": "Selected"
 }

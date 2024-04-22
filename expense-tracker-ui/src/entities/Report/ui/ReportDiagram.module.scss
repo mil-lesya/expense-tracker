@@ -2,14 +2,22 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 20px;
-    border-radius: 20px;
-    border: 1px solid var(--color-border);
 
     @include only-mobile {
         flex-direction: column;
         gap: 50px;
     }
+  }
+
+  .chartComponentWrapper {
+    border-radius: 20px;
+    border: 1px solid var(--color-border);
+    padding: 20px;
+  }
+
+  .chartTitle {
+    font-size: 25px;
+    margin-bottom: 20px;
   }
   
   .doughnutChartWrapper {
@@ -17,7 +25,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    width: 50%; // Размер можно настроить
+    width: 40%;
     position: relative;
 
     @include only-mobile {
@@ -25,11 +33,15 @@
         width: 100%;
     }
   }
-  
+
+  .doughnutChart {
+    z-index: 2;
+  }
+
   .labelList {
     list-style-type: none;
     padding: 0;
-    width: 40%; // Размер можно настроить
+    width: 50%;
 
     @include only-mobile {
         width: 100%;
@@ -61,6 +73,25 @@
         width: 100%;
       }
     }
+
+    .labelItemFooter {
+        border-top: 1px solid var(--color-border);
+        border-bottom: none;
+        cursor: default;
+
+        &:hover {
+            font-weight: normal;
+          }
+    }
+
+    .labelItemHeader {
+        color: var(--color-disabled-text);
+        cursor: default;
+
+        &:hover {
+            font-weight: normal;
+          }
+    }
   }
 
   .chartWrapper {
@@ -69,20 +100,25 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    z-index: 1;
   }
 
   .chartInfo {
     position: absolute;
-    top: 40%;
-    left: 38%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
+    gap: 5px;
   }
 
   .chartInfoTitle {
     font: var(--font-main-text);
+    color: var(--color-disabled-text);
+    font-size: 19px;
   }
 
   .chartInfoTotal {
@@ -92,4 +128,32 @@
 
   .chartInfoDate {
     font: var(--font-main-text);
+    color: var(--color-disabled-text);
+  }
+
+  .categoryWrapper {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .amount {
+    font-family: var(--font-family-main-bold);
+    font-size: 13px;
+  }
+
+  .percent {
+    font-size: 14px;
+    color: var(--color-disabled-text);
+  }
+
+  .totalText {
+    font-family: var(--font-family-title-second);
+    text-transform: uppercase;
+    font-size: 18px;
+  }
+
+  .totalBalance {
+    font-family: var(--font-family-main-bold);
+    font-size: 16px;
   }

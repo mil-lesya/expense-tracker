@@ -12,6 +12,12 @@
     display: flex;
     align-items: flex-start;
     justify-content: space-between;
+
+    @include only-mobile {
+        margin-top: 10px;
+        flex-direction: column;
+        gap: 10px
+    }
 }
 
 .title {

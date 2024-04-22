@@ -3,43 +3,34 @@ import { classNames } from 'shared/lib/classNames/classNames';
 import cls from './FilterReports.module.scss';
 import DatePicker from 'shared/ui/DatePicker/DatePicker';
 import { useTranslation } from 'react-i18next';
-import DynamicModuleLoader, { ReducersList } from 'shared/lib/components/DynamicModuleLoader/DinamicModuleLoader';
-import { fetchWallets, getUserWallets, walletsReducer } from 'entities/Wallet';
-import { categoryReducer, fetchCategory, getUserCategories } from 'entities/Category';
-import { useAppDispatch } from 'shared/lib/hooks/useAppDispatch';
+import { getUserWallets } from 'entities/Wallet';
+import { getUserCategories } from 'entities/Category';
 import { useSelector } from 'react-redux';
 import { transformToSelectOptions } from 'shared/lib/transformToSelect/transformToSelect';
 import Select, { SelectOption } from 'shared/ui/Select/ui/Select';
 import { ReportType } from 'entities/Report';
-
-const initialReducers: ReducersList = {
-  wallets: walletsReducer,
-  category: categoryReducer
-};
+import dayjs from 'dayjs';
 
 interface FilterReportsProps {
   className?: string
   type: ReportType
+  onChangeDate?: (startDate: string, endDate: string) => void
+  onChangeWallets?: (value: string) => void
+  onChangeCategories?: (value: string) => void
 }
 
 const FilterReports: FC<FilterReportsProps> = (props) => {
-  const { className, type } = props;
+  const { className, type, onChangeDate, onChangeWallets, onChangeCategories } = props;
   const { t } = useTranslation(['reports', 'category']);
-  const dispatch = useAppDispatch();
 
   const wallets = useSelector(getUserWallets.selectAll);
   const categories = useSelector(getUserCategories.selectAll);
 
-  const [date, setDate] = useState(new Date().toISOString());
-  const [walletId, setWalletId] = useState('');
+  const [date, setDate] = useState(dayjs().startOf('month').toISOString());
+  const [walletId, setWalletId] = useState('all');
   const [walletOptions, setWalletOptions] = useState(null);
-  const [categoryId, setCategoryId] = useState('');
+  const [categoryId, setCategoryId] = useState('all');
   const [categoryOptions, setCategoryOptions] = useState(null);
-
-  useEffect(() => {
-    dispatch(fetchWallets({}));
-    dispatch(fetchCategory());
-  }, []);
 
   useEffect(() => {
     if (wallets.length > 0) {
@@ -62,22 +53,37 @@ const FilterReports: FC<FilterReportsProps> = (props) => {
     }
   }, [categories, type]);
 
+  useEffect(() => {
+    setCategoryId('all');
+    setWalletId('all');
+  }, [type]);
+
   const handleDateChange = (range: { startDate: Date, endDate: Date }) => {
-    setDate(new Date(range.startDate).toISOString());
+    const start = new Date(range.startDate).toISOString();
+    const end = new Date(range.endDate).toISOString();
+    setDate(start);
+    onChangeDate(start, end);
   };
 
   const onChangeWalletId = (value: string) => {
-    console.log(value);
     setWalletId(value);
+    if (value === 'all') {
+      onChangeWallets('');
+    } else {
+      onChangeWallets(value);
+    }
   };
 
   const onChangeCategoryId = (value: string) => {
-    console.log(value);
     setCategoryId(value);
+    if (value === 'all') {
+      onChangeCategories('');
+    } else {
+      onChangeCategories(value);
+    }
   };
 
   return (
-    <DynamicModuleLoader reducers={initialReducers}>
     <div className={classNames(cls.filterReports, {}, [className])}>
         <DatePicker
             initialDate={date}
@@ -99,7 +105,6 @@ const FilterReports: FC<FilterReportsProps> = (props) => {
             readonly={type === 'expense,income'}
         />
     </div>
-    </DynamicModuleLoader>
   );
 };
 
