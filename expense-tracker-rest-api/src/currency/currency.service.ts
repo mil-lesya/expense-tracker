@@ -10,12 +10,16 @@ export class CurrencyService {
     private readonly httpService: HttpService,
   ) {}
 
-  async getPairConversion(from: string, to: string, amount: number) {
+  async getPairConversion(
+    from: string,
+    to: string,
+    amount: number,
+  ): Promise<number> {
     const response = await firstValueFrom(
       this.httpService.get(
         `${this.configService.get('API_DOMAIN')}${this.configService.get('API_KEY')}/pair/${from}/${to}/${amount}`,
       ),
     );
-    return Math.round(response.data.conversion_result * 100) / 100;
+    return response.data.conversion_result;
   }
 }
