@@ -283,9 +283,21 @@ export class TransactionService {
     const wallet = await this.walletService.findById(transaction.wallet.id);
     this.authService.checkAuthorization(userId, wallet.user.id);
 
-    return this.getTransactionResponse(
-      await this.transactionRepository.remove(transaction),
-    );
+    const removedTransaction =
+      await this.transactionRepository.remove(transaction);
+
+    let amount =
+      removedTransaction.currency === wallet.currency
+        ? transaction.amount
+        : await this.currencyService.getPairConversion(
+            removedTransaction.currency,
+            wallet.currency,
+            removedTransaction.amount,
+          );
+
+    amount = transaction.type === TransactionType.expense ? amount : -amount;
+    await this.walletService.updateBalance(wallet.id, amount);
+    return this.getTransactionResponse(removedTransaction);
   }
 
   getTransactionResponse(transaction: Transaction): TransactionResponseDto {

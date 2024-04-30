@@ -31,7 +31,10 @@ export class Transaction {
   @JoinColumn({ name: 'category_id' })
   category: Category;
 
-  @ManyToOne(() => Wallet, (wallet) => wallet.transactions, { eager: true })
+  @ManyToOne(() => Wallet, (wallet) => wallet.transactions, {
+    eager: true,
+    onDelete: 'CASCADE',
+  })
   @JoinColumn({ name: 'wallet_id' })
   @Exclude()
   wallet: Wallet;
