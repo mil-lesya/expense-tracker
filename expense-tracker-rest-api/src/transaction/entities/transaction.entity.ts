@@ -5,10 +5,10 @@ import {
   ManyToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { Category } from '../../categories/entities/category.entity';
+import { Category } from '../../category/entities/category.entity';
 import { CurrencyCode } from '../../currency/enums/currency-code.enum';
 import { TransactionType } from '../enums/transaction-type.enum';
-import { Wallet } from '../../wallets/entities/wallet.entity';
+import { Wallet } from '../../wallet/entities/wallet.entity';
 import { Exclude } from 'class-transformer';
 
 @Entity()
@@ -31,10 +31,7 @@ export class Transaction {
   @JoinColumn({ name: 'category_id' })
   category: Category;
 
-  @ManyToOne(() => Wallet, (wallet) => wallet.transactions, {
-    eager: true,
-    onDelete: 'CASCADE',
-  })
+  @ManyToOne(() => Wallet, (wallet) => wallet.transactions, { eager: true })
   @JoinColumn({ name: 'wallet_id' })
   @Exclude()
   wallet: Wallet;

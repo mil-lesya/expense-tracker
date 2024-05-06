@@ -5,9 +5,7 @@ import {
   ManyToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { CurrencyCode } from '../../currency/enums/currency-code.enum';
-import { Category } from '../../categories/entities/category.entity';
-import { User } from '../../users/entities/user.entity';
+import { Category } from '../../category/entities/category.entity';
 import { Exclude } from 'class-transformer';
 import { Budget } from '../../budget/entity/budget.entity';
 

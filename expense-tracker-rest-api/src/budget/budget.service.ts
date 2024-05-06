@@ -4,7 +4,7 @@ import { Budget } from './entity/budget.entity';
 import { UpdateBudgetDto } from './dto/update-budget.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { UserService } from '../users/user.service';
+import { UserService } from '../user/user.service';
 import { AuthService } from '../auth/auth.service';
 import { Limit } from '../limit/entity/limit.entity';
 

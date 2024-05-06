@@ -6,7 +6,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { AuthService } from '../auth/auth.service';
 import { BudgetService } from '../budget/budget.service';
-import { CategoryService } from '../categories/category.service';
+import { CategoryService } from '../category/category.service';
 
 @Injectable()
 export class LimitService {

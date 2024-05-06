@@ -3,10 +3,9 @@ import { BudgetController } from './budget.controller';
 import { BudgetService } from './budget.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Budget } from './entity/budget.entity';
-import { UserModule } from '../users/user.module';
+import { UserModule } from '../user/user.module';
 import { AuthModule } from '../auth/auth.module';
 import { AuthService } from '../auth/auth.service';
-import { UserService } from '../users/user.service';
 import { Limit } from '../limit/entity/limit.entity';
 
 @Module({

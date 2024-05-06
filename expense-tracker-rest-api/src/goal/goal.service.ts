@@ -4,7 +4,7 @@ import { UpdateGoalDto } from './dto/update-goal.dto';
 import { Goal } from './entities/goal.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { UserService } from '../users/user.service';
+import { UserService } from '../user/user.service';
 import { AuthService } from '../auth/auth.service';
 import { ConfigService } from '@nestjs/config';
 import { join } from 'path';

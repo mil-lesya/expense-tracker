@@ -7,7 +7,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { FindManyOptions, Repository } from 'typeorm';
 import { Wallet } from './entities/wallet.entity';
 import { CreateWalletDto } from './dto/create-wallet.dto';
-import { UserService } from '../users/user.service';
+import { UserService } from '../user/user.service';
 import { AuthService } from '../auth/auth.service';
 import { UpdateWalletDto } from './dto/update-wallet.dto';
 import { CurrencyService } from '../currency/currency.service';

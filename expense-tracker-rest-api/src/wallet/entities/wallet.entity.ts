@@ -7,8 +7,8 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { CurrencyCode } from '../../currency/enums/currency-code.enum';
-import { User } from '../../users/entities/user.entity';
-import { Transaction } from '../../transactions/entities/transaction.entity';
+import { User } from '../../user/entities/user.entity';
+import { Transaction } from '../../transaction/entities/transaction.entity';
 import { Exclude } from 'class-transformer';
 
 @Entity()

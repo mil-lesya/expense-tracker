@@ -7,7 +7,7 @@ import {
 } from 'typeorm';
 import { Exclude } from 'class-transformer';
 import { CurrencyCode } from '../../currency/enums/currency-code.enum';
-import { User } from '../../users/entities/user.entity';
+import { User } from '../../user/entities/user.entity';
 
 @Entity()
 export class Goal {

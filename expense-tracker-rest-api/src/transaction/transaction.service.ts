@@ -17,14 +17,14 @@ import {
 import { AuthService } from '../auth/auth.service';
 import { Transaction } from './entities/transaction.entity';
 import { CreateTransactionDto } from './dto/create-transaction.dto';
-import { WalletService } from '../wallets/wallet.service';
-import { CategoryService } from '../categories/category.service';
+import { WalletService } from '../wallet/wallet.service';
+import { CategoryService } from '../category/category.service';
 import { TransactionResponseDto } from './interfaces/transaction.response.dto';
 import { UpdateTransactionDto } from './dto/update-transaction.dto';
 import { TransactionType } from './enums/transaction-type.enum';
 import { CurrencyCode } from '../currency/enums/currency-code.enum';
 import { CurrencyService } from '../currency/currency.service';
-import { UserService } from '../users/user.service';
+import { UserService } from '../user/user.service';
 
 @Injectable()
 export class TransactionService {
@@ -283,21 +283,9 @@ export class TransactionService {
     const wallet = await this.walletService.findById(transaction.wallet.id);
     this.authService.checkAuthorization(userId, wallet.user.id);
 
-    const removedTransaction =
-      await this.transactionRepository.remove(transaction);
-
-    let amount =
-      removedTransaction.currency === wallet.currency
-        ? transaction.amount
-        : await this.currencyService.getPairConversion(
-            removedTransaction.currency,
-            wallet.currency,
-            removedTransaction.amount,
-          );
-
-    amount = transaction.type === TransactionType.expense ? amount : -amount;
-    await this.walletService.updateBalance(wallet.id, amount);
-    return this.getTransactionResponse(removedTransaction);
+    return this.getTransactionResponse(
+      await this.transactionRepository.remove(transaction),
+    );
   }
 
   getTransactionResponse(transaction: Transaction): TransactionResponseDto {
