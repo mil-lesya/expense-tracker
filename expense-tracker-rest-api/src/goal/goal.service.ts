@@ -25,7 +25,7 @@ export class GoalService {
       ...createGoalDto,
       user,
       isCompleted: false,
-      depositedAmount: 0,
+      depositedAmount: createGoalDto.depositedAmount || 0,
       image: `${this.configService.get('API_DOMAIN')}/${userId}/goals/${createGoalDto.image}`,
     });
     return this.goalRepository.save(goal);

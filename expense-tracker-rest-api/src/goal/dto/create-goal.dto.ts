@@ -1,9 +1,6 @@
 import {
-  IsBoolean,
-  IsDate,
   IsDateString,
   IsEnum,
-  IsNumber,
   IsNumberString,
   IsOptional,
   IsString,
@@ -26,4 +23,8 @@ export class CreateGoalDto {
   @IsString()
   @IsOptional()
   image: string;
+
+  @IsNumberString()
+  @IsOptional()
+  depositedAmount: number;
 }
