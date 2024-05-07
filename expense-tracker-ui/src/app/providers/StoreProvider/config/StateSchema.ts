@@ -1,10 +1,13 @@
 import { AnyAction, CombinedState, EnhancedStore, Reducer, ReducersMapObject } from '@reduxjs/toolkit';
 import { AxiosInstance } from 'axios';
+import { BudgetSchema } from 'entities/Budget';
 import { CategorySchema } from 'entities/Category';
+import { GoalSchema } from 'entities/Goal';
 import { ReportSchema } from 'entities/Report';
 import { TransactionSchema } from 'entities/Transaction';
 import { UserSchema } from 'entities/User';
 import { WalletSchema } from 'entities/Wallet';
+import { AddEditGoalSchema } from 'features/AddEditGoal';
 import { AddEditWalletSchema } from 'features/AddEditWallet';
 import { AddTransactionSchema } from 'features/AddTransaction';
 import { LoginSchema } from 'features/Auth';
@@ -35,6 +38,11 @@ export interface StateSchema {
   category?: CategorySchema
   // Аналитика
   reports?: ReportSchema
+  // Бюджеты
+  budgets?: BudgetSchema
+  // Цели
+  goals?: GoalSchema
+  addEditGoal?: AddEditGoalSchema
 }
 
 export type StateSchemaKey = keyof StateSchema;

@@ -22,6 +22,7 @@ export interface TransactionSchema extends EntityState<Transaction> {
   count?: number
   totalPages?: number
   currentPage: number
+  limit: number
 }
 
 export interface RecordsPageTransactionDto extends RecordsPagesDto {

@@ -10,5 +10,6 @@
         "showRows": "Show rows",
         "of": "of"
     },
-    "select": "Selected"
+    "select": "Selected",
+    "imageUpload": "Drop your image here or browse"
 }
