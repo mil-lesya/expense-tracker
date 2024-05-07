@@ -17,7 +17,7 @@ export class CurrencyService {
   ): Promise<number> {
     const response = await firstValueFrom(
       this.httpService.get(
-        `${this.configService.get('API_DOMAIN')}${this.configService.get('API_KEY')}/pair/${from}/${to}/${amount}`,
+        `${this.configService.get('EXCHANGE_API')}${this.configService.get('API_KEY')}/pair/${from}/${to}/${amount}`,
       ),
     );
     return response.data.conversion_result;
