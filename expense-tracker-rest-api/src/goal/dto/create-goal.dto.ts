@@ -18,6 +18,7 @@ export class CreateGoalDto {
   currency: CurrencyCode;
 
   @IsDateString()
+  @IsOptional()
   targetDate: Date;
 
   @IsString()
