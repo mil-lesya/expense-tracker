@@ -65,10 +65,6 @@ export class GoalService {
 
     this.authService.checkAuthorization(userId, goal.user.id);
 
-    if (updateGoalDto.targetDate === '' || 'null') {
-      updateGoalDto.targetDate = null;
-    }
-
     if (updateGoalDto.image) {
       updateGoalDto.image = `${this.configService.get('API_DOMAIN')}/${userId}/goals/${updateGoalDto.image}`;
       if (goal.image) {

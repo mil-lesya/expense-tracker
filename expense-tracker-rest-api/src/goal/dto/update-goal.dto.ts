@@ -1,14 +1,18 @@
-import { IsEnum, IsNumberString, IsOptional, IsString } from 'class-validator';
+import {
+  IsBoolean,
+  IsEnum,
+  IsNumber,
+  IsOptional,
+  IsString,
+} from 'class-validator';
 import { CurrencyCode } from '../../currency/enums/currency-code.enum';
-import { Transform } from 'class-transformer';
 
 export class UpdateGoalDto {
   @IsString()
   @IsOptional()
   name: string;
 
-  @IsNumberString()
-  @Transform(({ value }) => Number(value))
+  @IsNumber()
   @IsOptional()
   goalAmount: number;
 
@@ -17,19 +21,17 @@ export class UpdateGoalDto {
   currency: CurrencyCode;
 
   @IsOptional()
-  @Transform(({ value }) => new Date(value))
   targetDate: string;
 
-  @IsNumberString()
+  @IsNumber()
   @IsOptional()
-  @Transform(({ value }) => Number(value))
   depositedAmount: number;
 
   @IsString()
   @IsOptional()
   image: string;
 
+  @IsBoolean()
   @IsOptional()
-  @Transform(({ value }) => value === 'true')
   isCompleted: boolean;
 }
