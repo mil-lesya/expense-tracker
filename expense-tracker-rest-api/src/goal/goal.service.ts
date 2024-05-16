@@ -63,6 +63,10 @@ export class GoalService {
       throw new NotFoundException('Goal not found');
     }
 
+    if (updateGoalDto.targetDate === 'null') {
+      updateGoalDto.targetDate = null;
+    }
+
     this.authService.checkAuthorization(userId, goal.user.id);
 
     if (updateGoalDto.image) {
