@@ -1,24 +1,25 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { ThunkConfig } from 'app/providers/StoreProvider';
-import { RecordsPagesDto } from 'shared/types/requestTypes';
-import { GoalsResponseDto } from '../types/goal';
+import { GoalsResponseDto, RecordsPageGoalsDto } from '../types/goal';
 
 export const fetchGoals = createAsyncThunk<
 GoalsResponseDto,
-RecordsPagesDto,
+null,
 ThunkConfig<string>
 >(
   'goals/fetchGoals',
-  async ({ page, limit }, thunkApi) => {
-    const { extra, rejectWithValue } = thunkApi;
+  async (_, thunkApi) => {
+    const { extra, rejectWithValue, getState } = thunkApi;
 
+    const state = getState().goals;
     try {
       const response = await extra.api.get<GoalsResponseDto>(
         '/goals',
         {
           params: {
-            page,
-            limit
+            page: state.currentPage,
+            limit: state.limit,
+            completed: state.completed
           }
         }
       );

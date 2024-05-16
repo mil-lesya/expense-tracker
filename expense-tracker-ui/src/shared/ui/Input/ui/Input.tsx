@@ -1,8 +1,8 @@
 import { classNames } from 'shared/lib/classNames/classNames';
 import cls from './Input.module.scss';
-import { InputHTMLAttributes, FC, memo, useState, useEffect } from 'react';
+import { InputHTMLAttributes, FC, memo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { IMaskInput, IMaskInputProps, useIMask } from 'react-imask';
+import { IMaskInput, IMaskInputProps } from 'react-imask';
 
 export type HTMLInputProps = Omit<
 InputHTMLAttributes<HTMLInputElement>,

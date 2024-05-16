@@ -8,11 +8,12 @@ interface GoalsListProps {
   goals: Goal[]
   onClickEdit: (goal: Goal) => void
   onClickDelete: (goal: Goal) => void
+  onClickChangeAmount: (goal: Goal, isTakeFrom: boolean) => void
   className?: string
 }
 
 const GoalsList: FC<GoalsListProps> = (props) => {
-  const { className, goals, onClickEdit, onClickDelete } = props;
+  const { className, goals, onClickEdit, onClickDelete, onClickChangeAmount } = props;
 
   return (
     <div className={classNames(cls.walletsList, {}, [className])}>
@@ -20,6 +21,7 @@ const GoalsList: FC<GoalsListProps> = (props) => {
         <GoalListItem
             onClickEdit={onClickEdit}
             onClickDelete={onClickDelete}
+            onClickChangeAmount={onClickChangeAmount}
             key={item.id}
             goal={item}
         />

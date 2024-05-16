@@ -11,6 +11,8 @@ import { AddEditGoalSchema } from 'features/AddEditGoal';
 import { AddEditWalletSchema } from 'features/AddEditWallet';
 import { AddTransactionSchema } from 'features/AddTransaction';
 import { LoginSchema } from 'features/Auth';
+import { ChangeDepositedAmountGoalSchema } from 'features/ChangeDepositedAmountGoal';
+import { DeleteGoalSchema } from 'features/DeleteGoal';
 import { DeleteTransactionSchema } from 'features/DeleteTransaction';
 import { DeleteWalletSchema } from 'features/DeleteWallet';
 import { EditTransactionSchema } from 'features/EditTransaction';
@@ -43,6 +45,8 @@ export interface StateSchema {
   // Цели
   goals?: GoalSchema
   addEditGoal?: AddEditGoalSchema
+  deleteGoal?: DeleteGoalSchema
+  changeDepositedAmountGoal?: ChangeDepositedAmountGoalSchema
 }
 
 export type StateSchemaKey = keyof StateSchema;

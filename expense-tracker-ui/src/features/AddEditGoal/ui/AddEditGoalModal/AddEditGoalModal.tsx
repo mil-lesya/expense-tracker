@@ -227,7 +227,6 @@ const AddEditGoalModal: FC<AddEditGoalModalProps> = (props) => {
                 value={currency}
                 options={currencyOptions}
                 onChange={onChangeCurrency}
-                readonly={isEdit}
             />
               <Input
                 value={depositedAmount}

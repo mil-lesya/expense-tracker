@@ -20,10 +20,23 @@ const goalsSlice = createSlice({
   initialState: goalsAdapter.getInitialState<GoalSchema>({
     isLoading: false,
     error: undefined,
+    currentPage: 1,
+    completed: false,
+    limit: 10,
     ids: [],
     entities: {}
   }),
-  reducers: {},
+  reducers: {
+    setLimit: (state, action: PayloadAction<number>) => {
+      state.limit = action.payload;
+    },
+    setCurrentPage: (state, action: PayloadAction<number>) => {
+      state.currentPage = action.payload;
+    },
+    setCompleted: (state, action: PayloadAction<boolean>) => {
+      state.completed = action.payload;
+    }
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchGoals.pending, (state) => {
@@ -45,3 +58,4 @@ const goalsSlice = createSlice({
 });
 
 export const { reducer: goalsReducer } = goalsSlice;
+export const { actions: goalsActions } = goalsSlice;

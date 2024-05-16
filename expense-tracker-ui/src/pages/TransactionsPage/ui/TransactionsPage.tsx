@@ -35,10 +35,7 @@ const TransactionsPage: FC<TransactionsPageProps> = (props) => {
   const totalPages = useSelector(getTransactionsTotalPages);
   const transactionsIsLoading = useSelector(getTransactionsIsLoading);
   const limit = useSelector(getTransactionsLimit);
-  // const currentPage = useSelector(getTransactionsCurrentPage);
-
-  const [pageIndex, setPageIndex] = useState(1);
-  const [countRecords, setCountRecords] = useState(10);
+  const currentPage = useSelector(getTransactionsCurrentPage);
 
   const [isDeleteModal, setIsDeleteModal] = useState(false);
   const [deleteTransaction, setDeleteTransaction] = useState(null);
@@ -52,11 +49,11 @@ const TransactionsPage: FC<TransactionsPageProps> = (props) => {
   }, []);
 
   useEffect(() => {
-    dispatch(fetchTransactions({ page: pageIndex, limit }));
-  }, [pageIndex, limit]);
+    dispatch(fetchTransactions({ page: currentPage, limit }));
+  }, [currentPage, limit]);
 
   const onPageChange = (page: number) => {
-    setPageIndex(page);
+    dispatch(transactionsActions.setCurrentPage(page));
   };
 
   const onRowsPerPageChange = (numberOfRows: number) => {
@@ -100,7 +97,7 @@ const TransactionsPage: FC<TransactionsPageProps> = (props) => {
               countRecords={limit}
               count={transactionsCount}
               totalPages={totalPages}
-              currentPage={pageIndex}
+              currentPage={Number(currentPage)}
               onPageChange={onPageChange}
               onRowsPerPageChange={onRowsPerPageChange}
             />
@@ -117,14 +114,14 @@ const TransactionsPage: FC<TransactionsPageProps> = (props) => {
         isOpen={isDeleteModal}
         onClose={onToggleDeleteModal}
         transaction={deleteTransaction}
-        currentPage={pageIndex}
+        currentPage={currentPage}
         limit={limit}
       />
       <EditTransactionModal
         isOpen={isEditModal}
         onClose={onToggleEditModal}
         transaction={editTransaction}
-        currentPage={pageIndex}
+        currentPage={currentPage}
         limit={limit}
       />
     </DynamicModuleLoader>

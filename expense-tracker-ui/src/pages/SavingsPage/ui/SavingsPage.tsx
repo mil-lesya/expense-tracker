@@ -9,15 +9,14 @@ import { useTranslation } from 'react-i18next';
 import { useAppDispatch } from 'shared/lib/hooks/useAppDispatch';
 import { useSelector, useStore } from 'react-redux';
 import { ReduxStoreWidthManager } from 'app/providers/StoreProvider';
-import { getUserGoals, goalsReducer } from 'entities/Goal/model/slice/goalSlice';
-import { getGoalsIsLoading } from 'entities/Goal/model/selectors/goal';
 import { AddEditGoalModal, addEditGoalReducer } from 'features/AddEditGoal';
 import { Goal } from 'entities/Goal/model/types/goal';
-import { fetchGoals } from 'entities/Goal/model/services/fetchGoals';
 import { PageLoader } from 'shared/ui/PageLoader';
 import { EmptyBlock } from 'shared/ui/EmptyBlock';
-import { GoalsList } from 'entities/Goal';
+import { GoalsList, getGoalsCompleted, getGoalsIsLoading, fetchGoals, getUserGoals, goalsReducer, getGoalsLimit, getGoalsCurrentPage, goalsActions } from 'entities/Goal';
 import DynamicModuleLoader, { ReducersList } from 'shared/lib/components/DynamicModuleLoader/DinamicModuleLoader';
+import { DeleteGoalModal, deleteGoalReducer } from 'features/DeleteGoal';
+import { ChangeDepositedAmountGoalModal } from 'features/ChangeDepositedAmountGoal';
 
 const reducers: ReducersList = {
   goals: goalsReducer
@@ -36,11 +35,17 @@ const SavingsPage: FC<SavingsPageProps> = (props) => {
   const store = useStore() as ReduxStoreWidthManager;
   const goals = useSelector(getUserGoals.selectAll);
   const goalsIsLoading = useSelector(getGoalsIsLoading);
+  const isCompleted = useSelector(getGoalsCompleted);
+  const limit = useSelector(getGoalsLimit);
+  const currentPage = useSelector(getGoalsCurrentPage);
 
   const [isAddEditGoalModal, setIsAddEditGoalModal] = useState(false);
   const [isDeleteGoalModal, setIsDeleteGoalModal] = useState(false);
+  const [isChangeDepositedAmountGoalModal, setIsChangeDepositedAmountGoalModal] = useState(false);
   const [editGoal, setEditGoal] = useState(null);
   const [deleteGoal, setDeleteGoal] = useState(null);
+  const [changeAmountGoal, setChangeAmountGoal] = useState(null);
+  const [isTakeFrom, setIsTakeFrom] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
 
   const onToggleAddEditModal = useCallback(() => {
@@ -58,16 +63,20 @@ const SavingsPage: FC<SavingsPageProps> = (props) => {
   }, []);
 
   const onToggleDeleteModal = useCallback(() => {
-    // setIsDeleteGoalModal((prev) => {
-    //   if (prev) {
-    //     store.reducerManager.remove('deleteWallet');
-    //     dispatch({ type: '@DESTROY deleteWallet reducer' });
-    //   } else {
-    //     store.reducerManager.add('deleteWallet', deleteWalletReducer);
-    //     dispatch({ type: '@INIT deleteWallet reducer' });
-    //   }
-    //   return !prev;
-    // });
+    setIsDeleteGoalModal((prev) => {
+      if (prev) {
+        store.reducerManager.remove('deleteGoal');
+        dispatch({ type: '@DESTROY deleteGoal reducer' });
+      } else {
+        store.reducerManager.add('deleteGoal', deleteGoalReducer);
+        dispatch({ type: '@INIT deleteGoal reducer' });
+      }
+      return !prev;
+    });
+  }, []);
+
+  const onToggleChangeDepositedAmountModal = useCallback(() => {
+    setIsChangeDepositedAmountGoalModal((prev) => !prev);
   }, []);
 
   const onOpenEditModal = useCallback((goal: Goal) => {
@@ -84,7 +93,17 @@ const SavingsPage: FC<SavingsPageProps> = (props) => {
   }, []);
 
   useEffect(() => {
-    dispatch(fetchGoals({ page: 1, limit: 10 }));
+    dispatch(fetchGoals());
+  }, [isCompleted]);
+
+  const onChangeDepositedAmountModal = useCallback((goal: Goal, isTakeFrom: boolean) => {
+    setChangeAmountGoal(goal);
+    setIsTakeFrom(isTakeFrom);
+    onToggleChangeDepositedAmountModal();
+  }, []);
+
+  const onChangeCompleted = useCallback((val: boolean) => {
+    dispatch(goalsActions.setCompleted(val));
   }, []);
 
   return (
@@ -98,12 +117,20 @@ const SavingsPage: FC<SavingsPageProps> = (props) => {
             onClick={onToggleAddEditModal}>
           {t('info')}
         </PageInfoBlock>
+        <div className={cls.titleWrapper}>
+          <p className={cls.title}>{t('listTitle')}</p>
+          <div className={cls.controls}>
+            <Button theme={ThemeButton.GREY} active={!isCompleted} onClick={() => { onChangeCompleted(false); }}>{t('buttons.active')}</Button>
+            <Button theme={ThemeButton.GREY} active={isCompleted} onClick={() => { onChangeCompleted(true); }}>{t('buttons.completed')}</Button>
+          </div>
+        </div>
 
         {goals.length
           ? (<GoalsList
                 goals={goals}
                 onClickEdit={onOpenEditModal}
                 onClickDelete={onDeleteModal}
+                onClickChangeAmount={onChangeDepositedAmountModal}
               />)
           : (<EmptyBlock>{t('emptyList')}</EmptyBlock>)}
         </div>)}
@@ -112,6 +139,17 @@ const SavingsPage: FC<SavingsPageProps> = (props) => {
           editGoalData={editGoal}
           isOpen={isAddEditGoalModal}
           onClose={onToggleAddEditModal}
+        />
+        <DeleteGoalModal
+          isOpen={isDeleteGoalModal}
+          onClose={onToggleDeleteModal}
+          goal={deleteGoal}
+        />
+        <ChangeDepositedAmountGoalModal
+          goal={changeAmountGoal}
+          isOpen={isChangeDepositedAmountGoalModal}
+          onClose={onToggleChangeDepositedAmountModal}
+          isTakeFrom={isTakeFrom}
         />
     </DynamicModuleLoader>
   );

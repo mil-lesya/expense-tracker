@@ -1,6 +1,6 @@
 import { EntityState } from '@reduxjs/toolkit';
 import { CurrencyCode } from 'shared/const/common';
-import { RecordsPagesResponse } from 'shared/types/requestTypes';
+import { RecordsPagesDto, RecordsPagesResponse } from 'shared/types/requestTypes';
 
 export interface Goal {
   id: string
@@ -19,6 +19,12 @@ export interface GoalSchema extends EntityState<Goal> {
   count?: number
   totalPages?: number
   currentPage?: number
+  limit: number
+  completed: boolean
+}
+
+export interface RecordsPageGoalsDto extends RecordsPagesDto {
+  completed: boolean
 }
 
 export interface GoalsResponseDto extends RecordsPagesResponse {

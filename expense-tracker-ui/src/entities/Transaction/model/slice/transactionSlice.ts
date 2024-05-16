@@ -28,6 +28,9 @@ const transactionsSlice = createSlice({
   reducers: {
     setLimit: (state, action: PayloadAction<number>) => {
       state.limit = action.payload;
+    },
+    setCurrentPage: (state, action: PayloadAction<number>) => {
+      state.currentPage = action.payload;
     }
   },
   extraReducers: (builder) => {

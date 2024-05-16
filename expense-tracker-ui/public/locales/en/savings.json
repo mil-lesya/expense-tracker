@@ -3,10 +3,15 @@
     "buttons": {
         "create": "Create a goal",
         "edit": "Edit",
-        "delete": "Delete"
+        "delete": "Delete",
+        "contribute": "Contribute",
+        "takeFrom": "Take from",
+        "active": "Active",
+        "completed": "Completed"
     },
     "info": "Setting financial goals and cultivating a savings habit are critical components of achieving financial stability and success. They provide direction, motivation, and a sense of purpose for your financial efforts, and they can help you build wealth and prepare for unexpected expenses.",
     "emptyList": "No goals found. Create a new goal",
+    "listTitle": "Savings goals",
     "modal": {
         "buttonCreate": "Create",
         "buttonEdit": "Edit",
@@ -15,6 +20,8 @@
         "titleAdd": "Add a new goal",
         "titleEdit": "Edit a goal",
         "titleDelete": "Delete a goal",
+        "titleContribute": "Contribute amount",
+        "titleTakeFrom": "Take from amount",
         "subtitle": "What are you saving for?",
         "deleteQuestion": "Are you sure you want to delete your goal ",
         "deleteWarning": "This action cannot be undone",

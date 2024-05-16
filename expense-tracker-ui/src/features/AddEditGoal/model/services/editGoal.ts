@@ -23,7 +23,7 @@ ThunkConfig<string>
         throw new Error();
       }
 
-      dispatch(fetchGoals({ page: 1, limit: 200 }));
+      dispatch(fetchGoals());
 
       return response.data;
     } catch (e) {
