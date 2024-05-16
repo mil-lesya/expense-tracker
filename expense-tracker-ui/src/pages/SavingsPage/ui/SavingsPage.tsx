@@ -13,10 +13,11 @@ import { AddEditGoalModal, addEditGoalReducer } from 'features/AddEditGoal';
 import { Goal } from 'entities/Goal/model/types/goal';
 import { PageLoader } from 'shared/ui/PageLoader';
 import { EmptyBlock } from 'shared/ui/EmptyBlock';
-import { GoalsList, getGoalsCompleted, getGoalsIsLoading, fetchGoals, getUserGoals, goalsReducer, getGoalsLimit, getGoalsCurrentPage, goalsActions } from 'entities/Goal';
+import { GoalsList, getGoalsCompleted, getGoalsIsLoading, fetchGoals, getUserGoals, goalsReducer, getGoalsLimit, getGoalsCurrentPage, goalsActions, getGoalsTotalPages, getGoalsCount } from 'entities/Goal';
 import DynamicModuleLoader, { ReducersList } from 'shared/lib/components/DynamicModuleLoader/DinamicModuleLoader';
 import { DeleteGoalModal, deleteGoalReducer } from 'features/DeleteGoal';
 import { ChangeDepositedAmountGoalModal } from 'features/ChangeDepositedAmountGoal';
+import Pagination from 'shared/ui/Pagination/Pagination';
 
 const reducers: ReducersList = {
   goals: goalsReducer
@@ -38,6 +39,8 @@ const SavingsPage: FC<SavingsPageProps> = (props) => {
   const isCompleted = useSelector(getGoalsCompleted);
   const limit = useSelector(getGoalsLimit);
   const currentPage = useSelector(getGoalsCurrentPage);
+  const totalPages = useSelector(getGoalsTotalPages);
+  const goalsCount = useSelector(getGoalsCount);
 
   const [isAddEditGoalModal, setIsAddEditGoalModal] = useState(false);
   const [isDeleteGoalModal, setIsDeleteGoalModal] = useState(false);
@@ -106,6 +109,14 @@ const SavingsPage: FC<SavingsPageProps> = (props) => {
     dispatch(goalsActions.setCompleted(val));
   }, []);
 
+  const onPageChange = (page: number) => {
+    dispatch(goalsActions.setCurrentPage(page));
+  };
+
+  const onRowsPerPageChange = (numberOfRows: number) => {
+    dispatch(goalsActions.setLimit(numberOfRows));
+  };
+
   return (
     <DynamicModuleLoader reducers={reducers}>
       <PageHeader>{t('title')}</PageHeader>
@@ -126,12 +137,25 @@ const SavingsPage: FC<SavingsPageProps> = (props) => {
         </div>
 
         {goals.length
-          ? (<GoalsList
+          ? (
+            <>
+              <GoalsList
                 goals={goals}
                 onClickEdit={onOpenEditModal}
                 onClickDelete={onDeleteModal}
                 onClickChangeAmount={onChangeDepositedAmountModal}
-              />)
+              />
+              {goals.length >= 5 && (
+                <Pagination
+                  countRecords={limit}
+                  count={goalsCount}
+                  totalPages={totalPages}
+                  currentPage={Number(currentPage)}
+                  onPageChange={onPageChange}
+                  onRowsPerPageChange={onRowsPerPageChange}
+                />
+              )}
+            </>)
           : (<EmptyBlock>{t('emptyList')}</EmptyBlock>)}
         </div>)}
         <AddEditGoalModal

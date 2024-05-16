@@ -49,6 +49,9 @@ const goalsSlice = createSlice({
       ) => {
         state.isLoading = false;
         goalsAdapter.setAll(state, action.payload.goals);
+        state.count = action.payload.count;
+        state.currentPage = action.payload.currentPage;
+        state.totalPages = action.payload.totalPages;
       })
       .addCase(fetchGoals.rejected, (state, action) => {
         state.isLoading = false;

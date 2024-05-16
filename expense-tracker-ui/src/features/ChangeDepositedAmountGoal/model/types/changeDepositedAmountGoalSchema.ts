@@ -7,4 +7,5 @@ export interface ChangeDepositedAmountGoalSchema {
 export interface ChangeDepositedAmountGoalDto {
   id: string
   depositedAmount: number
+  isCompleted?: boolean
 }

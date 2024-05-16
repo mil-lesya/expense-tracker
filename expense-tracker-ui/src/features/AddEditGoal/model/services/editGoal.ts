@@ -14,6 +14,7 @@ ThunkConfig<string>
   async ({ id, ...goalData }, thunkApi) => {
     const { extra, rejectWithValue, dispatch } = thunkApi;
 
+    console.log(goalData);
     const formData = toFormData(goalData);
 
     try {

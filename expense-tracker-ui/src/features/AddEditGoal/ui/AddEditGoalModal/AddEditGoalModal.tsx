@@ -70,6 +70,10 @@ const AddEditGoalModal: FC<AddEditGoalModalProps> = (props) => {
       dispatch(addEditGoalActions.setCurrency(editGoalData.currency));
       dispatch(addEditGoalActions.setDepositedAmount(editGoalData.depositedAmount));
       dispatch(addEditGoalActions.setTargetDate(editGoalData.targetDate));
+
+      if (targetDate) {
+        setIsTargetDate(true);
+      }
     }
   }, [isEdit, editGoalData]);
 
@@ -78,7 +82,7 @@ const AddEditGoalModal: FC<AddEditGoalModalProps> = (props) => {
       const changes = getWalletChanges();
       setGoalChanges(changes);
     }
-  }, [name, goalAmount, currency, depositedAmount, targetDate, image]);
+  }, [name, goalAmount, currency, depositedAmount, targetDate, image, isTargetDate]);
 
   useEffect(() => {
     if (!name || nameError ||
@@ -160,9 +164,14 @@ const AddEditGoalModal: FC<AddEditGoalModalProps> = (props) => {
     if (editGoalData.goalAmount !== goalAmount) differences.goalAmount = goalAmount;
     if (editGoalData.currency !== currency) differences.currency = currency;
     if (editGoalData.depositedAmount !== depositedAmount) differences.depositedAmount = depositedAmount;
-    if (editGoalData.targetDate !== targetDate) differences.targetDate = targetDate;
+    if (editGoalData.targetDate !== targetDate ||
+      (editGoalData.targetDate && !isTargetDate) ||
+      (!editGoalData.targetDate && isTargetDate)) {
+      differences.targetDate = isTargetDate ? targetDate : null;
+    }
     if (image) differences.image = image;
 
+    console.log(differences);
     return differences;
   };
 
@@ -180,11 +189,11 @@ const AddEditGoalModal: FC<AddEditGoalModalProps> = (props) => {
         return;
       }
 
-      dispatch(addGoal({ name, goalAmount, currency, depositedAmount, image, targetDate, isCompleted })).then(() => {
+      dispatch(addGoal({ name, goalAmount, currency, depositedAmount, image, targetDate: isTargetDate ? targetDate : null, isCompleted })).then(() => {
         onCloseModal();
       });
     },
-    [dispatch, isEdit, editGoalData, goalChanges, name, goalAmount, currency, depositedAmount, image, targetDate]
+    [dispatch, isEdit, editGoalData, goalChanges, name, goalAmount, currency, depositedAmount, image, targetDate, isTargetDate]
   );
 
   return (

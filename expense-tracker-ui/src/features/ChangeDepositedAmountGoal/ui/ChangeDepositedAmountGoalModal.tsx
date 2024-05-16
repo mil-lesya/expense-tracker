@@ -80,7 +80,13 @@ const ChangeDepositedAmountGoalModal: FC<ChangeDepositedAmountGoalModalProps> = 
 
   const onChangeAmount = () => {
     if (goal && depositedAmount && depositedAmount > 0) {
-      dispatch(changeDepositedAmountGoal({ id: goal.id, depositedAmount: changedAmount })).finally(() => { onCloseModal(); });
+      let isCompleted;
+      if (goal.goalAmount === changedAmount) {
+        isCompleted = true;
+      } else if (goal.goalAmount > changedAmount) {
+        isCompleted = false;
+      }
+      dispatch(changeDepositedAmountGoal({ id: goal.id, depositedAmount: changedAmount, isCompleted })).finally(() => { onCloseModal(); });
     } else {
       onCloseModal();
     }
