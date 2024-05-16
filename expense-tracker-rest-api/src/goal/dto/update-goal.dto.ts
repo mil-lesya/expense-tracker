@@ -1,14 +1,4 @@
-import {
-  IsBoolean,
-  IsDate,
-  IsDateString,
-  IsEmail,
-  IsEnum,
-  IsNumber,
-  IsNumberString,
-  IsOptional,
-  IsString,
-} from 'class-validator';
+import { IsEnum, IsNumberString, IsOptional, IsString } from 'class-validator';
 import { CurrencyCode } from '../../currency/enums/currency-code.enum';
 
 export class UpdateGoalDto {
@@ -24,9 +14,8 @@ export class UpdateGoalDto {
   @IsOptional()
   currency: CurrencyCode;
 
-  @IsDateString()
   @IsOptional()
-  targetDate: Date;
+  targetDate: string;
 
   @IsNumberString()
   @IsOptional()
