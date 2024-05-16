@@ -54,12 +54,13 @@ export class GoalController {
     @Req() req: any,
     @Query('page') page: number = 1,
     @Query('limit') limit: number = 10,
+    @Query('completed') completed: boolean,
   ) {
-    return this.goalService.findAll(req.user.id, page, limit);
+    return this.goalService.findAll(req.user.id, page, limit, completed);
   }
 
   @Get('/:id')
-  async findOne(@Param('id') id: string, @Req() req: any) {
+  async findOne(@Param('id') id: string) {
     const goal = await this.goalService.findById(id);
     if (!goal) {
       throw new NotFoundException('Goal not found');

@@ -25,15 +25,23 @@ export class GoalService {
       ...createGoalDto,
       user,
       isCompleted: false,
-      depositedAmount: 0,
+      depositedAmount: createGoalDto.depositedAmount || 0,
       image: `${this.configService.get('API_DOMAIN')}/${userId}/goals/${createGoalDto.image}`,
     });
     return this.goalRepository.save(goal);
   }
 
-  async findAll(userId: string, page: number, limit: number) {
+  async findAll(
+    userId: string,
+    page: number,
+    limit: number,
+    completed?: boolean,
+  ) {
     const [results, total] = await this.goalRepository.findAndCount({
-      where: { user: { id: userId } },
+      where: {
+        user: { id: userId },
+        ...(completed && { isCompleted: completed }),
+      },
       take: limit,
       skip: limit * (page - 1),
     });

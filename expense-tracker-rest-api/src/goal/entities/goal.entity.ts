@@ -23,7 +23,7 @@ export class Goal {
   @Column()
   currency: CurrencyCode;
 
-  @Column({ name: 'target_date' })
+  @Column({ name: 'target_date', nullable: true })
   targetDate: Date;
 
   @Column('numeric', { name: 'deposited_amount' })
