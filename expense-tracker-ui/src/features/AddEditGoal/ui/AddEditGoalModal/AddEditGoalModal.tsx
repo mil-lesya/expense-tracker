@@ -183,7 +183,7 @@ const AddEditGoalModal: FC<AddEditGoalModalProps> = (props) => {
           return;
         }
 
-        dispatch(editGoal({ id: editGoalData.id, ...goalChanges })).then(() => {
+        dispatch(editGoal({ id: editGoalData.id, ...goalChanges, targetDate: isTargetDate ? targetDate : 'null' })).then(() => {
           onCloseModal();
         });
         return;
