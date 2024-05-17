@@ -36,6 +36,7 @@
         "placeholderDepositedAmount": "0,00",
         "errorDepositedAmount": "Внесенная сумма не может превышать сумму цели",
         "errorDepositedAmountTakeFrom": "Вы не можете взять сумму больше внесенной ранее",
+        "errorDepositedAmountTwo": "Внесенная сумма не может быть равна сумме цели",
         "labelImage": "Перетащите сюда свое изображение или нажмите чтобы выбрать",
         "labelToggle": "Дата окончания"
     }

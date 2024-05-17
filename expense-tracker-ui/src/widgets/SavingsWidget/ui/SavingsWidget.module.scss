@@ -1,0 +1,33 @@
+.savingsWidget {
+    width: 100%;
+    background-color: var(--color-light-grey);
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    border-radius: 20px;
+}
+
+.title {
+    font: var(--font-title-l);
+    font-size: 30px;
+}
+
+.titleWrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 8px;
+    border-bottom: 0.6px solid var(--color-border);
+    margin-bottom: 15px;
+}
+
+.goalName {
+    font: var(--font-title-l);
+    font-size: 22px;
+}
+
+.list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}

@@ -131,8 +131,8 @@ const SavingsPage: FC<SavingsPageProps> = (props) => {
         <div className={cls.titleWrapper}>
           <p className={cls.title}>{t('listTitle')}</p>
           <div className={cls.controls}>
-            <Button theme={ThemeButton.GREY} active={!isCompleted} onClick={() => { onChangeCompleted(false); }}>{t('buttons.active')}</Button>
-            <Button theme={ThemeButton.GREY} active={isCompleted} onClick={() => { onChangeCompleted(true); }}>{t('buttons.completed')}</Button>
+            <Button className={cls.btn} theme={ThemeButton.GREY} active={!isCompleted} onClick={() => { onChangeCompleted(false); }}>{t('buttons.active')}</Button>
+            <Button className={cls.btn} theme={ThemeButton.GREY} active={isCompleted} onClick={() => { onChangeCompleted(true); }}>{t('buttons.completed')}</Button>
           </div>
         </div>
 

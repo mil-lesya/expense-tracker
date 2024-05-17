@@ -5,7 +5,8 @@ import { CurrencyCode } from 'shared/const/common';
 
 export enum ThemeProgress {
   LIGHT = 'light',
-  DARK = 'dark'
+  DARK = 'dark',
+  DARK_MINI = 'darkMini',
 }
 
 interface ProgressProps {

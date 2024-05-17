@@ -35,6 +35,8 @@
         "labelDepositedAmount": "Deposited amount (optional)",
         "placeholderDepositedAmount": "0,00",
         "errorDepositedAmount": "The deposited amount cannot exceed the goal amount",
+        "errorDepositedAmountTakeFrom": "You cannot withdraw more than the amount previously deposited",
+        "errorDepositedAmountTwo": "The deposit amount cannot be equal to the goal amount",
         "labelImage": "Drop your image here or browse",
         "labelToggle": "Target goal date"
     }

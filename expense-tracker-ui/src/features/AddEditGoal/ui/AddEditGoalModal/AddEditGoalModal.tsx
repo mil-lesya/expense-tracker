@@ -71,7 +71,7 @@ const AddEditGoalModal: FC<AddEditGoalModalProps> = (props) => {
       dispatch(addEditGoalActions.setDepositedAmount(editGoalData.depositedAmount));
       dispatch(addEditGoalActions.setTargetDate(editGoalData.targetDate));
 
-      if (targetDate) {
+      if (editGoalData.targetDate) {
         setIsTargetDate(true);
       }
     }
@@ -82,7 +82,7 @@ const AddEditGoalModal: FC<AddEditGoalModalProps> = (props) => {
       const changes = getWalletChanges();
       setGoalChanges(changes);
     }
-  }, [name, goalAmount, currency, depositedAmount, targetDate, image, isTargetDate]);
+  }, [name, goalAmount, currency, depositedAmount, targetDate, image]);
 
   useEffect(() => {
     if (!name || nameError ||
@@ -104,6 +104,11 @@ const AddEditGoalModal: FC<AddEditGoalModalProps> = (props) => {
   useEffect(() => {
     if (depositedAmount > goalAmount) {
       setDepositedAmountError(t('modal.errorDepositedAmount'));
+    }
+    if (depositedAmount && goalAmount && depositedAmount === goalAmount && !isEdit) {
+      setDepositedAmountError(t('modal.errorDepositedAmountTwo'));
+    } else if (depositedAmount && goalAmount && depositedAmount === goalAmount) {
+      dispatch(addEditGoalActions.setIsCompleted(true));
     }
   }, [depositedAmount, goalAmount]);
 
@@ -171,7 +176,6 @@ const AddEditGoalModal: FC<AddEditGoalModalProps> = (props) => {
     }
     if (image) differences.image = image;
 
-    console.log(differences);
     return differences;
   };
 
@@ -183,17 +187,18 @@ const AddEditGoalModal: FC<AddEditGoalModalProps> = (props) => {
           return;
         }
 
-        dispatch(editGoal({ id: editGoalData.id, ...goalChanges, targetDate: isTargetDate ? targetDate : 'null' })).then(() => {
+        dispatch(editGoal({ id: editGoalData.id, ...goalChanges, targetDate: isTargetDate ? targetDate : 'null', isCompleted })).then(() => {
           onCloseModal();
         });
         return;
       }
 
+      console.log('aa11', isCompleted);
       dispatch(addGoal({ name, goalAmount, currency, depositedAmount, image, targetDate: isTargetDate ? targetDate : null, isCompleted })).then(() => {
         onCloseModal();
       });
     },
-    [dispatch, isEdit, editGoalData, goalChanges, name, goalAmount, currency, depositedAmount, image, targetDate, isTargetDate]
+    [dispatch, isEdit, editGoalData, goalChanges, name, goalAmount, currency, depositedAmount, image, targetDate, isTargetDate, isCompleted]
   );
 
   return (

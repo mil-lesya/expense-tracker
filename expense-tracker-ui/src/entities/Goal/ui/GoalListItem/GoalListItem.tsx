@@ -43,7 +43,15 @@ const GoalListItem: FC<GoalListItemProps> = (props) => {
       onMouseLeave={() => { setIsVisible(false); setIsOpen(false); }}
     >
       <div className={cls.imageWrapper}>
-        <img src={goal.image} alt='Goal image' className={cls.image}></img>
+        {goal.image
+          ? (
+          <img src={goal.image} alt='Goal image' className={cls.image}></img>
+            )
+          : (
+          <div className={cls.preview}>
+            <SvgIcon name='image' className={cls.previewIcon} />
+          </div>
+            )}
       </div>
 
       <div className={cls.wrapper}>

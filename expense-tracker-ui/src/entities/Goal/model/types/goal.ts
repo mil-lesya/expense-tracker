@@ -7,8 +7,8 @@ export interface Goal {
   name: string
   goalAmount: number
   currency: CurrencyCode
-  targetDate: string
-  image: string
+  targetDate: string | null
+  image: string | null
   depositedAmount: number
   isCompleted: boolean
 }

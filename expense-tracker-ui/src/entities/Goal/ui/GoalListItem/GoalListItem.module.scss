@@ -13,6 +13,13 @@
         background-color: var(--color-light-grey2);
         transform: scale(1.01);
     }
+
+    @include only-mobile {
+      flex-direction: column;
+      height: auto;
+      gap: 15px;
+      position: relative;
+    }
 }
 
 .wrapper {
@@ -22,6 +29,11 @@
   width: 100%;
   height: 100%;
   gap: 20px;
+
+  @include only-mobile {
+    flex-direction: column;
+    gap: 10px;
+  }
 }
 
 .imageWrapper {
@@ -32,6 +44,11 @@
   border-radius: 10px;
   flex-shrink: 0;
   flex-grow: 0;
+
+  @include only-mobile {
+    width: 100%;
+    height: 200px;
+  }
 }
 
 .image {
@@ -43,6 +60,10 @@
     font: var(--font-main-text);
     font-size: var(--font-size-title-l);
     font-weight: 300;
+
+    @include only-mobile {
+      margin-bottom: 5px;
+    }
 }
 
 .targetDate {
@@ -50,6 +71,11 @@
     font-weight: 300;
     color: var(--color-middle-grey);
     margin-top: 3px;
+
+    @include only-mobile {
+      margin-bottom: 15px;
+      margin-top: 0;
+    }
 }
 
 .red {
@@ -91,12 +117,41 @@
     flex-direction: column;
     align-items: start;
     gap: 10px;
+
+    @include only-mobile {
+      flex-direction: row;
+    }
   }
 
   .btn {
     width: 140px;
+
+    @include only-mobile {
+      width: 100%;
+    }
   }
 
   .iconBtn {
     margin-left: 5px;
+  }
+
+  .preview {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--color-light-grey2);
+  }
+
+  .previewIcon {
+    color: var(--color-primary);
+  }
+
+  .buttonWrapper {
+    @include only-mobile {
+      position: absolute;
+      top: 220px;
+      right: 20px;
+    }
   }

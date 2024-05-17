@@ -1,4 +1,5 @@
 .progressContainer {
+    display: block;
     font: var(--font-main-text);
     width: 100%;
 
@@ -45,4 +46,32 @@
 
 .dark .progressBar {
     background-color: var(--color-disabled-button);
+}
+
+.darkMini .progressBar {
+    background-color: var(--color-disabled-button);
+    height: 8px;
+}
+
+.darkMini.progressContainer {
+    display: flex;
+    flex-direction: column-reverse;
+    position: relative;
+}
+
+.darkMini .progressPercentage {
+    position: absolute;
+    font-size: 20px;
+    line-height: normal;
+    bottom: 0;
+    right: 0;
+}
+
+.darkMini .progressText {
+    font-size: 16px;
+    margin-top: 5px;
+
+    @include only-tablet {
+        font-size: 13px;
+    }
 }

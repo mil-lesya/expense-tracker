@@ -8,6 +8,7 @@ import { useMediaWidth } from 'shared/lib/hooks/useMediaWidth';
 import { LAPTOP_SIZE, MOBILE_SIZE, TABLET_SIZE } from 'shared/const/windowSizes';
 import { SidebarItemsList } from '../../model/items';
 import { useTranslation } from 'react-i18next';
+import { useLocation } from 'react-router-dom';
 
 interface SidebarProps {
   className?: string
@@ -18,6 +19,8 @@ export const Sidebar: FC<SidebarProps> = (props) => {
 
   const { currentStyle } = useMediaWidth();
   const { t } = useTranslation('authorized');
+  const location = useLocation();
+
   const [activeItem, setActiveItem] = useState<string | null>(null);
   const [isMobile, setIsMobile] = useState<boolean>(false);
   const [isTablet, setIsTablet] = useState<boolean>(false);
@@ -40,6 +43,12 @@ export const Sidebar: FC<SidebarProps> = (props) => {
         setIsLaptop(false);
     }
   }, [currentStyle]);
+
+  useEffect(() => {
+    if (location.pathname !== '/signin' && location.pathname !== '/signup') {
+      setActiveItem(location.pathname);
+    }
+  }, [location.pathname]);
 
   const handleItemClick = (path: string) => {
     setActiveItem(path);

@@ -14,11 +14,14 @@ import { categoryReducer, fetchCategory } from 'entities/Category';
 import { TransactionsTable, fetchTransactions, getTransactionsCount, getTransactionsIsLoading, transactionsReducer } from 'entities/Transaction';
 import { WalletsWidget } from 'widgets/WalletsWidget';
 import { EmptyBlock } from 'shared/ui/EmptyBlock';
+import { SavingsWidget } from 'widgets/SavingsWidget';
+import { fetchGoals, goalsReducer } from 'entities/Goal';
 
 const reducers: ReducersList = {
   wallets: walletsReducer,
   transactions: transactionsReducer,
-  category: categoryReducer
+  category: categoryReducer,
+  goals: goalsReducer
 };
 interface DashboardPageProps {
   className?: string
@@ -36,7 +39,8 @@ const DashboardPage: FC<DashboardPageProps> = (props) => {
   useEffect(() => {
     dispatch(fetchWallets({ page: 1, limit: 100 }));
     dispatch(fetchCategory());
-    dispatch(fetchTransactions({ page: 1, limit: 10, sort: 'date', order: 'ASC' }));
+    dispatch(fetchTransactions({ page: 1, limit: 10, sort: 'date', order: 'DESC' }));
+    dispatch(fetchGoals());
   }, []);
 
   return (
@@ -52,6 +56,7 @@ const DashboardPage: FC<DashboardPageProps> = (props) => {
           <div className={cls.leftBlock}>
             <WalletsTotalBalance theme={ThemeWalletsTotalBalance.DARK} />
             <WalletsWidget />
+            <SavingsWidget />
           </div>
           <div className={cls.rightBlock}>
             <AddTransactionForm />
