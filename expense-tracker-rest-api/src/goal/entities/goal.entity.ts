@@ -40,6 +40,6 @@ export class Goal {
   @Exclude()
   user: User;
 
-  @Column()
+  @Column({ nullable: true })
   image: string;
 }

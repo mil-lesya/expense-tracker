@@ -8,6 +8,7 @@ import { SvgIcon } from '../SvgIcon';
 
 interface PaginationProps {
   className?: string
+  countRecords: number
   count: number // Общее количество записей
   totalPages: number // Всего страниц
   currentPage: number // Текущая страница
@@ -18,6 +19,7 @@ interface PaginationProps {
 const Pagination: FC<PaginationProps> = (props) => {
   const {
     className,
+    countRecords,
     count,
     totalPages,
     currentPage,
@@ -26,7 +28,7 @@ const Pagination: FC<PaginationProps> = (props) => {
   } = props;
 
   const { t } = useTranslation();
-  const [countRows, setCountRows] = useState(10);
+  const [countRows, setCountRows] = useState(countRecords);
 
   const rowsPerPageOptions = [
     { value: '5', content: 5 },
@@ -50,7 +52,7 @@ const Pagination: FC<PaginationProps> = (props) => {
         <span className={cls.showRows}>{t('pagination.showRows')}</span>
         <Select
             options={rowsPerPageOptions}
-            value={countRows.toString()}
+            value={`${countRows}`}
             theme={ThemeSelect.CLEAR}
             onChange={onChangeCountRows}
         />

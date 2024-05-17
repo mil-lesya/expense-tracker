@@ -5,3 +5,4 @@ export const getTransactionsError = (state: StateSchema) => state.transactions?.
 export const getTransactionsCount = (state: StateSchema) => state.transactions?.count;
 export const getTransactionsCurrentPage = (state: StateSchema) => state.transactions?.currentPage;
 export const getTransactionsTotalPages = (state: StateSchema) => state.transactions?.totalPages;
+export const getTransactionsLimit = (state: StateSchema) => state.transactions?.limit;

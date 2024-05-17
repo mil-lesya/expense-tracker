@@ -10,6 +10,7 @@ import cls from './DatePicker.module.scss';
 import Tippy from '@tippyjs/react';
 import { useTranslation } from 'react-i18next';
 import { SvgIcon } from '../SvgIcon';
+import { classNames } from 'shared/lib/classNames/classNames';
 
 interface DatePickerProps {
   label?: string
@@ -17,10 +18,11 @@ interface DatePickerProps {
   maxDate?: Date
   initialDate?: string
   range?: boolean
+  readonly?: boolean
   onDateChange?: (range?: { startDate: Date, endDate: Date } | Date) => void
 }
 
-const BaseDatePicker: React.FC<DatePickerProps> = ({ label, initialDate = new Date(), range = false, onDateChange, minDate, maxDate }) => {
+const BaseDatePicker: React.FC<DatePickerProps> = ({ label, initialDate = new Date(), range = false, onDateChange, minDate, maxDate, readonly = false }) => {
   const [stateRange, setStateRange] = useState([{
     startDate: new Date(initialDate),
     endDate: range ? new Date() : new Date(initialDate),
@@ -32,40 +34,48 @@ const BaseDatePicker: React.FC<DatePickerProps> = ({ label, initialDate = new Da
   const { i18n } = useTranslation();
 
   useEffect(() => {
+    const newDate = new Date(initialDate);
+    if (!isNaN(newDate.getTime()) && newDate.getTime() !== stateDate.getTime()) {
+      setStateDate(newDate);
+      const newRange = {
+        startDate: newDate,
+        endDate: range ? new Date() : newDate,
+        key: 'selection'
+      };
+
+      // Более надежное сравнение объектов дат
+      if (
+        stateRange[0].startDate.getTime() !== newRange.startDate.getTime() ||
+        stateRange[0].endDate.getTime() !== newRange.endDate.getTime()
+      ) {
+        setStateRange([newRange]);
+      }
+    }
+  }, [initialDate, range]);
+
+  useEffect(() => {
     setLocale(i18n.language === 'ru' ? ru : enUS);
   }, [i18n.language]);
 
-  useEffect(() => {
-    const newDate = new Date(initialDate);
-    if (!isNaN(newDate.getTime())) {
-      setStateDate(newDate);
-      setStateRange([{ startDate: newDate, endDate: range ? new Date() : newDate, key: 'selection' }]);
+  const handleSelect = (ranges: any) => {
+    if (!readonly) {
+      if (range) {
+        setStateRange([ranges.selection]);
+        onDateChange && onDateChange({
+          startDate: ranges.selection.startDate,
+          endDate: ranges.selection.endDate
+        });
+      } else {
+        setStateDate(ranges);
+        onDateChange && onDateChange(ranges);
+      }
+      setPickerVisible(!range);
     }
-  }, [initialDate, range]);
+  };
 
   const formattedDate = range
     ? `${dayjs(stateRange[0].startDate).format('DD MMM YYYY')} - ${dayjs(stateRange[0].endDate).format('DD MMM YYYY')}`
     : dayjs(stateDate).format('DD MMM YYYY');
-
-  const handleSelect = (ranges: any) => {
-    if (range) {
-      setStateRange([ranges.selection]);
-      if (onDateChange) {
-        onDateChange({
-          startDate: ranges.selection.startDate,
-          endDate: ranges.selection.endDate
-        });
-      }
-      if (!range) {
-        setPickerVisible(false);
-      }
-    } else {
-      setStateDate(ranges);
-      if (onDateChange) {
-        onDateChange(ranges);
-      }
-    }
-  };
 
   return (
     <>
@@ -94,11 +104,11 @@ const BaseDatePicker: React.FC<DatePickerProps> = ({ label, initialDate = new Da
             maxDate={maxDate}/>
                 )
         }
-        visible={isPickerVisible}
+        visible={isPickerVisible && !readonly}
         onClickOutside={() => { setPickerVisible(false); }}
         interactive
       >
-        <div className={cls.buttonWrapper}>
+        <div className={classNames(cls.buttonWrapper, { [cls.readonly]: readonly }, [])}>
           <button
             className={cls.button}
             onClick={() => { setPickerVisible(!isPickerVisible); }}>

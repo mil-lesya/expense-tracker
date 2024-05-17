@@ -1,0 +1,77 @@
+.progressContainer {
+    display: block;
+    font: var(--font-main-text);
+    width: 100%;
+
+    .progressText {
+      font-size: 17px;
+      color: var(--color-middle-grey);
+    }
+
+    .progressTextDeposited {
+        color: var(--color-black);
+    }
+
+    .progressBar {
+      background-color: var(--color-white);
+      border-radius: 10px;
+      overflow: hidden;
+      height: 15px;
+      width: 100%;
+    }
+
+    .progressFill {
+      background-color: var(--color-primary);
+      height: 100%;
+      border-radius: 10px;
+      transition: width 0.3s ease-in-out;
+    }
+
+    .progressPercentage {
+      color: var(--color-black);
+      font: var(--font-title-l);
+    }
+
+    .progressBarWrapper {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 20px;
+    }
+}
+
+.light .progressBar {
+  background-color: var(--color-white);
+}
+
+.dark .progressBar {
+    background-color: var(--color-disabled-button);
+}
+
+.darkMini .progressBar {
+    background-color: var(--color-disabled-button);
+    height: 8px;
+}
+
+.darkMini.progressContainer {
+    display: flex;
+    flex-direction: column-reverse;
+    position: relative;
+}
+
+.darkMini .progressPercentage {
+    position: absolute;
+    font-size: 20px;
+    line-height: normal;
+    bottom: 0;
+    right: 0;
+}
+
+.darkMini .progressText {
+    font-size: 16px;
+    margin-top: 5px;
+
+    @include only-tablet {
+        font-size: 13px;
+    }
+}

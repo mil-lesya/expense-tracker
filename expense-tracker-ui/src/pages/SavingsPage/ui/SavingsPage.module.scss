@@ -3,3 +3,40 @@
     width: 100%;
     height: 100%;
 }
+
+.titleWrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 15px;
+
+    @include only-mobile {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+        margin-bottom: 25px;
+    }
+}
+
+.controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+
+    @include only-mobile {
+        gap: 10px;
+        width: 100%;
+    }
+}
+
+.btn {
+    @include only-mobile {
+        width: 100%;
+    } 
+}
+
+.title {
+    font-size: var(--font-size-title-l);
+    line-height: normal;
+}

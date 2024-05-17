@@ -2,5 +2,7 @@
     "title": "Главная",
     "titleTransactions": "Транзакции",
     "walletsTitle": "Мои кошельки",
-    "emptyTransaction": "Транзакции не найдены. Создайте новую транзакцию"
+    "emptyTransaction": "Транзакции не найдены. Создайте новую транзакцию",
+    "savingsTitle": "Цели",
+    "seeAll": "Показать все"
 }

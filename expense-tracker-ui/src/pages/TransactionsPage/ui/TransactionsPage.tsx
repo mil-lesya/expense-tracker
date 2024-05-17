@@ -6,7 +6,7 @@ import Table from 'shared/ui/Table/Table';
 import { useTranslation } from 'react-i18next';
 import { useAppDispatch } from 'shared/lib/hooks/useAppDispatch';
 import { useSelector } from 'react-redux';
-import { Transaction, TransactionsTable, fetchTransactions, getTransactionsCount, getTransactionsCurrentPage, getTransactionsError, getTransactionsIsLoading, getTransactionsTotalPages, getUserTransactions, transactionsReducer } from 'entities/Transaction';
+import { Transaction, TransactionsTable, fetchTransactions, getTransactionsCount, getTransactionsCurrentPage, getTransactionsError, getTransactionsIsLoading, getTransactionsTotalPages, getUserTransactions, transactionsActions, transactionsReducer } from 'entities/Transaction';
 import DynamicModuleLoader, { ReducersList } from 'shared/lib/components/DynamicModuleLoader/DinamicModuleLoader';
 import { fetchWallets, walletsReducer } from 'entities/Wallet';
 import Pagination from 'shared/ui/Pagination/Pagination';
@@ -15,6 +15,7 @@ import { EmptyBlock } from 'shared/ui/EmptyBlock';
 import { DeleteTransactionModal } from 'features/DeleteTransaction';
 import { EditTransactionModal } from 'features/EditTransaction';
 import { categoryReducer, fetchCategory } from 'entities/Category';
+import { getTransactionsLimit } from 'entities/Transaction/model/selectors/transactions';
 
 const reducers: ReducersList = {
   wallets: walletsReducer,
@@ -33,10 +34,8 @@ const TransactionsPage: FC<TransactionsPageProps> = (props) => {
   const transactionsCount = useSelector(getTransactionsCount);
   const totalPages = useSelector(getTransactionsTotalPages);
   const transactionsIsLoading = useSelector(getTransactionsIsLoading);
-  // const currentPage = useSelector(getTransactionsCurrentPage);
-
-  const [pageIndex, setPageIndex] = useState(1);
-  const [countRecords, setCountRecords] = useState(10);
+  const limit = useSelector(getTransactionsLimit);
+  const currentPage = useSelector(getTransactionsCurrentPage);
 
   const [isDeleteModal, setIsDeleteModal] = useState(false);
   const [deleteTransaction, setDeleteTransaction] = useState(null);
@@ -50,15 +49,15 @@ const TransactionsPage: FC<TransactionsPageProps> = (props) => {
   }, []);
 
   useEffect(() => {
-    dispatch(fetchTransactions({ page: pageIndex, limit: countRecords }));
-  }, [pageIndex, countRecords]);
+    dispatch(fetchTransactions({ page: currentPage, limit }));
+  }, [currentPage, limit]);
 
   const onPageChange = (page: number) => {
-    setPageIndex(page);
+    dispatch(transactionsActions.setCurrentPage(page));
   };
 
   const onRowsPerPageChange = (numberOfRows: number) => {
-    setCountRecords(numberOfRows);
+    dispatch(transactionsActions.setLimit(numberOfRows));
   };
 
   const onEditTransaction = (transaction: Transaction) => {
@@ -95,9 +94,10 @@ const TransactionsPage: FC<TransactionsPageProps> = (props) => {
               onDelete={onDeleteTransaction}
             />
             <Pagination
+              countRecords={limit}
               count={transactionsCount}
               totalPages={totalPages}
-              currentPage={pageIndex}
+              currentPage={Number(currentPage)}
               onPageChange={onPageChange}
               onRowsPerPageChange={onRowsPerPageChange}
             />
@@ -114,15 +114,15 @@ const TransactionsPage: FC<TransactionsPageProps> = (props) => {
         isOpen={isDeleteModal}
         onClose={onToggleDeleteModal}
         transaction={deleteTransaction}
-        currentPage={pageIndex}
-        limit={countRecords}
+        currentPage={currentPage}
+        limit={limit}
       />
       <EditTransactionModal
         isOpen={isEditModal}
         onClose={onToggleEditModal}
         transaction={editTransaction}
-        currentPage={pageIndex}
-        limit={countRecords}
+        currentPage={currentPage}
+        limit={limit}
       />
     </DynamicModuleLoader>
   );

@@ -1,0 +1,57 @@
+.addEditGoalModal {
+    width: 100%;
+}
+
+.buttonWrapper {
+    width: 100%;
+    display: flex;
+    justify-content: end;
+}
+
+.button {
+    width: 45%;
+
+    @include only-mobile {
+        width: 100%;
+    }
+}
+
+.formWrapper {
+    display: flex;
+    width: 100%;
+    gap: 20px;
+    margin-bottom: 30px;
+
+    @include only-mobile {
+        flex-direction: column-reverse;
+    }
+}
+
+.leftBlock {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 55%;
+
+    @include only-mobile {
+        width: 100%;
+    }
+}
+
+.rightBlock {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 45%;
+
+    @include only-mobile {
+        gap: 20px;
+        width: 100%;
+    }
+}
+
+.targetDateWrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}

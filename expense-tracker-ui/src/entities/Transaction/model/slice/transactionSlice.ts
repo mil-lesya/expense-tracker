@@ -21,10 +21,18 @@ const transactionsSlice = createSlice({
     isLoading: false,
     error: undefined,
     currentPage: 1,
+    limit: 10,
     ids: [],
     entities: {}
   }),
-  reducers: {},
+  reducers: {
+    setLimit: (state, action: PayloadAction<number>) => {
+      state.limit = action.payload;
+    },
+    setCurrentPage: (state, action: PayloadAction<number>) => {
+      state.currentPage = action.payload;
+    }
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchTransactions.pending, (state) => {
@@ -49,3 +57,4 @@ const transactionsSlice = createSlice({
 });
 
 export const { reducer: transactionsReducer } = transactionsSlice;
+export const { actions: transactionsActions } = transactionsSlice;

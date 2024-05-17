@@ -2,5 +2,7 @@
     "title": "Dashboard",
     "titleTransactions": "Transactions",
     "walletsTitle": "My wallets",
-    "emptyTransaction": "No transactions found. Create a new transaction"
+    "emptyTransaction": "No transactions found. Create a new transaction",
+    "savingsTitle": "Savings",
+    "seeAll": "See all"
 }

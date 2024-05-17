@@ -1,0 +1,43 @@
+{
+    "title": "Savings",
+    "buttons": {
+        "create": "Create a goal",
+        "edit": "Edit",
+        "delete": "Delete",
+        "contribute": "Contribute",
+        "takeFrom": "Take from",
+        "active": "Active",
+        "completed": "Completed"
+    },
+    "info": "Setting financial goals and cultivating a savings habit are critical components of achieving financial stability and success. They provide direction, motivation, and a sense of purpose for your financial efforts, and they can help you build wealth and prepare for unexpected expenses.",
+    "emptyList": "No goals found. Create a new goal",
+    "listTitle": "Savings goals",
+    "modal": {
+        "buttonCreate": "Create",
+        "buttonEdit": "Edit",
+        "buttonCancel": "Cancel",
+        "buttonDelete": "Delete",
+        "titleAdd": "Add a new goal",
+        "titleEdit": "Edit a goal",
+        "titleDelete": "Delete a goal",
+        "titleContribute": "Contribute amount",
+        "titleTakeFrom": "Take from amount",
+        "subtitle": "What are you saving for?",
+        "deleteQuestion": "Are you sure you want to delete your goal ",
+        "deleteWarning": "This action cannot be undone",
+        "labelName": "Name of goal",
+        "placeholderName": "Enter goal name",
+        "labelCurrency": "Currency",
+        "placeholderCurrency": "USD",
+        "labelAmount": "Goal amount",
+        "placeholderAmount": "0,00",
+        "errorAmount": "The field can only contain numeric values",
+        "labelDepositedAmount": "Deposited amount (optional)",
+        "placeholderDepositedAmount": "0,00",
+        "errorDepositedAmount": "The deposited amount cannot exceed the goal amount",
+        "errorDepositedAmountTakeFrom": "You cannot withdraw more than the amount previously deposited",
+        "errorDepositedAmountTwo": "The deposit amount cannot be equal to the goal amount",
+        "labelImage": "Drop your image here or browse",
+        "labelToggle": "Target goal date"
+    }
+}

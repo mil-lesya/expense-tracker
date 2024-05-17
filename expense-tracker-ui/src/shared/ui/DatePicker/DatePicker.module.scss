@@ -58,3 +58,24 @@
     color: var(--color-primary);
     margin-right: 10px;
   }
+
+  .readonly {
+    border: 1px solid var(--color-border);
+    color: var(--color-disabled-text);
+
+    &:hover {
+      border-color: var(--color-border);
+    }
+  
+    &:focus-within {
+      border-color: var(--color-border);
+    }
+  }
+
+  .readonly .button {
+    color: var(--color-disabled-text);
+  }
+
+  .readonly .icon {
+    color: var(--color-disabled-text);
+  }
