@@ -6,6 +6,7 @@ import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { JwtStrategy } from './strategy/jwt.strategy';
 import { UserModule } from '../user/user.module';
+import { NotificationModule } from '../notification/notification.module';
 
 @Module({
   imports: [
@@ -26,9 +27,10 @@ import { UserModule } from '../user/user.module';
       inject: [ConfigService],
     }),
     forwardRef(() => UserModule),
+    NotificationModule,
   ],
   providers: [JwtStrategy, AuthService],
-  exports: [JwtModule, PassportModule],
+  exports: [JwtModule, PassportModule, AuthService],
   controllers: [AuthController],
 })
 export class AuthModule {}

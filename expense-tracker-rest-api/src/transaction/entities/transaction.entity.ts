@@ -5,10 +5,10 @@ import {
   ManyToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { Category } from '../../category/entities/category.entity';
+import { Category } from '../../category/entity/category.entity';
 import { CurrencyCode } from '../../currency/enums/currency-code.enum';
 import { TransactionType } from '../enums/transaction-type.enum';
-import { Wallet } from '../../wallet/entities/wallet.entity';
+import { Wallet } from '../../wallet/entity/wallet.entity';
 import { Exclude } from 'class-transformer';
 
 @Entity()

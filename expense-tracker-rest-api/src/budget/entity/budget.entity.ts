@@ -7,7 +7,7 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { CurrencyCode } from '../../currency/enums/currency-code.enum';
-import { User } from '../../user/entities/user.entity';
+import { User } from '../../user/entity/user.entity';
 import { Exclude } from 'class-transformer';
 import { Limit } from '../../limit/entity/limit.entity';
 

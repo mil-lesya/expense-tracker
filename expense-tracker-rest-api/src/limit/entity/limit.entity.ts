@@ -5,7 +5,7 @@ import {
   ManyToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { Category } from '../../category/entities/category.entity';
+import { Category } from '../../category/entity/category.entity';
 import { Exclude } from 'class-transformer';
 import { Budget } from '../../budget/entity/budget.entity';
 

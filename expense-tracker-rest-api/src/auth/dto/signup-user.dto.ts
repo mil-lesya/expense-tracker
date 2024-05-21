@@ -5,6 +5,7 @@ import {
   Matches,
   IsOptional,
   IsEnum,
+  IsBoolean,
 } from 'class-validator';
 import { CurrencyCode } from '../../currency/enums/currency-code.enum';
 
@@ -26,4 +27,8 @@ export class SignupUserDto {
   @IsEnum(CurrencyCode)
   @IsOptional()
   defaultCurrency: CurrencyCode;
+
+  @IsBoolean()
+  @IsOptional()
+  isConfirmed: boolean;
 }

@@ -11,11 +11,12 @@ import { WalletService } from '../wallet/wallet.service';
 import { CategoryModule } from '../category/category.module';
 import { WalletModule } from '../wallet/wallet.module';
 import { UserService } from '../user/user.service';
-import { Category } from '../category/entities/category.entity';
-import { User } from '../user/entities/user.entity';
-import { Wallet } from '../wallet/entities/wallet.entity';
+import { Category } from '../category/entity/category.entity';
+import { User } from '../user/entity/user.entity';
+import { Wallet } from '../wallet/entity/wallet.entity';
 import { HttpModule } from '@nestjs/axios';
 import { CurrencyService } from '../currency/currency.service';
+import { NotificationModule } from '../notification/notification.module';
 
 @Module({
   imports: [
@@ -25,6 +26,7 @@ import { CurrencyService } from '../currency/currency.service';
     CategoryModule,
     WalletModule,
     HttpModule,
+    NotificationModule,
   ],
   providers: [
     TransactionService,

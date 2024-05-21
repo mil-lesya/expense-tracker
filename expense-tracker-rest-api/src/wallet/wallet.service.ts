@@ -5,7 +5,7 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { FindManyOptions, Repository } from 'typeorm';
-import { Wallet } from './entities/wallet.entity';
+import { Wallet } from './entity/wallet.entity';
 import { CreateWalletDto } from './dto/create-wallet.dto';
 import { UserService } from '../user/user.service';
 import { AuthService } from '../auth/auth.service';

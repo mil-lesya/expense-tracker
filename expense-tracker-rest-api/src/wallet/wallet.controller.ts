@@ -16,7 +16,7 @@ import {
 import { WalletService } from './wallet.service';
 import { AuthGuard } from '@nestjs/passport';
 import { CreateWalletDto } from './dto/create-wallet.dto';
-import { Wallet } from './entities/wallet.entity';
+import { Wallet } from './entity/wallet.entity';
 import { UpdateWalletDto } from './dto/update-wallet.dto';
 
 @UseGuards(AuthGuard('jwt'))

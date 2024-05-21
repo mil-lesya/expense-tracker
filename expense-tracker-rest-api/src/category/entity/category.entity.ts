@@ -7,7 +7,7 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { Transaction } from '../../transaction/entities/transaction.entity';
-import { User } from '../../user/entities/user.entity';
+import { User } from '../../user/entity/user.entity';
 import { Exclude } from 'class-transformer';
 import { Limit } from '../../limit/entity/limit.entity';
 import { CategoryType } from '../enum/category.type';
