@@ -1,4 +1,4 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { MailerService } from '@nestjs-modules/mailer';
 import { User } from '../user/entity/user.entity';
@@ -12,22 +12,15 @@ export class NotificationService {
 
   async sendConfirmMail(user: User, token: string) {
     const confirmLink = `${this.configService.get('FRONTEND_SERVER_URL')}/auth/confirm?token=${token}`;
-    return await this.mailerService
-      .sendMail({
-        to: user.email,
-        subject: 'Confirm email',
-        template: 'confirm.ejs',
-        context: {
-          username: user.username,
-          confirmLink,
-        },
-      })
-      .catch((e) => {
-        throw new HttpException(
-          JSON.stringify(e),
-          HttpStatus.UNPROCESSABLE_ENTITY,
-        );
-      });
+    await this.mailerService.sendMail({
+      to: user.email,
+      subject: 'Confirm email',
+      template: 'confirm.ejs',
+      context: {
+        username: user.username,
+        confirmLink,
+      },
+    });
   }
 
   async sendPasswordResetEmail(user: User, token: string) {
