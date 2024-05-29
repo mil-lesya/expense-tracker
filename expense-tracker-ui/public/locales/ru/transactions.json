@@ -7,7 +7,7 @@
         "columnDescription": "Описание",
         "columnAmount": "Сумма"
     },
-    "emptyList": "Транзакции не найдены. Создайте новую транзакцию на главной странице",
+    "emptyList": "Транзакции не найдены. Создайте новую транзакцию на главной странице или измените параметры поиска",
     "buttons": {
         "create": "Создать транзакцию",
         "edit": "Редактировать",
@@ -36,5 +36,16 @@
         "placeholderDescription": "Введите детали транзакции",
         "labelDate": "Дата"
     },
-    "addTitle": "Добавить транзакцию"
+    "addTitle": "Добавить транзакцию",
+    "placeholderSearch": "Поиск транзакций",
+    "filter": {
+        "title": "Фильтры",
+        "typeTransactions": "Типы транзакций",
+        "typeIncome": "Доходы",
+        "typeExpense": "Расходы",
+        "wallets": "Кошельки",
+        "amount": "Сумма",
+        "expenseCategories": "Категории расходов",
+        "incomeCategories": "Категории доходов"
+    }
 }

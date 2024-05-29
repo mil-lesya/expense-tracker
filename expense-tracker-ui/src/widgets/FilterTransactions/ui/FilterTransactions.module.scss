@@ -1,0 +1,87 @@
+.filterTransactions {
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    padding: 20px;
+    min-width: 300px;
+    height: fit-content;
+
+    .title {
+        font: var(--font-title-l);
+        font-size: 28px;
+    }
+  
+    .section {
+      border-bottom: 0.5px solid var(--color-border);
+      padding: 8px 0;
+  
+      &:last-child {
+        border-bottom: none;
+      }
+  
+      .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        cursor: pointer;
+        user-select: none;
+        font: var(--font-main-text);
+
+        .icon {
+            transition: transform 0.5s ease, color 0.3s ease; // Увеличена длительность анимации
+            font-size: 20px;
+            color: var(--color-middle-blue); // Primary color
+        }
+        
+        &:hover .icon {
+            color: var(--color-primary);
+        }
+
+        .iconWrapper {
+            padding: 5px;
+            cursor: pointer;
+            height: 34px;
+            display: flex;
+        }
+  
+        .expanded {
+            transform: rotate(45deg);
+        }
+      }
+  
+      .content {
+        overflow: hidden; // Добавлено для плавности
+        max-height: 0;
+        opacity: 0;
+        transition: max-height 0.5s ease, opacity 0.5s ease; // Увеличена длительность анимации
+  
+        &.expanded {
+          max-height: 500px; // Задать достаточно большое значение для полной видимости контента
+          opacity: 1;
+        }
+      }
+    }
+  }
+  
+  .block {
+    max-height: 200px;
+    overflow: scroll;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .categoryItem {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+
+  .blockType {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .blockAmount {
+    padding: 5px 15px 0;
+  }

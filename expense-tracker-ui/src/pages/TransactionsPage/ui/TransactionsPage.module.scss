@@ -3,3 +3,21 @@
     width: 100%;
     height: 100%;
 }
+
+.searchBlock {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.searchField {
+    margin-right: 40%;
+}
+
+.contentWrapper {
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+    gap: 20px;
+}

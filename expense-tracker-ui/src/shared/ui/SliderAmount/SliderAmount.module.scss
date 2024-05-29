@@ -1,0 +1,19 @@
+.sliderContainer {
+    width: 100%;
+  
+    .sliderLabels {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 8px;
+    }
+
+    .label {
+        font: var(--font-main-text);
+    }
+  }
+
+  .labelTooltip {
+    font: var(--font-main-text);
+    padding: 2px 5px;
+  }
+  
