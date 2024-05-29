@@ -12,6 +12,9 @@ import { useTranslation } from 'react-i18next';
 import { SvgIcon } from '../SvgIcon';
 import { classNames } from 'shared/lib/classNames/classNames';
 
+export enum ThemeDatePicker {
+  DARK = 'dark'
+}
 interface DatePickerProps {
   label?: string
   minDate?: Date
@@ -20,9 +23,10 @@ interface DatePickerProps {
   range?: boolean
   readonly?: boolean
   onDateChange?: (range?: { startDate: Date, endDate: Date } | Date) => void
+  theme?: ThemeDatePicker
 }
 
-const BaseDatePicker: React.FC<DatePickerProps> = ({ label, initialDate = new Date(), range = false, onDateChange, minDate, maxDate, readonly = false }) => {
+const BaseDatePicker: React.FC<DatePickerProps> = ({ label, initialDate = new Date(), range = false, onDateChange, minDate, maxDate, readonly = false, theme }) => {
   const [stateRange, setStateRange] = useState([{
     startDate: new Date(initialDate),
     endDate: range ? new Date() : new Date(initialDate),
@@ -79,7 +83,7 @@ const BaseDatePicker: React.FC<DatePickerProps> = ({ label, initialDate = new Da
 
   return (
     <>
-    <div className={cls.datePicker}>
+    <div className={classNames(cls.datePicker, { }, [cls[theme]])}>
     {label && <span className={cls.label}>{label}</span>}
     <Tippy
         content={
