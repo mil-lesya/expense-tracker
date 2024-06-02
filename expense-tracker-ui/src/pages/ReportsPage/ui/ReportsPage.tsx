@@ -39,7 +39,7 @@ const ReportsPage: FC<ReportsPageProps> = (props) => {
   const period = useSelector(getReportsPeriod);
 
   useEffect(() => {
-    dispatch(fetchWallets({}));
+    dispatch(fetchWallets({ page: 1, limit: 20 }));
     dispatch(fetchCategory());
   }, []);
 

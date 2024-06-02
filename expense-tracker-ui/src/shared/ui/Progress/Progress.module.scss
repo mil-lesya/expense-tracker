@@ -1,10 +1,12 @@
 .progressContainer {
-    display: block;
+    display: flex;
     font: var(--font-main-text);
     width: 100%;
+    flex-direction: column;
 
     .progressText {
       font-size: 17px;
+      line-height: normal;
       color: var(--color-middle-grey);
     }
 
@@ -38,6 +40,10 @@
         justify-content: center;
         gap: 20px;
     }
+}
+
+.bottom.progressContainer {
+  flex-direction: column-reverse;
 }
 
 .light .progressBar {

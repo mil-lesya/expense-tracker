@@ -9,6 +9,7 @@ export enum ThemeButton {
   OUTLINE_DARK = 'outlineDark',
   CLEAR = 'clear',
   ICON = 'iconTheme',
+  ICON_LIGHT = 'iconThemeLight',
   GREY = 'grey'
 }
 
