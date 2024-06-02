@@ -7,6 +7,7 @@ export enum ThemeProgress {
   LIGHT = 'light',
   DARK = 'dark',
   DARK_MINI = 'darkMini',
+  BOTTOM = 'bottom'
 }
 
 interface ProgressProps {
