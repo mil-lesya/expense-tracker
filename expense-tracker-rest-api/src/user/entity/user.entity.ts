@@ -1,9 +1,9 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { Exclude } from 'class-transformer';
-import { Category } from '../../category/entities/category.entity';
-import { Wallet } from '../../wallet/entities/wallet.entity';
-import { CurrencyCode } from '../../currency/enums/currency-code.enum';
-import { Goal } from '../../goal/entities/goal.entity';
+import { Category } from '../../category/entity/category.entity';
+import { Wallet } from '../../wallet/entity/wallet.entity';
+import { CurrencyCode } from '../../currency/enum/currency-code.enum';
+import { Goal } from '../../goal/entity/goal.entity';
 import { Budget } from '../../budget/entity/budget.entity';
 
 @Entity()

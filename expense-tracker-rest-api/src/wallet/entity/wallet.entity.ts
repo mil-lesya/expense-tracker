@@ -6,9 +6,9 @@ import {
   OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { CurrencyCode } from '../../currency/enums/currency-code.enum';
-import { User } from '../../user/entities/user.entity';
-import { Transaction } from '../../transaction/entities/transaction.entity';
+import { CurrencyCode } from '../../currency/enum/currency-code.enum';
+import { User } from '../../user/entity/user.entity';
+import { Transaction } from '../../transaction/entity/transaction.entity';
 import { Exclude } from 'class-transformer';
 
 @Entity()

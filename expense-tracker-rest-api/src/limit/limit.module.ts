@@ -10,8 +10,8 @@ import { CategoryService } from '../category/category.service';
 import { UserService } from '../user/user.service';
 import { BudgetModule } from '../budget/budget.module';
 import { Budget } from '../budget/entity/budget.entity';
-import { Category } from '../category/entities/category.entity';
-import { User } from '../user/entities/user.entity';
+import { Category } from '../category/entity/category.entity';
+import { User } from '../user/entity/user.entity';
 
 @Module({
   imports: [

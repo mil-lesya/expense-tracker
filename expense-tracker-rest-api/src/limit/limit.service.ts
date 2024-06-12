@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { CreateLimitDto } from './dto/create-limit.dto';
 import { UpdateLimitDto } from './dto/update-limit.dto';
 import { Limit } from './entity/limit.entity';
@@ -16,24 +20,37 @@ export class LimitService {
     private readonly categoryService: CategoryService,
     private readonly authService: AuthService,
   ) {}
+
   async create(createLimitDto: CreateLimitDto, userId: string) {
     const budget = await this.budgetService.findById(createLimitDto.budgetId);
-    console.log(budget);
+    if (!budget) {
+      throw new NotFoundException('Budget not found');
+    }
     this.authService.checkAuthorization(userId, budget.user.id);
 
     const category = await this.categoryService.findById(
       createLimitDto.categoryId,
     );
-    if (category.user) {
+    if (!category) {
+      throw new NotFoundException('Category not found');
+    }
+    if (category?.user) {
       this.authService.checkAuthorization(userId, category.user.id);
     }
 
-    const limit = this.limitRepository.create({
+    const limit = await this.limitRepository.findOne({
+      where: { budget: { id: budget.id }, category: { id: category.id } },
+    });
+    if (limit) {
+      throw new BadRequestException('Limit for a such category already exists');
+    }
+
+    const newLimit = this.limitRepository.create({
       ...createLimitDto,
       budget,
       category,
     });
-    return this.limitRepository.save(limit);
+    return this.limitRepository.save(newLimit);
   }
 
   findById(id: string) {
@@ -45,7 +62,6 @@ export class LimitService {
     if (!limit) {
       throw new NotFoundException('Limit not found');
     }
-    console.log(limit);
     this.authService.checkAuthorization(userId, limit.budget.user.id);
     Object.assign(limit, updateBudgetDto);
     return this.limitRepository.save(limit);

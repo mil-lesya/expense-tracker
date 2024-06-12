@@ -4,7 +4,7 @@ import { CategoryController } from './category.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserModule } from '../user/user.module';
 import { AuthModule } from '../auth/auth.module';
-import { Category } from './entities/category.entity';
+import { Category } from './entity/category.entity';
 import { AuthService } from '../auth/auth.service';
 
 @Module({

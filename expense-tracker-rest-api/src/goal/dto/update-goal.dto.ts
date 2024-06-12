@@ -1,5 +1,5 @@
 import { IsEnum, IsOptional, IsString } from 'class-validator';
-import { CurrencyCode } from '../../currency/enums/currency-code.enum';
+import { CurrencyCode } from '../../currency/enum/currency-code.enum';
 import { Transform } from 'class-transformer';
 
 export class UpdateGoalDto {

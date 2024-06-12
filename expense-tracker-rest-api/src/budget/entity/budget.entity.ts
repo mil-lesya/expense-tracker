@@ -6,10 +6,11 @@ import {
   OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { CurrencyCode } from '../../currency/enums/currency-code.enum';
-import { User } from '../../user/entities/user.entity';
+import { CurrencyCode } from '../../currency/enum/currency-code.enum';
+import { User } from '../../user/entity/user.entity';
 import { Exclude } from 'class-transformer';
 import { Limit } from '../../limit/entity/limit.entity';
+import { Period } from '../enum/period.enum';
 
 @Entity()
 export class Budget {
@@ -25,11 +26,8 @@ export class Budget {
   @Column()
   currency: CurrencyCode;
 
-  @Column({ name: 'start_date' })
-  startDate: Date;
-
-  @Column({ name: 'end_date' })
-  endDate: Date;
+  @Column()
+  period: Period;
 
   @OneToMany(() => Limit, (limit) => limit.budget)
   limits: Limit[];
