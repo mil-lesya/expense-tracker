@@ -6,6 +6,7 @@
         "delete": "Delete"
     },
     "emptyList": "No budgets found. Create a new budget",
+    "emptyBudget": "Add a new budget",
     "modal": {
         "buttonCreate": "Create",
         "buttonEdit": "Edit",

@@ -1,10 +1,10 @@
-import { FC, useCallback, useEffect, useState } from 'react';
+import { FC, useCallback, useEffect } from 'react';
 import { classNames } from 'shared/lib/classNames/classNames';
 import cls from './ReportsPage.module.scss';
 import { PageHeader } from 'shared/ui/PageHeader';
 import { Button, ThemeButton } from 'shared/ui/Button';
 import { useTranslation } from 'react-i18next';
-import { ReportDiagram, ReportType, fetchReport, getReportsCategories, getReportsIsLoading, getReportsPeriod, getReportsType, getReportsWallets, reportsActions } from 'entities/Report';
+import { ReportDiagram, ReportType, fetchReport, getReportsCategories, getReportsIsLoading, getReportsPeriod, getReportsType, getReportsWallets, reportsActions, reportsReducer } from 'entities/Report';
 import { FilterReports } from 'widgets/FilterReports';
 import DynamicModuleLoader, { ReducersList } from 'shared/lib/components/DynamicModuleLoader/DinamicModuleLoader';
 import { fetchWallets, getWalletsIsLoading, walletsReducer } from 'entities/Wallet';
@@ -13,7 +13,6 @@ import { useAppDispatch } from 'shared/lib/hooks/useAppDispatch';
 import { useSelector } from 'react-redux';
 import { PageLoader } from 'shared/ui/PageLoader';
 import dayjs from 'dayjs';
-import { reportsReducer } from 'entities/Report/model/slice/reportsSlice';
 
 const initialReducers: ReducersList = {
   wallets: walletsReducer,

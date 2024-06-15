@@ -8,6 +8,7 @@
     "info": "Add a spending limit for certain categories",
     "emptyList": "Limits for categories were not found",
     "balance": "BALANCE",
+    "error": "Limit exceeded",
     "modal": {
         "buttonCreate": "Create",
         "buttonEdit": "Edit",
@@ -19,7 +20,7 @@
         "subtitle": "Take control of your finances",
         "deleteQuestion": "Are you sure you want to delete your limit ",
         "deleteWarning": "This action cannot be undone",
-        "labelName": "Category",
+        "labelCategory": "Category",
         "labelAmount": "Amount",
         "placeholderAmount": "0,00",
         "errorAmount": "The field can only contain numeric values"

@@ -18,14 +18,13 @@ import {
 } from '../model/selectors/addTransaction';
 import toast from 'react-hot-toast';
 import { addTransaction } from '../model/services/addTransaction';
-import { Transaction, TransactionType } from 'entities/Transaction';
+import { TransactionType } from 'entities/Transaction';
 import { addTransactionActions, addTransactionReducer } from '../model/slice/addTransactionSlice';
-import { AddTransactionDto } from '../model/types/addTransactionSchema';
 import Select, { SelectOption } from 'shared/ui/Select/ui/Select';
 import { getUserWallets } from 'entities/Wallet';
 import { transformToSelectOptions } from 'shared/lib/transformToSelect/transformToSelect';
 import DynamicModuleLoader, { ReducersList } from 'shared/lib/components/DynamicModuleLoader/DinamicModuleLoader';
-import { Category, CategoryDto, getUserCategories } from 'entities/Category';
+import { getUserCategories } from 'entities/Category';
 import Input from 'shared/ui/Input/ui/Input';
 import { currencyOptions } from 'shared/lib/enumToSelect/enumToSelect';
 import DatePicker from 'shared/ui/DatePicker/DatePicker';

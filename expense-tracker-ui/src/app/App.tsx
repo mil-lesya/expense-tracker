@@ -1,7 +1,7 @@
 import { UnauthorizedLayout } from 'pages/layouts/UnauthorizedLayout';
 import { AppRouter } from './providers/router';
 import { Suspense, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { getUserState } from 'entities/User';
 import { AuthorizedLayout } from 'pages/layouts/AuthorizedLayout';
 import { initAuthData } from 'entities/User/model/services/initAuthData';
