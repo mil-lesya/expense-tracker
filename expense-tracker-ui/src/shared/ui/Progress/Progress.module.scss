@@ -42,8 +42,44 @@
     }
 }
 
+.red .progressFill {
+  background-color: var(--color-red);
+}
+
+.green .progressFill {
+  background-color: var(--color-green);
+}
+
+.orange .progressFill {
+  background-color: var(--color-orange);
+}
+
 .bottom.progressContainer {
   flex-direction: column-reverse;
+}
+
+.bottomRed.progressContainer {
+  flex-direction: column-reverse;
+
+  .progressFill {
+    background-color: var(--color-red);
+  }
+}
+
+.bottomGreen.progressContainer {
+  flex-direction: column-reverse;
+
+  .progressFill {
+    background-color: var(--color-green);
+  }
+}
+
+.bottomOrange.progressContainer {
+  flex-direction: column-reverse;
+
+  .progressFill {
+    background-color: var(--color-orange);
+  }
 }
 
 .light .progressBar {

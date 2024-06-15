@@ -9,8 +9,7 @@ export interface Budget {
   name: string
   amount: number
   currency: CurrencyCode
-  startDate: string
-  endDate: string
+  period: BudgetPeriod
 }
 
 export interface BudgetItemCarusel {

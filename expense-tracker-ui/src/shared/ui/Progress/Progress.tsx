@@ -7,7 +7,13 @@ export enum ThemeProgress {
   LIGHT = 'light',
   DARK = 'dark',
   DARK_MINI = 'darkMini',
-  BOTTOM = 'bottom'
+  BOTTOM = 'bottom',
+  RED = 'red',
+  BOTTOM_RED = 'bottomRed',
+  GREEN = 'green',
+  BOTTOM_GREEN = 'bottomGreen',
+  ORANGE = 'orange',
+  BOTTOM_ORANGE = 'bottomOrange',
 }
 
 interface ProgressProps {
@@ -21,7 +27,7 @@ interface ProgressProps {
 const Progress: FC<ProgressProps> = (props) => {
   const { className, current, total, currency, theme = 'light' } = props;
 
-  const percentage = Math.round((current / total) * 100);
+  const percentage = parseFloat(((current / total) * 100).toFixed(2));
 
   return (
     <div className={classNames(cls.progressContainer, {}, [className, cls[theme]])}>

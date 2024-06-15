@@ -22,7 +22,6 @@ const GoalListItem: FC<GoalListItemProps> = (props) => {
 
   const { t } = useTranslation('savings');
 
-  const [isVisible, setIsVisible] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const buttonRef = useRef(null);
 
@@ -31,16 +30,15 @@ const GoalListItem: FC<GoalListItemProps> = (props) => {
   // Контент выпадающего списка
   const dropdownContent = (
     <ul className={cls.dropdownMenu}>
-      <li onClick={() => { onClickEdit(goal); }}>{t('buttons.edit')}</li>
-      <li onClick={() => { onClickDelete(goal); }}>{t('buttons.delete')}</li>
+      <li onClick={() => { onClickEdit(goal); setIsOpen(false); }}>{t('buttons.edit')}</li>
+      <li onClick={() => { onClickDelete(goal); setIsOpen(false); }}>{t('buttons.delete')}</li>
     </ul>
   );
 
   return (
     <div
       className={classNames(cls.goalListItem, {}, [className])}
-      onMouseEnter={() => { setIsVisible(true); }}
-      onMouseLeave={() => { setIsVisible(false); setIsOpen(false); }}
+      onMouseLeave={() => { setIsOpen(false); }}
     >
       <div className={cls.imageWrapper}>
         {goal.image

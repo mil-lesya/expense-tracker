@@ -5,7 +5,7 @@ import { PageHeader } from 'shared/ui/PageHeader';
 import { useTranslation } from 'react-i18next';
 import { useAppDispatch } from 'shared/lib/hooks/useAppDispatch';
 import { useSelector } from 'react-redux';
-import { Transaction, TransactionsTable, fetchTransactions, getTransactionsCount, getTransactionsCurrentPage, getTransactionsError, getTransactionsIsLoading, getTransactionsTotalPages, getUserTransactions, transactionsActions, transactionsReducer } from 'entities/Transaction';
+import { Transaction, TransactionsTable, fetchTransactions, getTransactionsCount, getTransactionsLimit, getTransactionsCurrentPage, getTransactionsIsLoading, getTransactionsTotalPages, transactionsActions, transactionsReducer } from 'entities/Transaction';
 import DynamicModuleLoader, { ReducersList } from 'shared/lib/components/DynamicModuleLoader/DinamicModuleLoader';
 import { fetchWallets, walletsReducer } from 'entities/Wallet';
 import Pagination from 'shared/ui/Pagination/Pagination';
@@ -14,7 +14,6 @@ import { EmptyBlock } from 'shared/ui/EmptyBlock';
 import { DeleteTransactionModal } from 'features/DeleteTransaction';
 import { EditTransactionModal } from 'features/EditTransaction';
 import { categoryReducer, fetchCategory } from 'entities/Category';
-import { getTransactionsLimit } from 'entities/Transaction/model/selectors/transactions';
 import Input from 'shared/ui/Input/ui/Input';
 import DatePicker, { ThemeDatePicker } from 'shared/ui/DatePicker/DatePicker';
 import dayjs from 'dayjs';
@@ -53,7 +52,6 @@ const TransactionsPage: FC<TransactionsPageProps> = (props) => {
   const [filterCategory, setFilterCategory] = useState<string>();
   const [filterWallets, setFilterWallets] = useState<string>();
   const [filterMinAmount, setFilterMinAmount] = useState<string>();
-  const [filters, setFilters] = useState<{ type?: string, category?: string, wallet?: string, minAmount?: string, maxAmount?: string }>(null);
 
   useEffect(() => {
     dispatch(fetchWallets({ page: 1, limit: 100 }));

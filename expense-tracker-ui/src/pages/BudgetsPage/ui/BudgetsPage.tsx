@@ -1,28 +1,27 @@
-import { FC } from 'react';
+import { FC, useCallback, useEffect, useState } from 'react';
 import { classNames } from 'shared/lib/classNames/classNames';
 import cls from './BudgetsPage.module.scss';
 import { PageHeader } from 'shared/ui/PageHeader';
-import { BudgetCarusel } from 'entities/Budget';
+import { BudgetCarusel, fetchBudgets, BudgetItemCarusel, BudgetPeriod, budgetsReducer, getUserBudgets } from 'entities/Budget';
 import { useTranslation } from 'react-i18next';
-import { BudgetItemCarusel } from 'entities/Budget/model/types/budget';
-import { CurrencyCode } from 'shared/const/common';
 import { Button, ThemeButton } from 'shared/ui/Button';
-import { SvgIcon } from 'shared/ui/SvgIcon';
-import Progress, { ThemeProgress } from 'shared/ui/Progress/Progress';
+import { useSelector } from 'react-redux';
+import { useAppDispatch } from 'shared/lib/hooks/useAppDispatch';
+import DynamicModuleLoader, { ReducersList } from 'shared/lib/components/DynamicModuleLoader/DinamicModuleLoader';
+import { fetchReport, reportsReducer } from 'entities/Report';
+import dayjs from 'dayjs';
+import { EmptyBlock } from 'shared/ui/EmptyBlock';
+import { getUserLimits, limitsReducer, LimitItemCard, LimitList, fetchLimits } from 'entities/Limit';
+import { AddEditBudgetModal } from 'features/AddEditBudget';
+import { DeleteBudgetModal } from 'features/DeleteBudget';
+import { AddEditLimitModal } from 'features/AddEditLimit';
+import { DeleteLimitModal } from 'features/DeleteLimit';
 
-const budgets: BudgetItemCarusel[] = [
-  { id: '1', name: 'Мой недельный бюджет', amount: 1408, total: 2000, currency: CurrencyCode.USD, period: 'weekly' },
-  { id: '2', name: 'Мой ежемесячный бюджет', amount: 2500, total: 5000, currency: CurrencyCode.USD, period: 'monthly' }
-  // { id: '3', name: 'My Yearly budget', amount: 3200, total: 5000, currency: CurrencyCode.USD, period: 'yearly' }
-];
-
-const limits = [
-  { id: '1', name: 'pets', icon: 'pet', amount: 100, total: 50, balance: 50, currency: CurrencyCode.USD },
-  { id: '2', name: 'clothing', icon: 'dress', amount: 120, total: 50, balance: 70, currency: CurrencyCode.USD },
-  { id: '3', name: 'transport', icon: 'car', amount: 100, total: 50, balance: 50, currency: CurrencyCode.USD },
-  { id: '4', name: 'cosmetics', icon: 'cosmetic', amount: 110, total: 50, balance: 60, currency: CurrencyCode.USD },
-  { id: '5', name: 'onlineShopping', icon: 'shopping', amount: 100, total: 50, balance: 50, currency: CurrencyCode.USD }
-];
+const reducers: ReducersList = {
+  budgets: budgetsReducer,
+  reports: reportsReducer,
+  limits: limitsReducer
+};
 interface BudgetsPageProps {
   className?: string
 }
@@ -30,44 +29,264 @@ interface BudgetsPageProps {
 const BudgetsPage: FC<BudgetsPageProps> = (props) => {
   const { className } = props;
 
+  const dispatch = useAppDispatch();
   const { t } = useTranslation(['budgets', 'limits', 'category']);
 
+  const budgetsItems = useSelector(getUserBudgets.selectAll);
+  const limitsItems = useSelector(getUserLimits.selectAll);
+
+  const [budgets, setBudgets] = useState<BudgetItemCarusel[]>([]);
+  const [limits, setLimits] = useState<LimitItemCard[]>([]);
+  const [currentIndex, setCurrentIndex] = useState(1);
+  const [defaultPeriod, setDefaultPeriod] = useState<BudgetPeriod | 'all'>('all');
+  const [currentBudget, setCurrentBudget] = useState<BudgetItemCarusel>();
+
+  const [isAddBudgetModal, setIsAddBudgetModal] = useState(false);
+  const [isDeleteBudgetModal, setIsDeleteBudgetModal] = useState(false);
+  const [editBudget, setEditBudget] = useState(null);
+  const [deleteBudget, setDeleteBudget] = useState(null);
+  const [isEdit, setIsEdit] = useState(false);
+
+  const [isAddEditLimitModal, setIsAddEditLimitModal] = useState(false);
+  const [isDeleteLimitModal, setIsDeleteLimitModal] = useState(false);
+  const [editLimit, setEditLimit] = useState(null);
+  const [deleteLimit, setDeleteLimit] = useState(null);
+  const [isEditLimit, setIsEditLimit] = useState(false);
+
+  const getPeriodDates = (period: BudgetPeriod) => {
+    const now = dayjs();
+    switch (period) {
+      case 'weekly':
+        return {
+          startDate: now.startOf('week').format('YYYY-MM-DD'),
+          endDate: now.endOf('week').format('YYYY-MM-DD')
+        };
+      case 'monthly':
+        return {
+          startDate: now.startOf('month').format('YYYY-MM-DD'),
+          endDate: now.endOf('month').format('YYYY-MM-DD')
+        };
+      case 'yearly':
+        return {
+          startDate: now.startOf('year').format('YYYY-MM-DD'),
+          endDate: now.endOf('year').format('YYYY-MM-DD')
+        };
+      default:
+        return {
+          startDate: now.format('YYYY-MM-DD'),
+          endDate: now.format('YYYY-MM-DD')
+        };
+    }
+  };
+
+  useEffect(() => {
+    dispatch(fetchBudgets({ page: 1, limit: 10 }));
+  }, []);
+
+  useEffect(() => {
+    if (limitsItems.length > 0 && currentBudget) {
+      const fetchAllTransactions = async () => {
+        const updatedLimits = await Promise.all(limitsItems.map(async (item) => {
+          const { startDate, endDate } = getPeriodDates(currentBudget.period);
+          const data = await dispatch(fetchReport({
+            startDate,
+            endDate,
+            type: 'expense',
+            category: item.category.id
+          }));
+
+          const amount = Math.abs(data.payload.totalBalance);
+          const balance = item.amount - amount;
+          return {
+            id: item.id,
+            amount,
+            total: item.amount,
+            balance,
+            currency: currentBudget.currency,
+            category: item.category
+          };
+        }));
+
+        setLimits(updatedLimits);
+      };
+
+      fetchAllTransactions();
+    } else if (!currentBudget) {
+      setLimits([]);
+    }
+  }, [limitsItems, currentBudget, dispatch]);
+
+  useEffect(() => {
+    if (budgetsItems.length > 0) {
+      const fetchAllTransactions = async () => {
+        const updatedBudgets = await Promise.all(budgetsItems.map(async (item) => {
+          const { startDate, endDate } = getPeriodDates(item.period);
+          const data = await dispatch(fetchReport({
+            startDate,
+            endDate,
+            type: 'expense'
+          }));
+
+          return { ...item, amount: Math.abs(data.payload.totalBalance), total: item.amount };
+        }));
+
+        setBudgets(updatedBudgets);
+      };
+
+      fetchAllTransactions();
+    } else {
+      setBudgets([]);
+    }
+  }, [budgetsItems, dispatch]);
+
+  useEffect(() => {
+    if (budgets.length > 0) {
+      let budget: BudgetItemCarusel | undefined;
+      if (currentIndex === 0) {
+        budget = budgets.find((item) => item.period === 'weekly');
+      } else if (currentIndex === 1) {
+        budget = budgets.find((item) => item.period === 'monthly');
+      } else if (currentIndex === 2) {
+        budget = budgets.find((item) => item.period === 'yearly');
+      }
+      setCurrentBudget(budget);
+      if (budget) {
+        dispatch(fetchLimits(budget.id));
+      }
+    }
+  }, [currentIndex, budgets]);
+
+  const changeCurrentIndex = (index: number) => {
+    setCurrentIndex(index);
+  };
+
+  const onToggleAddModal = useCallback(() => {
+    setIsAddBudgetModal((prev) => !prev);
+    setIsEdit(false);
+  }, []);
+
+  const onToggleDeleteModal = useCallback(() => {
+    setIsDeleteBudgetModal((prev) => !prev);
+  }, []);
+
+  const onToggleAddEditLimitModal = useCallback(() => {
+    setIsAddEditLimitModal((prev) => !prev);
+    setIsEditLimit(false);
+  }, []);
+
+  const onAddBudgetPeriod = useCallback((period: BudgetPeriod) => {
+    setDefaultPeriod(period);
+    onToggleAddModal();
+  }, []);
+
+  const onToggleDeleteLimitModal = useCallback(() => {
+    setIsDeleteLimitModal((prev) => !prev);
+  }, []);
+
+  const onOpenEditModal = useCallback((budget: BudgetItemCarusel) => {
+    setDefaultPeriod(budget.period);
+    setIsEdit(true);
+    setEditBudget({
+      id: budget.id,
+      amount: budget.total,
+      name: budget.name,
+      period: budget.period,
+      currency: budget.currency
+    });
+    setIsAddBudgetModal(true);
+  }, []);
+
+  const onOpenDeleteModal = useCallback((budget: BudgetItemCarusel) => {
+    setDeleteBudget({
+      id: budget.id,
+      amount: budget.total,
+      name: budget.name,
+      period: budget.period,
+      currency: budget.currency
+    });
+    setIsDeleteBudgetModal(true);
+  }, []);
+
+  const onOpenEditLimitModal = useCallback((limit: LimitItemCard) => {
+    setIsEditLimit(true);
+    setEditLimit({
+      id: limit.id,
+      amount: limit.total,
+      category: limit.category
+    });
+    setIsAddEditLimitModal(true);
+  }, []);
+
+  const onOpenDeleteLimitModal = useCallback((limit: LimitItemCard) => {
+    setDeleteLimit({
+      id: limit.id,
+      amount: limit.total,
+      category: limit.category
+    });
+    setIsDeleteLimitModal(true);
+  }, []);
+
   return (
-    <>
+    <DynamicModuleLoader reducers={reducers}>
       <PageHeader>{t('budgets:title')}</PageHeader>
       <div className={classNames(cls.budgetsPage, {}, [className])}>
-        <BudgetCarusel items={budgets} />
-        <div className={cls.limitsHeaderWrapper}>
-          <div className={cls.limitsHeader}>
-            <h3 className={cls.limitsTitle}>{t('limits:title')}</h3>
-            <p className={cls.limitsInfo}>{t('limits:info')}</p>
-          </div>
-          <Button theme={ThemeButton.PRIMARY}>{t('limits:buttons.create')}</Button>
-        </div>
-
-        <div className={cls.limitsList}>
-          {limits.map((item) => (
-            <div className={cls.limitsCard} key={item.id}>
-              <div className={cls.header}>
-                <div className={cls.nameWrapper}>
-                  <div className={cls.icon}>
-                    <SvgIcon name={`${item.icon}`} />
-                  </div>
-                  <span className={cls.name}>{t(`category:${item.name}`)}</span>
-                </div>
-                <div className={cls.menu}><SvgIcon name='menu-kebab' className={cls.iconMenu} /></div>
-              </div>
-              <div className={cls.balance}>{t('limits:balance')}: {item.balance.toLocaleString()} {item.currency}</div>
-              <Progress current={item.total} total={item.amount} currency={item.currency} theme={ThemeProgress.BOTTOM} />
-              {/* <div className={styles.details}>
-                <span>{item.amount.toLocaleString()} {item.currency} of {total.toLocaleString()} {currency}</span>
-                <span className={cls.percentage}>{percentage}%</span>
-              </div> */}
+        {budgets.length > 0
+          ? (
+          <>
+          <BudgetCarusel
+            items={budgets}
+            changeIndex={changeCurrentIndex}
+            onAdd={onAddBudgetPeriod}
+            onClickEdit={onOpenEditModal}
+            onClickDelete={onOpenDeleteModal}
+          />
+          <div className={cls.limitsHeaderWrapper}>
+            <div className={cls.limitsHeader}>
+              <h3 className={cls.limitsTitle}>{t('limits:title')}</h3>
+              <p className={cls.limitsInfo}>{t('limits:info')}</p>
             </div>
-          ))}
-        </div>
+            {currentBudget && (<Button className={cls.btn} theme={ThemeButton.PRIMARY} onClick={onToggleAddEditLimitModal}>{t('limits:buttons.create')}</Button>)}
+          </div>
+          </>)
+          : (
+          <>
+          <EmptyBlock>
+            {t('budgets:emptyList')}
+            <div className={cls.addWrapper}>
+              <Button theme={ThemeButton.PRIMARY} onClick={() => { setDefaultPeriod('all'); onToggleAddModal(); }}>{t('budgets:buttons.create')}</Button>
+            </div>
+          </EmptyBlock>
+          </>
+            )}
+        {limits.length > 0 && (<LimitList limits={limits} onClickEdit={onOpenEditLimitModal} onClickDelete={onOpenDeleteLimitModal} />)}
+        {(limits.length === 0 && currentBudget) && (<EmptyBlock>{t('limits:emptyList')}</EmptyBlock>)}
       </div>
-    </>
+      <AddEditBudgetModal
+        defaultPeriod={defaultPeriod}
+        isOpen={isAddBudgetModal}
+        onClose={onToggleAddModal}
+        isEdit={isEdit}
+        budgetData={editBudget}
+      />
+      <DeleteBudgetModal
+        isOpen={isDeleteBudgetModal}
+        onClose={onToggleDeleteModal}
+        budget={deleteBudget}
+      />
+      <AddEditLimitModal
+        isOpen={isAddEditLimitModal}
+        onClose={onToggleAddEditLimitModal}
+        isEdit={isEditLimit}
+        limitData={editLimit}
+        currentBudget={currentBudget}
+      />
+      <DeleteLimitModal
+        isOpen={isDeleteLimitModal}
+        onClose={onToggleDeleteLimitModal}
+        limit={deleteLimit}
+        budgetId={currentBudget?.id}
+      />
+    </DynamicModuleLoader>
   );
 };
 
