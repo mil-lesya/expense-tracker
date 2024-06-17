@@ -21,6 +21,7 @@ import { DeleteLimitSchema } from 'features/DeleteLimit';
 import { DeleteTransactionSchema } from 'features/DeleteTransaction';
 import { DeleteWalletSchema } from 'features/DeleteWallet';
 import { EditTransactionSchema } from 'features/EditTransaction';
+import { EditUserInfoSchema } from 'features/EditUserInfo';
 import { RegistrationSchema } from 'features/Registration';
 import { NavigateOptions } from 'react-router';
 import { To } from 'react-router-dom';
@@ -29,6 +30,7 @@ import { WalletsTotalBalanceSchema } from 'widgets/WalletsTotalBalance';
 export interface StateSchema {
   user: UserSchema
   // Асинхронные редьюсеры
+  editUserInfo?: EditUserInfoSchema
   loginForm?: LoginSchema
   registrationForm?: RegistrationSchema
   // Кошельки
