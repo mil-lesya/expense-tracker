@@ -5,7 +5,7 @@ import { PageHeader } from 'shared/ui/PageHeader';
 import { PageLoader } from 'shared/ui/PageLoader';
 import { useTranslation } from 'react-i18next';
 import { useAppDispatch } from 'shared/lib/hooks/useAppDispatch';
-import { ThemeWalletsTotalBalance, WalletsTotalBalance, getWalletsTotalBalanceIsLoading } from 'widgets/WalletsTotalBalance';
+import { ThemeWalletsTotalBalance, WalletsTotalBalance } from 'widgets/WalletsTotalBalance';
 import { useSelector } from 'react-redux';
 import { AddTransactionForm } from 'features/AddTransaction';
 import DynamicModuleLoader, { ReducersList } from 'shared/lib/components/DynamicModuleLoader/DinamicModuleLoader';

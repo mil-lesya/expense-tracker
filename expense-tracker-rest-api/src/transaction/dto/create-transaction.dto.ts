@@ -1,4 +1,4 @@
-import { CurrencyCode } from '../../currency/enums/currency-code.enum';
+import { CurrencyCode } from '../../currency/enum/currency-code.enum';
 import {
   IsDateString,
   IsEnum,

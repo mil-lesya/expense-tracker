@@ -3,3 +3,45 @@
     width: 100%;
     height: 100%;
 }
+
+.limitsHeaderWrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 20px;
+    margin-bottom: 20px;
+
+    @include only-mobile {
+        flex-direction: column;
+        gap: 10px;
+    }
+}
+
+.btn {
+    @include only-mobile {
+        width: 100%;
+    }
+}
+
+.limitsHeader {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.limitsTitle {
+    font-size: 28px;
+    font-family: var(--font-family-title);
+}
+
+.limitsInfo {
+    font: var(--font-main-text);
+    line-height: normal;
+    color: var(--color-disabled-text);
+}
+
+.addWrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

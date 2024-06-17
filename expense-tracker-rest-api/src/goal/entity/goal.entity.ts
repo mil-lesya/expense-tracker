@@ -6,7 +6,7 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { Exclude } from 'class-transformer';
-import { CurrencyCode } from '../../currency/enums/currency-code.enum';
+import { CurrencyCode } from '../../currency/enum/currency-code.enum';
 import { User } from '../../user/entity/user.entity';
 
 @Entity()

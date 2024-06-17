@@ -35,6 +35,17 @@
     }
   }
 
+  .dark {
+    width: auto;
+    white-space: nowrap;
+  }
+
+  .dark .buttonWrapper {
+    border: none;
+    background-color: var(--color-light-grey);
+    width: auto;
+  }
+
   .button {
     cursor: pointer;
     height: 100%;
@@ -52,6 +63,13 @@
     &::placeholder {
       color: var(--color-placeholder);
     }
+  }
+
+  .dark .button {
+    border: none;
+    background-color: var(--color-light-grey);
+    width: auto;
+    padding: 8px 10px;
   }
 
   .icon {

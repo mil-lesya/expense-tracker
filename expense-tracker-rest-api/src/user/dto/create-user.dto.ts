@@ -1,5 +1,5 @@
 import { IsEmail, IsEnum, IsString } from 'class-validator';
-import { CurrencyCode } from '../../currency/enums/currency-code.enum';
+import { CurrencyCode } from '../../currency/enum/currency-code.enum';
 
 export class CreateUserDto {
   @IsString()

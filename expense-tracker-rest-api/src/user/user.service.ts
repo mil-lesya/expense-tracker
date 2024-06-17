@@ -5,7 +5,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import * as bcrypt from 'bcrypt';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { CurrencyCode } from '../currency/enums/currency-code.enum';
+import { CurrencyCode } from '../currency/enum/currency-code.enum';
 
 @Injectable()
 export class UserService {

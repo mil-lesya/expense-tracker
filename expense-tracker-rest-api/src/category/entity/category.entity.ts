@@ -6,7 +6,7 @@ import {
   OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { Transaction } from '../../transaction/entities/transaction.entity';
+import { Transaction } from '../../transaction/entity/transaction.entity';
 import { User } from '../../user/entity/user.entity';
 import { Exclude } from 'class-transformer';
 import { Limit } from '../../limit/entity/limit.entity';

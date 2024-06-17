@@ -1,7 +1,10 @@
+import { CurrencyCode } from 'shared/const/common';
+
 export interface User {
   id: string
   username: string
   email: string
+  defaultCurrency: CurrencyCode
 }
 
 export interface UserSchema {

@@ -1,5 +1,5 @@
 import { Category } from '../../category/entity/category.entity';
-import { CurrencyCode } from '../../currency/enums/currency-code.enum';
+import { CurrencyCode } from '../../currency/enum/currency-code.enum';
 
 export interface TransactionResponseDto {
   id: string;

@@ -14,9 +14,6 @@ export class Limit {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column()
-  name: string;
-
   @Column('numeric')
   amount: number;
 

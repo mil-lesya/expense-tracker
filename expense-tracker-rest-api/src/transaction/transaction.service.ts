@@ -15,14 +15,14 @@ import {
   Repository,
 } from 'typeorm';
 import { AuthService } from '../auth/auth.service';
-import { Transaction } from './entities/transaction.entity';
+import { Transaction } from './entity/transaction.entity';
 import { CreateTransactionDto } from './dto/create-transaction.dto';
 import { WalletService } from '../wallet/wallet.service';
 import { CategoryService } from '../category/category.service';
 import { TransactionResponseDto } from './interfaces/transaction.response.dto';
 import { UpdateTransactionDto } from './dto/update-transaction.dto';
 import { TransactionType } from './enums/transaction-type.enum';
-import { CurrencyCode } from '../currency/enums/currency-code.enum';
+import { CurrencyCode } from '../currency/enum/currency-code.enum';
 import { CurrencyService } from '../currency/currency.service';
 import { UserService } from '../user/user.service';
 

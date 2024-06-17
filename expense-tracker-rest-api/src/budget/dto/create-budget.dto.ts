@@ -1,12 +1,6 @@
-import {
-  IsDate,
-  IsDateString,
-  IsEnum,
-  IsNumber,
-  IsOptional,
-  IsString,
-} from 'class-validator';
-import { CurrencyCode } from '../../currency/enums/currency-code.enum';
+import { IsEnum, IsNumber, IsString } from 'class-validator';
+import { CurrencyCode } from '../../currency/enum/currency-code.enum';
+import { Period } from '../enum/period.enum';
 
 export class CreateBudgetDto {
   @IsString()
@@ -18,9 +12,6 @@ export class CreateBudgetDto {
   @IsEnum(CurrencyCode)
   currency: CurrencyCode;
 
-  @IsDateString()
-  startDate: Date;
-
-  @IsDateString()
-  endDate: Date;
+  @IsEnum(Period)
+  period: Period;
 }

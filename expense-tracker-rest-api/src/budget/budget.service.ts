@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { CreateBudgetDto } from './dto/create-budget.dto';
 import { Budget } from './entity/budget.entity';
 import { UpdateBudgetDto } from './dto/update-budget.dto';
@@ -19,8 +23,17 @@ export class BudgetService {
 
   async create(createBudgetDto: CreateBudgetDto, userId: string) {
     const user = await this.userService.findById(userId);
-    const budget = this.budgetRepository.create({ ...createBudgetDto, user });
-    return this.budgetRepository.save(budget);
+    const budget = await this.budgetRepository.findOne({
+      where: { user: { id: user.id }, period: createBudgetDto.period },
+    });
+    if (budget) {
+      throw new BadRequestException('Budget with such period already exists');
+    }
+    const newBudget = this.budgetRepository.create({
+      ...createBudgetDto,
+      user,
+    });
+    return this.budgetRepository.save(newBudget);
   }
 
   async findAll(userId: string, page: number, limit: number) {

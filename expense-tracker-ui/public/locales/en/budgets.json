@@ -1,0 +1,38 @@
+{
+    "title": "Budgets",
+    "buttons": {
+        "create": "Create a budget",
+        "edit": "Edit",
+        "delete": "Delete"
+    },
+    "emptyList": "No budgets found. Create a new budget",
+    "emptyBudget": "Add a new budget",
+    "modal": {
+        "buttonCreate": "Create",
+        "buttonEdit": "Edit",
+        "buttonCancel": "Cancel",
+        "buttonDelete": "Delete",
+        "titleAdd": "Create a new budget",
+        "titleEdit": "Edit budget",
+        "titleDelete": "Delete budget",
+        "subtitle": "Take control of your finances",
+        "deleteQuestion": "Are you sure you want to delete your budget ",
+        "deleteWarning": "This action cannot be undone",
+        "labelName": "Name of budget",
+        "placeholderName": "Enter the name of the budget",
+        "labelAmount": "Amount",
+        "placeholderAmount": "0,00",
+        "errorAmount": "The field can only contain numeric values",
+        "labelPeriod": "Period"
+    },
+    "period": {
+        "weekly": "Weekly",
+        "monthly": "Monthly",
+        "yearly": "Yearly"
+    },
+    "status": {
+        "ok": "The budget is on track",
+        "warn": "The budget is approaching its limit",
+        "error": "The budget is over the limit"
+    }
+}

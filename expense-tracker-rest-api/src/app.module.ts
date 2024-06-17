@@ -12,7 +12,7 @@ import { Wallet } from './wallet/entity/wallet.entity';
 import { CategoryModule } from './category/category.module';
 import { TransactionModule } from './transaction/transaction.module';
 import { Category } from './category/entity/category.entity';
-import { Transaction } from './transaction/entities/transaction.entity';
+import { Transaction } from './transaction/entity/transaction.entity';
 import { GoalModule } from './goal/goal.module';
 import { Goal } from './goal/entity/goal.entity';
 import { Budget } from './budget/entity/budget.entity';

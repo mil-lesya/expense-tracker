@@ -66,7 +66,7 @@ const EditTransactionModal: FC<EditTransactionModalProps> = (props) => {
   const type = useSelector(getEditTransactionType);
 
   const [amountError, setAmountError] = useState('');
-  const [disabledBtn, setDisabledBtn] = useState(false);
+  // const [disabledBtn, setDisabledBtn] = useState(false);
   const [transactionChanges, setTransactionChanges] = useState({});
   const [walletOptions, setWalletOptions] = useState(null);
   const [categoryOptions, setCategoryOptions] = useState(null);

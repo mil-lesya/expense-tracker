@@ -7,7 +7,7 @@
         "columnDescription": "Description",
         "columnAmount": "Amount"
     },
-    "emptyList": "No transactions found. Create a new transaction on the Dashboard page",
+    "emptyList": "No transactions found. Create a new transaction on the home page or change the search parameters",
     "buttons": {
         "create": "Create a transaction",
         "edit": "Edit",
@@ -36,5 +36,16 @@
         "placeholderDescription": "Enter transaction details",
         "labelDate": "Date"
     },
-    "addTitle": "Add a transaction"
+    "addTitle": "Add a transaction",
+    "placeholderSearch": "Search for transactions",
+    "filter": {
+        "title": "Filters",
+        "typeTransactions": "Types of transactions",
+        "typeIncome": "Income",
+        "typeExpense": "Expense",
+        "wallets": "Wallets",
+        "amount": "Amount",
+        "expenseCategories": "Expense categories",
+        "incomeCategories": "Income categories"
+    }
 }

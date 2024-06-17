@@ -12,3 +12,4 @@ export type { Transaction, TransactionSchema, TransactionType, TransactionsRespo
 export { TransactionsTable };
 export { fetchTransactions } from './model/services/fetchTransactions';
 export { getUserTransactions } from './model/slice/transactionSlice';
+export { getTransactionsLimit } from './model/selectors/transactions';

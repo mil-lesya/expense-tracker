@@ -1,10 +1,12 @@
 .progressContainer {
-    display: block;
+    display: flex;
     font: var(--font-main-text);
     width: 100%;
+    flex-direction: column;
 
     .progressText {
       font-size: 17px;
+      line-height: normal;
       color: var(--color-middle-grey);
     }
 
@@ -38,6 +40,46 @@
         justify-content: center;
         gap: 20px;
     }
+}
+
+.red .progressFill {
+  background-color: var(--color-red);
+}
+
+.green .progressFill {
+  background-color: var(--color-green);
+}
+
+.orange .progressFill {
+  background-color: var(--color-orange);
+}
+
+.bottom.progressContainer {
+  flex-direction: column-reverse;
+}
+
+.bottomRed.progressContainer {
+  flex-direction: column-reverse;
+
+  .progressFill {
+    background-color: var(--color-red);
+  }
+}
+
+.bottomGreen.progressContainer {
+  flex-direction: column-reverse;
+
+  .progressFill {
+    background-color: var(--color-green);
+  }
+}
+
+.bottomOrange.progressContainer {
+  flex-direction: column-reverse;
+
+  .progressFill {
+    background-color: var(--color-orange);
+  }
 }
 
 .light .progressBar {
