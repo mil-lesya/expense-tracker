@@ -1,0 +1,25 @@
+{
+    "title": "Settings",
+    "buttons": {
+        "edit": "Edit information"
+    },
+    "info": "On this page, you can easily manage your profile information and change localization settings. You can update personal information such as name, email address and password, as well as customize your preferred interface language. Here you will find all the tools you need to manage your settings easily and conveniently.",
+    "modal": {
+        "buttonEdit": "Apply",
+        "buttonCancel": "Cancel",
+        "titleEdit": "Edit user information",
+        "subtitle": "Manage your account easily",
+        "labelUsername": "Name",
+        "placeholderUsername": "Enter your name",
+        "labelDefaultCurrency": "Default currency",
+        "placeholderDefaultCurrency": "BYN",
+        "emailError": "Enter a valid email address"
+    },
+    "fields": {
+        "name": "Name",
+        "defaultCurrency": "Default currency"
+    },
+    "userData": "User information",
+    "localization": "Localization",
+    "lang": "Language"
+}
