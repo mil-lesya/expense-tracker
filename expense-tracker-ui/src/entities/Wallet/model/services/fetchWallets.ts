@@ -1,7 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { ThunkConfig } from 'app/providers/StoreProvider';
 import { WalletsResponseDto } from '../types/wallet';
-import { ACCESS_TOKEN_KEY } from 'shared/const/localstorage';
 import { RecordsPagesDto } from 'shared/types/requestTypes';
 
 export const fetchWallets = createAsyncThunk<
@@ -13,13 +12,8 @@ ThunkConfig<string>
   async ({ page, limit }, thunkApi) => {
     const { extra, rejectWithValue } = thunkApi;
 
-    const token = localStorage.getItem(ACCESS_TOKEN_KEY);
-    if (!token) {
-      return rejectWithValue('error');
-    }
-
     try {
-      const response = await extra.api.get<WalletsResponseDto>(
+      const response = await extra.get<WalletsResponseDto>(
         '/wallets',
         {
           params: {
@@ -29,13 +23,9 @@ ThunkConfig<string>
         }
       );
 
-      if (!response.data) {
-        throw new Error();
-      }
-
-      return response.data;
+      return response;
     } catch (e) {
-      return rejectWithValue('error');
+      return rejectWithValue(e.message);
     }
   }
 );

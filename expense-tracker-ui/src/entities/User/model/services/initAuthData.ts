@@ -1,8 +1,8 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios';
 import { User, userActions } from 'entities/User';
 import { ACCESS_TOKEN_KEY } from 'shared/const/localstorage';
 import { jwtDecode } from 'jwt-decode';
+import { get } from 'shared/api/api';
 
 interface decodedToken {
   id: string
@@ -16,7 +16,7 @@ export const initAuthData = createAsyncThunk<User>(
       const decoded: decodedToken | null = token ? jwtDecode(token) : null;
 
       if (token && decoded?.id) {
-        const response = await axios.get<User>(
+        const response = await get<User>(
           `http://localhost:3000/users/${decoded.id}`,
           {
             headers: {
@@ -25,21 +25,21 @@ export const initAuthData = createAsyncThunk<User>(
           }
         );
 
-        if (!response.data) {
+        if (!response) {
           thunkAPI.dispatch(userActions.setIsAuth(false));
           throw new Error();
         }
 
-        thunkAPI.dispatch(userActions.setAuthData(response.data));
+        thunkAPI.dispatch(userActions.setAuthData(response));
         thunkAPI.dispatch(userActions.setIsAuth(true));
 
-        return response.data;
+        return response;
       } else {
         thunkAPI.dispatch(userActions.setIsAuth(false));
         throw new Error();
       }
     } catch (e) {
-      return thunkAPI.rejectWithValue('error');
+      return thunkAPI.rejectWithValue(e.message);
     }
   }
 );

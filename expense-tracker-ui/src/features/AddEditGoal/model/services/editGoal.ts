@@ -14,21 +14,16 @@ ThunkConfig<string>
   async ({ id, ...goalData }, thunkApi) => {
     const { extra, rejectWithValue, dispatch } = thunkApi;
 
-    console.log(goalData);
     const formData = toFormData(goalData);
 
     try {
-      const response = await extra.api.patch<Goal>(`/goals/${id}`, formData);
-
-      if (!response.data) {
-        throw new Error();
-      }
+      const response = await extra.patch<Goal>(`/goals/${id}`, formData);
 
       dispatch(fetchGoals());
 
-      return response.data;
+      return response;
     } catch (e) {
-      return rejectWithValue('error');
+      return rejectWithValue(e.message);
     }
   }
 );

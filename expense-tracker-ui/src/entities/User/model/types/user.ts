@@ -5,11 +5,13 @@ export interface User {
   username: string
   email: string
   defaultCurrency: CurrencyCode
+  isConfirmed: boolean
 }
 
 export interface UserSchema {
   authData?: User
   isAuth: boolean
+  isReg: boolean
   isLoading: boolean
 }
 

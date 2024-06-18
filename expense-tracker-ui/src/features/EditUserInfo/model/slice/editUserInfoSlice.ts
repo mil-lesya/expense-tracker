@@ -5,7 +5,6 @@ import { CurrencyCode } from 'shared/const/common';
 
 const initialState: EditUserInfoSchema = {
   username: '',
-  email: '',
   defaultCurrency: CurrencyCode.USD,
   isLoading: false
 };
@@ -19,9 +18,6 @@ export const editUserInfoSlice = createSlice({
     },
     setDefaultCurrency: (state, action: PayloadAction<CurrencyCode>) => {
       state.defaultCurrency = action.payload;
-    },
-    setEmail: (state, action: PayloadAction<string>) => {
-      state.email = action.payload;
     }
   },
   extraReducers: (builder) => {

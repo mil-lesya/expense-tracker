@@ -1,4 +1,4 @@
-import { FC, useEffect } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { classNames } from 'shared/lib/classNames/classNames';
 import cls from './DashboardPage.module.scss';
 import { PageHeader } from 'shared/ui/PageHeader';
@@ -16,6 +16,9 @@ import { WalletsWidget } from 'widgets/WalletsWidget';
 import { EmptyBlock } from 'shared/ui/EmptyBlock';
 import { SavingsWidget } from 'widgets/SavingsWidget';
 import { fetchGoals, goalsReducer } from 'entities/Goal';
+import { Modal } from 'shared/ui/Modal';
+import { Button, ThemeButton } from 'shared/ui/Button';
+import { getUserState, userActions } from 'entities/User';
 
 const reducers: ReducersList = {
   wallets: walletsReducer,
@@ -32,9 +35,13 @@ const DashboardPage: FC<DashboardPageProps> = (props) => {
   const { t } = useTranslation('dashboard');
   const dispatch = useAppDispatch();
 
+  const { isReg } = useSelector(getUserState);
+
   const isLoadingWallets = useSelector(getWalletsIsLoading);
   const isLoadingTransactions = useSelector(getTransactionsIsLoading);
   const transactionsCount = useSelector(getTransactionsCount);
+
+  const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
     dispatch(fetchWallets({ page: 1, limit: 100 }));
@@ -42,6 +49,17 @@ const DashboardPage: FC<DashboardPageProps> = (props) => {
     dispatch(fetchTransactions({ page: 1, limit: 10, sort: 'date', order: 'DESC' }));
     dispatch(fetchGoals());
   }, []);
+
+  useEffect(() => {
+    if (isReg) {
+      setIsOpen(true);
+    }
+  }, [isReg]);
+
+  function onClose () {
+    setIsOpen((prev) => !prev);
+    dispatch(userActions.setIsReg(false));
+  }
 
   return (
     <DynamicModuleLoader reducers={reducers}>
@@ -74,6 +92,25 @@ const DashboardPage: FC<DashboardPageProps> = (props) => {
         </>
             )}
         </div>
+
+        <Modal
+          isOpen={isOpen}
+          onClose={onClose}
+          title={t('modal.title')}
+          subtitle=""
+          className={classNames(cls.modal, {}, [className])}
+        >
+        <div className={cls.info}>{t('modal.info')}</div>
+        <div className={cls.modalButtonWrapper}>
+          <Button
+            theme={ThemeButton.PRIMARY}
+            onClick={onClose}
+            className={cls.modalButton}
+          >
+            {t('modal.buttonOk')}
+          </Button>
+        </div>
+      </Modal>
     </DynamicModuleLoader>
   );
 };

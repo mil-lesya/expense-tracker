@@ -13,7 +13,7 @@ ThunkConfig<string>
     const { extra, rejectWithValue } = thunkApi;
 
     try {
-      const response = await extra.api.get<BudgetsResponseDto>(
+      const response = await extra.get<BudgetsResponseDto>(
         '/budget',
         {
           params: {
@@ -23,13 +23,9 @@ ThunkConfig<string>
         }
       );
 
-      if (!response.data) {
-        throw new Error();
-      }
-
-      return response.data;
+      return response;
     } catch (e) {
-      return rejectWithValue('error');
+      return rejectWithValue(e.message);
     }
   }
 );

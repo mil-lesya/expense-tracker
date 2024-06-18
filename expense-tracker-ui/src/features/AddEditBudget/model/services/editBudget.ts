@@ -13,16 +13,13 @@ ThunkConfig<string>
     const { extra, rejectWithValue, dispatch } = thunkApi;
 
     try {
-      const response = await extra.api.patch<Budget>(`/budget/${id}`, requestBody);
-      if (!response.data) {
-        throw new Error('Failed to add budget');
-      }
+      const response = await extra.patch<Budget>(`/budget/${id}`, requestBody);
 
       await dispatch(fetchBudgets({ page: 1, limit: 10 }));
 
-      return response.data;
+      return response;
     } catch (e) {
-      return rejectWithValue(e.message || 'Unknown error');
+      return rejectWithValue(e.message);
     }
   }
 );

@@ -13,17 +13,13 @@ ThunkConfig<string>
     const { extra, rejectWithValue, dispatch } = thunkApi;
 
     try {
-      const response = await extra.api.patch<User>(`/users/${id}`, requestBody);
+      const response = await extra.patch<User>(`/users/${id}`, requestBody);
 
-      if (!response.data) {
-        throw new Error();
-      }
+      dispatch(userActions.setAuthData(response));
 
-      dispatch(userActions.setAuthData(response.data));
-
-      return response.data;
+      return response;
     } catch (e) {
-      return rejectWithValue('error');
+      return rejectWithValue(e.message);
     }
   }
 );

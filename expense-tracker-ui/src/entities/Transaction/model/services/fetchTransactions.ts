@@ -1,6 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { ThunkConfig } from 'app/providers/StoreProvider';
-import { ACCESS_TOKEN_KEY } from 'shared/const/localstorage';
 import { RecordsPageTransactionDto, TransactionsResponseDto } from '../types/transaction';
 
 export const fetchTransactions = createAsyncThunk<
@@ -12,24 +11,15 @@ ThunkConfig<string>
   async (params, thunkApi) => {
     const { extra, rejectWithValue } = thunkApi;
 
-    const token = localStorage.getItem(ACCESS_TOKEN_KEY);
-    if (!token) {
-      return rejectWithValue('error');
-    }
-
     try {
-      const response = await extra.api.get<TransactionsResponseDto>(
+      const response = await extra.get<TransactionsResponseDto>(
         '/transactions',
         { params }
       );
 
-      if (!response.data) {
-        throw new Error();
-      }
-
-      return response.data;
+      return response;
     } catch (e) {
-      return rejectWithValue('error');
+      return rejectWithValue(e.message);
     }
   }
 );

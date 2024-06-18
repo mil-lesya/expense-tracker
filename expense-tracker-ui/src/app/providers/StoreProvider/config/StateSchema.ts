@@ -1,5 +1,4 @@
 import { AnyAction, CombinedState, EnhancedStore, Reducer, ReducersMapObject } from '@reduxjs/toolkit';
-import { AxiosInstance } from 'axios';
 import { BudgetSchema } from 'entities/Budget';
 import { CategorySchema } from 'entities/Category';
 import { GoalSchema } from 'entities/Goal';
@@ -22,9 +21,13 @@ import { DeleteTransactionSchema } from 'features/DeleteTransaction';
 import { DeleteWalletSchema } from 'features/DeleteWallet';
 import { EditTransactionSchema } from 'features/EditTransaction';
 import { EditUserInfoSchema } from 'features/EditUserInfo';
+import { ForgetPasswordSchema } from 'features/ForgetPassword/model/types/forgetPasswordSchema';
 import { RegistrationSchema } from 'features/Registration';
+import { ResetPasswordSchema } from 'features/ResetPassword/model/types/resetPasswordSchema';
+import { ConfirmSchema } from 'pages/ConfirmPage/model/types/confirmSchema';
 import { NavigateOptions } from 'react-router';
 import { To } from 'react-router-dom';
+import { AxiosRequestInterface } from 'shared/api/api';
 import { WalletsTotalBalanceSchema } from 'widgets/WalletsTotalBalance';
 
 export interface StateSchema {
@@ -33,6 +36,9 @@ export interface StateSchema {
   editUserInfo?: EditUserInfoSchema
   loginForm?: LoginSchema
   registrationForm?: RegistrationSchema
+  forgetPasswordForm?: ForgetPasswordSchema
+  resetPasswordForm?: ResetPasswordSchema
+  confirm?: ConfirmSchema
   // Кошельки
   wallets?: WalletSchema
   addEditWallet?: AddEditWalletSchema
@@ -76,7 +82,29 @@ export interface ReduxStoreWidthManager extends EnhancedStore<StateSchema> {
 }
 
 export interface ThunkExtraArg {
-  api: AxiosInstance
+  get: <TResponse = any, TParams = any>(
+    url: string,
+    config?: AxiosRequestInterface<TParams>
+  ) => Promise<TResponse>
+  post: <TResponse = any, TRequest = any, TParams = any>(
+    url: string,
+    requestBody: TRequest,
+    config?: AxiosRequestInterface<TParams>
+  ) => Promise<TResponse>
+  put: <TResponse = any, TRequest = any, TParams = any>(
+    url: string,
+    requestBody: TRequest,
+    config?: AxiosRequestInterface<TParams>
+  ) => Promise<TResponse>
+  patch: <TResponse = any, TRequest = any, TParams = any>(
+    url: string,
+    requestBody: TRequest,
+    config?: AxiosRequestInterface<TParams>
+  ) => Promise<TResponse>
+  delete: <TResponse = any, TParams = any>(
+    url: string,
+    config?: AxiosRequestInterface<TParams>
+  ) => Promise<TResponse>
   navigate?: (to: To, options?: NavigateOptions) => void
 }
 

@@ -37,11 +37,46 @@
 
 .fieldName {
     font: var(--font-main-text);
-    min-width: 180px;
+    min-width: 200px;
     font-size: 18px;
     font-weight: 900;
 }
 
+.fieldNameEmail {
+    font: var(--font-main-text);
+    min-width: 200px;
+}
+
 .fieldValue {
     font: var(--font-main-text);
+}
+
+.green {
+    color: var(--color-green);
+}
+
+.red {
+    color: var(--color-red);
+}
+
+.modal {
+    width: 100%;
+}
+
+.modalButtonWrapper {
+    width: 100%;
+    display: flex;
+    justify-content: end;
+}
+
+.modalButton {
+    width: 50%;
+}
+
+.info {
+    font-family: var(--font-family-main);
+    font-size: var(--font-size-title-l);
+    line-height: 35px;
+    font-weight: 300;
+    margin-bottom: 20px;
 }

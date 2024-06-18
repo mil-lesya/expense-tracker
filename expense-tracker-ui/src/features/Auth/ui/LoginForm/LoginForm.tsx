@@ -91,6 +91,10 @@ const LoginForm = ({ className }: LoginFormProps) => {
     navigate('/signup');
   }
 
+  const onForgetClick = useCallback(() => {
+    navigate('/forget-password');
+  }, []);
+
   return (
     <DynamicModuleLoader reducers={initialReducers}>
       <div className={classNames(cls.loginForm, {}, [className])}>
@@ -120,6 +124,13 @@ const LoginForm = ({ className }: LoginFormProps) => {
             placeholder={t('login.placeholderPassword')}
           />
         </div>
+        <Button
+          onClick={onForgetClick}
+          theme={ThemeButton.CLEAR}
+          className={cls.forgotButton}
+        >
+          {t('login.forgotButton')}
+        </Button>
         <Button
           onClick={onLoginClick}
           theme={ThemeButton.PRIMARY}

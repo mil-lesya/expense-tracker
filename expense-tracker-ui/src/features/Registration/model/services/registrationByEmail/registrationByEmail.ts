@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios';
 import { UserLoginResponseDto, userActions } from 'entities/User';
+import { post } from 'shared/api/api';
 import { CurrencyCode } from 'shared/const/common';
 import { ACCESS_TOKEN_KEY } from 'shared/const/localstorage';
 
@@ -16,20 +16,17 @@ UserLoginResponseDto,
 RegistrationByEmailProps
 >('registration/registrationByEmail', async (authData, thunkAPI) => {
   try {
-    const response = await axios.post<UserLoginResponseDto>(
+    const response = await post<UserLoginResponseDto>(
       'http://localhost:3000/auth/signup',
       authData
     );
 
-    if (!response.data) {
-      throw new Error();
-    }
-
-    localStorage.setItem(ACCESS_TOKEN_KEY, response.data.accessToken);
-    thunkAPI.dispatch(userActions.setAuthData(response.data.user));
+    localStorage.setItem(ACCESS_TOKEN_KEY, response.accessToken);
+    thunkAPI.dispatch(userActions.setAuthData(response.user));
     thunkAPI.dispatch(userActions.setIsAuth(true));
+    thunkAPI.dispatch(userActions.setIsReg(true));
 
-    return response.data;
+    return response;
   } catch (e) {
     return thunkAPI.rejectWithValue(e.message);
   }

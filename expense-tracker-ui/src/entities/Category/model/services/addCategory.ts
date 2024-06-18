@@ -12,15 +12,11 @@ ThunkConfig<string>
     const { extra, rejectWithValue } = thunkApi;
 
     try {
-      const response = await extra.api.post<Category>('/categories', category);
+      const response = await extra.post<Category>('/categories', category);
 
-      if (!response.data) {
-        throw new Error();
-      }
-
-      return response.data;
+      return response;
     } catch (e) {
-      return rejectWithValue('error');
+      return rejectWithValue(e.message);
     }
   }
 );

@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { ThunkConfig } from 'app/providers/StoreProvider';
-import { GoalsResponseDto, RecordsPageGoalsDto } from '../types/goal';
+import { GoalsResponseDto } from '../types/goal';
 
 export const fetchGoals = createAsyncThunk<
 GoalsResponseDto,
@@ -13,7 +13,7 @@ ThunkConfig<string>
 
     const state = getState().goals;
     try {
-      const response = await extra.api.get<GoalsResponseDto>(
+      const response = await extra.get<GoalsResponseDto>(
         '/goals',
         {
           params: {
@@ -24,13 +24,9 @@ ThunkConfig<string>
         }
       );
 
-      if (!response.data) {
-        throw new Error();
-      }
-
-      return response.data;
+      return response;
     } catch (e) {
-      return rejectWithValue('error');
+      return rejectWithValue(e.message);
     }
   }
 );

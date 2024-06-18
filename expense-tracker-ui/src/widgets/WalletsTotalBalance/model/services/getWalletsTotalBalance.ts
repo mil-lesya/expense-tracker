@@ -12,15 +12,11 @@ ThunkConfig<string>
     const { extra, rejectWithValue } = thunkApi;
 
     try {
-      const response = await extra.api.get<WalletsTotalBalanceResponseDto>('/wallets/balance');
+      const response = await extra.get<WalletsTotalBalanceResponseDto>('/wallets/balance');
 
-      if (!response.data) {
-        throw new Error();
-      }
-
-      return response.data;
+      return response;
     } catch (e) {
-      return rejectWithValue('error');
+      return rejectWithValue(e.message);
     }
   }
 );

@@ -23,7 +23,6 @@ const SavingsWidget: FC<SavingsWidgetProps> = (props) => {
 
   const goals = useSelector(getUserGoals.selectAll);
 
-  console.log(goals);
   return (
     <div className={classNames(cls.savingsWidget, {}, [className])}>
        <div className={cls.titleWrapper}>

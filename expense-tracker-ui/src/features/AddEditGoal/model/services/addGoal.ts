@@ -18,17 +18,13 @@ ThunkConfig<string>
     const formData = toFormData(goalData);
 
     try {
-      const response = await extra.api.post<Goal>('/goals', formData);
-
-      if (!response.data) {
-        throw new Error();
-      }
+      const response = await extra.post<Goal>('/goals', formData);
 
       dispatch(fetchGoals());
 
-      return response.data;
+      return response;
     } catch (e) {
-      return rejectWithValue('error');
+      return rejectWithValue(e.message);
     }
   }
 );

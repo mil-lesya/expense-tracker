@@ -15,9 +15,9 @@ import DynamicModuleLoader, { ReducersList } from 'shared/lib/components/Dynamic
 import Input from 'shared/ui/Input/ui/Input';
 import { currencyOptions } from 'shared/lib/enumToSelect/enumToSelect';
 import { User } from 'entities/User';
-import { getEditUserInfoDefaultCurrency, getEditUserInfoEmail, getEditUserInfoError, getEditUserInfoIsLoading, getEditUserInfoUsername } from '../model/selectors/editUserInfo';
+import { getEditUserInfoDefaultCurrency, getEditUserInfoError, getEditUserInfoIsLoading, getEditUserInfoUsername } from '../model/selectors/editUserInfo';
 import { CurrencyCode } from 'shared/const/common';
-import { EMAIL_MASK, TEXT_MASK } from 'shared/const/mask';
+import { TEXT_MASK } from 'shared/const/mask';
 
 const initialReducers: ReducersList = {
   editUserInfo: editUserInfoReducer
@@ -40,29 +40,27 @@ const EditUserInfoModal: FC<EditUserInfoModalProps> = (props) => {
   const error = useSelector(getEditUserInfoError);
   const username = useSelector(getEditUserInfoUsername);
   const defaultCurrency = useSelector(getEditUserInfoDefaultCurrency);
-  const email = useSelector(getEditUserInfoEmail);
 
   const [disabledBtn, setDisabledBtn] = useState(false);
   const [userInfoChanges, setUserInfoChanges] = useState({});
   const [usernameError, setUsernameError] = useState('');
-  const [emailError, setEmailError] = useState('');
 
   useEffect(() => {
-    if (!username || !email ||
-        usernameError || emailError ||
+    if (!username ||
+        usernameError ||
         !defaultCurrency) {
       setDisabledBtn(true);
     } else {
       setDisabledBtn(false);
     }
-  }, [usernameError, emailError, defaultCurrency]);
+  }, [username, usernameError, defaultCurrency]);
 
   useEffect(() => {
     if (user) {
       const changes = getUserInfoChanges();
       setUserInfoChanges(changes);
     }
-  }, [username, defaultCurrency, email]);
+  }, [username, defaultCurrency]);
 
   useEffect(() => {
     if (error) {
@@ -74,20 +72,12 @@ const EditUserInfoModal: FC<EditUserInfoModalProps> = (props) => {
     if (user) {
       dispatch(editUserInfoActions.setUsername(user.username));
       dispatch(editUserInfoActions.setDefaultCurrency(user.defaultCurrency));
-      dispatch(editUserInfoActions.setEmail(user.email));
     }
   }, [user]);
 
   const onChangeUsername = useCallback(
     (value: string) => {
       dispatch(editUserInfoActions.setUsername(value));
-    },
-    [dispatch]
-  );
-
-  const onChangeEmail = useCallback(
-    (value: string) => {
-      dispatch(editUserInfoActions.setEmail(value));
     },
     [dispatch]
   );
@@ -104,7 +94,6 @@ const EditUserInfoModal: FC<EditUserInfoModalProps> = (props) => {
 
     if (user.username !== username) differences.username = username;
     if (user.defaultCurrency !== defaultCurrency) differences.defaultCurrency = defaultCurrency;
-    if (user.email !== email) differences.email = email;
 
     return differences;
   };
@@ -144,17 +133,6 @@ const EditUserInfoModal: FC<EditUserInfoModalProps> = (props) => {
             options={currencyOptions}
             onChange={onChangeCurrency}
             label={t('modal.labelDefaultCurrency')}
-          />
-          <Input
-            value={email}
-            onChange={onChangeEmail}
-            mask={EMAIL_MASK}
-            required
-            errorText={t('modal.emailError')}
-            error={emailError}
-            setError={setEmailError}
-            label='Email'
-            placeholder='example@mail.com'
           />
         </div>
         <div className={cls.buttonWrapper}>

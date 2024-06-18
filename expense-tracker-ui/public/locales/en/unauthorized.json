@@ -3,6 +3,7 @@
         "title": "Welcome back",
         "subtitle": "Sign in for smarter money management",
         "button": "Sign in",
+        "forgotButton": "Forget Password",
         "emailError": "Enter a valid email",
         "password": "Password",
         "passwordError": "Enter a valid password",
@@ -27,6 +28,40 @@
         "placeholderRepeatPassword": "Repeat password",
         "alreadyAccount": "Already have an account?",
         "signIn": "Sign in"
+    },
+    "forget": {
+        "title": "Forgot your password?",
+        "subtitle": "To set a new password, enter your email",
+        "button": "Confirm",
+        "emailError": "Enter a valid email",
+        "modal": {
+            "title": "The letter has been sent",
+            "info": "A link has been sent to your e-mail. Follow the link from the e-mail to reset your password",
+            "buttonOk": "OK"
+        }
+    },
+    "reset": {
+        "title": "Password reset",
+        "subtitle": "Create a new password",
+        "button": "Confirm",
+        "password": "Password",
+        "passwordError": "Password: 8 characters, upper/lower case, numbers, special characters",
+        "placeholderPassword": "Create your password",
+        "repeatPassword": "Repeat Password",
+        "repeatPasswordError": "Passwords must match",
+        "placeholderRepeatPassword": "Repeat password",
+        "modal": {
+            "title": "A new password has been created",
+            "info": "Log into your account with your new password",
+            "buttonOk": "Go to login"
+        }
+    },
+    "confirm": {
+        "modal": {
+            "title": "Mail confirmed!",
+            "info": "Thank you for confirming the post, you may proceed with it",
+            "buttonOk": "Go to Dashboard"
+        }
     },
     "layout": {
         "buttonLogin": "Sign in",

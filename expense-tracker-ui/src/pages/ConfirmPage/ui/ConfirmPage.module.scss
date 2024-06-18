@@ -1,0 +1,25 @@
+.forgetPasswordPage {
+    width: 100%;
+}
+
+.modal {
+  width: 100%;
+}
+
+.modalButtonWrapper {
+  width: 100%;
+  display: flex;
+  justify-content: end;
+}
+
+.modalButton {
+  width: 50%;
+}
+
+.info {
+  font-family: var(--font-family-main);
+  font-size: var(--font-size-title-l);
+  line-height: 35px;
+  font-weight: 300;
+  margin-bottom: 20px;
+}

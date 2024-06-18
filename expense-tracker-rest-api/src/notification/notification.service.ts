@@ -11,7 +11,7 @@ export class NotificationService {
   ) {}
 
   async sendConfirmMail(user: User, token: string) {
-    const confirmLink = `${this.configService.get('FRONTEND_SERVER_URL')}/auth/confirm?token=${token}`;
+    const confirmLink = `${this.configService.get('FRONTEND_SERVER_URL')}/confirm?token=${token}`;
     await this.mailerService.sendMail({
       to: user.email,
       subject: 'Confirm email',
@@ -24,7 +24,7 @@ export class NotificationService {
   }
 
   async sendPasswordResetEmail(user: User, token: string) {
-    const resetLink = `${this.configService.get('FRONTEND_SERVER_URL')}/auth/reset-password?token=${token}`;
+    const resetLink = `${this.configService.get('FRONTEND_SERVER_URL')}/reset-password?token=${token}`;
     await this.mailerService.sendMail({
       to: user.email,
       subject: 'Reset Password',

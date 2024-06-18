@@ -13,17 +13,13 @@ ThunkConfig<string>
     const { extra, rejectWithValue, dispatch } = thunkApi;
 
     try {
-      const response = await extra.api.delete<Goal>(`/goals/${id}`);
-
-      if (!response.data) {
-        throw new Error();
-      }
+      const response = await extra.delete<Goal>(`/goals/${id}`);
 
       dispatch(fetchGoals());
 
-      return response.data;
+      return response;
     } catch (e) {
-      return rejectWithValue('error');
+      return rejectWithValue(e.message);
     }
   }
 );

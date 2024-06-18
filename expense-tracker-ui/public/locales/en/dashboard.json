@@ -4,5 +4,10 @@
     "walletsTitle": "My wallets",
     "emptyTransaction": "No transactions found. Create a new transaction",
     "savingsTitle": "Savings",
-    "seeAll": "See all"
+    "seeAll": "See all",
+    "modal": {
+        "title": "You have successfully registered!",
+        "info": "A link has been sent to your e-mail. Click on the link from the email to confirm your email address",
+        "buttonOk": "OK"
+    }
 }

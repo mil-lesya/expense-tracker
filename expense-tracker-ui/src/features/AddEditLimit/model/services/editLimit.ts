@@ -14,17 +14,14 @@ ThunkConfig<string>
     const { extra, rejectWithValue, dispatch } = thunkApi;
 
     try {
-      const response = await extra.api.patch<Limit>(`/limit/${id}`, requestBody);
-      if (!response.data) {
-        throw new Error('Failed to add limit');
-      }
+      const response = await extra.patch<Limit>(`/limit/${id}`, requestBody);
 
       await dispatch(fetchLimits(requestBody.budgetId));
       await dispatch(fetchCategory());
 
-      return response.data;
+      return response;
     } catch (e) {
-      return rejectWithValue(e.message || 'Unknown error');
+      return rejectWithValue(e.message);
     }
   }
 );

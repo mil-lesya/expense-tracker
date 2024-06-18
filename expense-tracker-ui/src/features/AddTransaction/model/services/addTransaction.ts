@@ -25,17 +25,14 @@ ThunkConfig<string>
         request = { ...requestBody, categoryId: categoryResponse.id };
       }
 
-      const transactionResponse = await extra.api.post<Transaction>('/transactions', request);
-      if (!transactionResponse.data) {
-        throw new Error('Failed to add transaction');
-      }
+      const transactionResponse = await extra.post<Transaction>('/transactions', request);
 
       await dispatch(fetchTransactions({ page: 1, limit: 10, sort: 'date', order: 'ASC' }));
       await dispatch(fetchCategory());
       await dispatch(fetchWallets({}));
-      return transactionResponse.data;
+      return transactionResponse;
     } catch (e) {
-      return rejectWithValue(e.message || 'Unknown error');
+      return rejectWithValue(e.message);
     }
   }
 );

@@ -19,7 +19,6 @@ import {
   getAddEditGoalCurrency,
   getAddEditGoalDepositedAmount,
   getAddEditGoalError,
-  getAddEditGoalImage,
   getAddEditGoalIsCompleted,
   getAddEditGoalIsLoading,
   getAddEditGoalName,
@@ -193,7 +192,6 @@ const AddEditGoalModal: FC<AddEditGoalModalProps> = (props) => {
         return;
       }
 
-      console.log('aa11', isCompleted);
       dispatch(addGoal({ name, goalAmount, currency, depositedAmount, image, targetDate: isTargetDate ? targetDate : null, isCompleted })).then(() => {
         onCloseModal();
       });

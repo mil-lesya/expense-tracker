@@ -114,7 +114,6 @@ const TransactionsPage: FC<TransactionsPageProps> = (props) => {
     setFilterTypeTransaction(filters.type);
     setFilterWallets(filters.wallet);
     setFilterMinAmount(filters.minAmount);
-    console.log(filters.category);
     setFilterCategory(filters.category);
   };
 

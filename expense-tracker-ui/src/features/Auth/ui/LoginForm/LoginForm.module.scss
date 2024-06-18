@@ -4,6 +4,7 @@
   background-color: var(--color-white);
   border-radius: 15px;
   padding: 50px;
+  position: relative;
 
   @include only-mobile {
     padding: 0;
@@ -47,4 +48,10 @@
   font: var(--font-main-text);
   font-weight: 900;
   margin-top: 15px;
+}
+
+.forgotButton {
+  position: absolute;
+  bottom: 100px;
+  right: 50px;
 }

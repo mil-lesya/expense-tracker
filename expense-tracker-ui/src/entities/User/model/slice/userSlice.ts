@@ -5,6 +5,7 @@ import { ACCESS_TOKEN_KEY } from 'shared/const/localstorage';
 
 const initialState: UserSchema = {
   isAuth: false,
+  isReg: false,
   isLoading: true
 };
 
@@ -17,6 +18,9 @@ export const userSlice = createSlice({
     },
     setIsAuth: (state, action: PayloadAction<boolean>) => {
       state.isAuth = action.payload;
+    },
+    setIsReg: (state, action: PayloadAction<boolean>) => {
+      state.isReg = action.payload;
     },
     logout: (state) => {
       state.isAuth = false;

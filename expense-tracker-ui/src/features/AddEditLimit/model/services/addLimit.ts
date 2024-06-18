@@ -24,17 +24,14 @@ ThunkConfig<string>
         request = { ...requestBody, categoryId: categoryResponse.id };
       }
 
-      const response = await extra.api.post<Limit>('/limit', request);
-      if (!response.data) {
-        throw new Error('Failed to add limit');
-      }
+      const response = await extra.post<Limit>('/limit', request);
 
       await dispatch(fetchLimits(requestBody.budgetId));
       await dispatch(fetchCategory());
 
-      return response.data;
+      return response;
     } catch (e) {
-      return rejectWithValue(e.message || 'Unknown error');
+      return rejectWithValue(e.message);
     }
   }
 );

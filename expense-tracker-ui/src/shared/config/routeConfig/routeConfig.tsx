@@ -1,7 +1,10 @@
 import { BudgetsPage } from 'pages/BudgetsPage';
+import { ConfirmPage } from 'pages/ConfirmPage';
 import { DashboardPage } from 'pages/DashboardPage';
+import { ForgetPasswordPage } from 'pages/ForgetPasswordPage';
 import { NotFoundPage } from 'pages/NotFoundPage';
 import { ReportsPage } from 'pages/ReportsPage';
+import { ResetPasswordPage } from 'pages/ResetPasswordPage';
 import { SavingsPage } from 'pages/SavingsPage';
 import { SettingsPage } from 'pages/SettingsPage';
 import { SignInPage } from 'pages/SignInPage';
@@ -20,6 +23,9 @@ export enum AppRoutes {
   WALLETS = 'wallets',
   REPORTS = 'reports',
   SETTINGS = 'settings',
+  FORGET_PASSWORD = 'forget_password',
+  RESET_PASSWORD = 'reset_password',
+  CONFIRM = 'confirm',
   NOT_FOUND = 'not_found',
 }
 
@@ -33,6 +39,9 @@ export const RoutePath: Record<AppRoutes, string> = {
   [AppRoutes.WALLETS]: '/wallets',
   [AppRoutes.REPORTS]: '/reports',
   [AppRoutes.SETTINGS]: '/settings',
+  [AppRoutes.FORGET_PASSWORD]: '/forget-password',
+  [AppRoutes.RESET_PASSWORD]: '/reset-password',
+  [AppRoutes.CONFIRM]: '/confirm',
   [AppRoutes.NOT_FOUND]: '*'
 };
 
@@ -72,6 +81,18 @@ export const routeConfig: Record<AppRoutes, RouteProps> = {
   [AppRoutes.SETTINGS]: {
     path: RoutePath.settings,
     element: <SettingsPage />
+  },
+  [AppRoutes.FORGET_PASSWORD]: {
+    path: RoutePath.forget_password,
+    element: <ForgetPasswordPage />
+  },
+  [AppRoutes.RESET_PASSWORD]: {
+    path: RoutePath.reset_password,
+    element: <ResetPasswordPage />
+  },
+  [AppRoutes.CONFIRM]: {
+    path: RoutePath.confirm,
+    element: <ConfirmPage />
   },
   [AppRoutes.NOT_FOUND]: {
     path: RoutePath.not_found,
